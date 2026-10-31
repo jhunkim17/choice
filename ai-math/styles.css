@@ -10,3 +10,4 @@ var{font-family:"Inquiry Math","Cambria Math",serif;font-style:normal;font-weigh
 .row-calculate{white-space:nowrap;font-size:14px;padding:7px 10px}.score-input-table th:first-child,.score-input-table td:first-child{position:sticky;left:0;background:#f5f8ff;z-index:1}.score-input-table th:first-child{background:#eaf0ff}
 .plot-reference{margin:20px 0 24px}.plot-reference h4{margin:0 0 10px}.plot-reference table{min-width:320px}
 .fill-all-row{margin-top:20px}
+.fill-toolbar{background:#fff1e8;border:2px solid #ffc5a8;border-radius:16px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px}.fill-toolbar strong{font-size:18px}.fill-toolbar p{margin:4px 0 0;color:var(--sub);font-size:14px}.fill-toolbar button{white-space:nowrap}#fill-toolbar-status:not(:empty){flex-basis:100%;font-size:14px;color:var(--green);font-weight:700}@media(max-width:600px){.fill-toolbar button{width:100%}}
