@@ -28,3 +28,5 @@ GitHub Pages가 저장소 루트에서 배포되도록 설정되어 있다면 `/
 점수표는 가중치 행마다 네 제품을 함께 계산하는 버튼을 제공합니다. 계산 후에도 입력값을 수정하거나 정답 확인을 할 수 있습니다.
 
 수학 변수 글꼴은 Latin Modern Math의 𝑎, 𝑏, 𝑥, 𝑦 글리프를 추린 WOFF 서브셋을 CSS에 내장했습니다. 원저자: Bogusław Jackowski, Piotr Strzelczyk, Piotr Pianowski. Copyright 2012–2014 (on behalf of TeX Users Groups). GUST Font License: licenses/GUST-FONT-LICENSE.txt. 이 앱은 원본 글꼴을 유지보수하거나 변경한 원본으로 배포하지 않습니다.
+
+일괄 채우기: 행렬 16칸, 점수표 44칸, 대표점 12개, 제외 제품 및 부등식 범위에 전체 정답 채우기를 제공합니다. 가중치 선호·두 반의 가중치 추정·서술형 문항은 정답이 유일하지 않으므로 예시 채우기로 표시합니다. 추정 예시는 가상 데이터 생성에 사용한 가중치이며 유일한 추정 정답을 뜻하지 않습니다. 예시 버튼은 해당 답안을 덮어쓰지만 투자 매매 기록은 변경하지 않습니다.
