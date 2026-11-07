@@ -1,126 +1,842 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>선택의 수학 · AI 추천 탐구실</title><style>:root{--navy:#14214d;--orange:#ff7a3d;--blue:#2f5fe0;--green:#087854;--red:#b32e36;--ink:#151a2d;--sub:#566079;--line:#d8deec;--bg:#f2f5fb}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;font-size:17px;line-height:1.65}header{background:var(--navy);color:white;display:flex;gap:16px;align-items:center;padding:16px 28px;flex-wrap:wrap}h1{font-size:23px;margin:0;flex:1}h1 small{font-size:14px;opacity:.75;display:inline-block;margin-left:8px}.badge{background:var(--orange);color:#14214d;border-radius:8px;padding:4px 10px;font-weight:800;font-size:14px}nav{background:white;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px 28px;border-bottom:1px solid var(--line)}nav button{background:white;color:var(--sub);box-shadow:none;text-align:left;border:2px solid transparent;padding:12px}nav button.active{background:#fff1e8;border-color:#ffc5a8;color:#85320c}.number{display:inline-grid;place-items:center;border-radius:50%;width:32px;height:32px;background:#e6eaf4;margin-right:8px}.active .number{background:var(--orange);color:var(--navy)}main{max-width:1400px;margin:auto;padding:24px 28px 50px}.intro span{font-weight:800;color:#ad470f;font-size:14px;letter-spacing:.08em}h2{font-size:32px;margin:4px 0 8px;line-height:1.35}.intro p{color:var(--sub);margin:0 0 24px}.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;align-items:start}.stack{display:grid;gap:18px}.card{background:white;border:2px solid var(--line);border-radius:20px;padding:22px;min-width:0}.card h3{margin:0 0 12px;font-size:21px}.card h4{margin:16px 0 6px}.hero{background:linear-gradient(135deg,#14214d,#293d8e);color:white;border-color:transparent}.hero p{color:#dce3ff}.muted,small{color:var(--sub)}.hero small{color:#dce3ff}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.metric{font-size:34px;font-weight:850;line-height:1.3}.label{font-size:14px;font-weight:700}.pill{display:inline-block;background:#eaf0ff;color:#2549ae;border-radius:20px;padding:4px 12px;font-size:14px;font-weight:800}.good{color:var(--green)}.bad{color:var(--red)}button{font:inherit;font-weight:750;border:0;border-radius:12px;padding:10px 16px;background:var(--blue);color:white;cursor:pointer;transition:background .15s}button:hover{filter:brightness(.94)}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #e08a1e;outline-offset:3px}button:disabled{opacity:.4;cursor:not-allowed}button.orange{background:var(--orange);color:#38200b}.outline{background:white;color:var(--blue);border:2px solid #cbd8fa}.light{color:white;border-color:#7682ac;background:transparent;font-size:14px}input,textarea,select{font:inherit;color:var(--ink);padding:10px;border:2px solid var(--line);border-radius:10px;background:white;max-width:100%}input[type=range]{width:100%;accent-color:var(--blue);padding:0;min-height:32px}input[type=number]{width:95px}textarea{display:block;width:100%;resize:vertical;min-height:100px;margin:10px 0}.scroll{overflow:auto;max-width:100%}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th{font-size:14px;color:#2549ae;background:#eaf0ff;white-space:nowrap}td,th{padding:9px 8px;text-align:center;border-bottom:1px solid #e5e9f2}td:first-child{text-align:left;font-weight:700}.stockgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stock{background:#f6f8fc;color:var(--ink);border:2px solid var(--line);text-align:left;padding:12px}.stock.selected{border-color:var(--blue);background:#eaf0ff}.stock small{display:block;font-size:12px}.notice{background:#fff6dd;border-left:5px solid #d78b1e;padding:13px 16px;border-radius:10px;margin:14px 0}.feedback{background:#e6f7f0;border-left:5px solid var(--green);padding:14px;border-radius:10px;margin-top:14px}.equation{font-size:21px;text-align:center;background:#f2f5fc;padding:16px;border-radius:14px;overflow:auto}.matrix{display:inline-grid;gap:4px;padding:8px 14px;border-left:3px solid var(--navy);border-right:3px solid var(--navy);vertical-align:middle;margin:8px}.matrix span{display:flex;gap:20px;justify-content:space-between}svg{width:100%;height:auto;display:block}.legend{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;font-size:14px}.swatch{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}.student{font-size:58px;text-align:center;margin:12px}.progress{height:9px;border-radius:9px;background:#e5eaf5;overflow:hidden;margin:12px 0}.progress div{height:100%;background:var(--orange)}.choices{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.choices div{text-align:center;padding:12px 4px;border-radius:12px;background:#f2f5fb}.choices .winner{background:#e6f7f0;box-shadow:inset 0 0 0 2px var(--green)}.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}.compare>div{border:2px solid var(--line);border-radius:15px;padding:16px}.matchgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.match{padding:8px;background:#e6f7f0;color:var(--green);border-radius:9px;text-align:center;font-size:13px}.match.no{background:#fdecea;color:var(--red)}details{margin-top:14px}summary{cursor:pointer;font-weight:750}footer{max-width:1400px;margin:auto;padding:18px 28px;font-size:13px;color:var(--sub)}#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:white;padding:12px 24px;border-radius:12px;display:none;max-width:90%;z-index:20}.plotlabel{font-size:12px;fill:var(--sub)}.checkpoint{background:#f5f8ff;padding:14px;border-radius:12px;margin-top:12px}.formula-input{width:62px!important;padding:5px;text-align:center}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}@media(max-width:950px){.grid{grid-template-columns:1fr}nav{padding:8px;gap:2px}nav button{font-size:13px;padding:8px 4px}.number{display:block;margin:0 auto 4px}header{padding:14px}main{padding:20px 14px}h2{font-size:26px}.card{padding:17px}h1 small{display:block;margin:0}.compare{grid-template-columns:1fr}}@media print{header button,nav,button{display:none}body{background:white}.grid{display:block}.card{break-inside:avoid;margin-bottom:16px}footer{display:none}}
-@media(max-width:600px){header{gap:10px}header .badge{font-size:12px}h1{flex:1 1 180px;font-size:21px}header button{flex:1}.number{display:grid}.matchgrid{gap:5px}.match{font-size:12px}}
-.day-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:22px}.day-steps button{background:white;color:var(--sub);border:2px solid var(--line);padding:12px 6px;box-shadow:none}.day-steps button small{display:block;font-size:13px;font-weight:500}.day-steps .selected{background:#fff1e8;border-color:var(--orange);color:#85320c}.day-metrics{margin:12px 0 20px}.day-metrics .metric{font-size:28px;margin:8px 0}.total-row{background:#eaf0ff;font-weight:800}@media(max-width:600px){.day-steps{gap:5px}.day-steps button{font-size:14px;padding:9px 2px}.day-steps button small{font-size:11px}#day-result td,#day-result th{padding:8px 4px;font-size:13px}.day-metrics{grid-template-columns:1fr 1fr}.day-metrics>div{padding:10px}.day-metrics .metric{font-size:23px}}
-@media(max-width:600px){header{display:grid;grid-template-columns:auto minmax(0,1fr)}header h1{font-size:21px;min-width:0}header button{width:100%;white-space:nowrap}header h1 small{font-size:13px}}
-.math-steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:20px}.math-steps button{background:white;color:var(--sub);border:2px solid var(--line);padding:12px 6px;font-size:14px}.math-steps button span{display:block;font-size:18px;margin-bottom:4px}.math-steps .selected{background:#fff1e8;border-color:var(--orange);color:#85320c}.math-activity{max-width:1050px;margin:auto}.math-navigation{border-top:1px solid var(--line);padding-top:20px;margin-top:26px}.math-input{width:76px!important;padding:7px;text-align:center}.math-expression{gap:8px;font-size:18px}.math-expression .matrix{padding:6px}.matrix-tasks{display:grid;grid-template-columns:1fr 1fr;gap:12px}.score-input-table td{padding:6px}.answer-error{border-color:var(--red);background:#fff3f1}.range-tasks .math-input{width:90px!important}@media(max-width:850px){.math-steps{grid-template-columns:repeat(3,minmax(0,1fr))}.matrix-tasks{grid-template-columns:1fr}}@media(max-width:600px){.math-input{width:60px!important}.math-expression{font-size:15px}.math-steps button{font-size:12px}.math-activity{padding:16px}.score-input-table{min-width:370px}}
-var{font-family:"Cambria Math","Times New Roman",serif;font-style:italic;font-weight:500;font-size:1.12em}.matrix-question h4{margin:0 0 16px}.matrix-equation{display:flex;align-items:center;gap:16px;flex-wrap:nowrap;min-height:108px}.math-matrix{position:relative;display:inline-grid;align-items:center;justify-items:center;gap:12px;padding:14px 16px;vertical-align:middle;color:var(--navy)}.math-matrix::before,.math-matrix::after{content:"";position:absolute;top:0;bottom:0;width:10px;border-top:2px solid currentColor;border-bottom:2px solid currentColor}.math-matrix::before{left:0;border-left:2px solid currentColor}.math-matrix::after{right:0;border-right:2px solid currentColor}.matrix-row{grid-template-columns:repeat(2,1fr)}.matrix-column{grid-template-columns:1fr;font-family:"Cambria Math","Times New Roman",serif;font-size:25px;gap:4px;white-space:nowrap}.math-operator{font-family:"Cambria Math","Times New Roman",serif;font-size:28px}.matrix-result{display:flex;align-items:center;gap:10px;margin:20px 0}.matrix-question .math-input{width:66px!important;font-family:"Cambria Math","Times New Roman",serif;font-size:23px;padding:9px 4px;font-variant-numeric:tabular-nums;appearance:textfield;-moz-appearance:textfield}.matrix-question input::-webkit-inner-spin-button,.matrix-question input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.matrix-check-row{align-items:flex-start;gap:12px;border-top:1px solid var(--line);padding-top:14px}.matrix-verdict{font-size:14px;flex:1;min-width:140px;padding:9px 0;min-height:44px}.verdict-correct{font-weight:750;color:var(--green)}.verdict-wrong{font-weight:750;color:var(--red)}.answer-correct{border-color:var(--green);background:#f0faf5}@media(max-width:600px){.matrix-equation{gap:10px}.math-matrix{padding:12px;gap:8px}.matrix-question .math-input{width:55px!important;font-size:21px}.matrix-column{font-size:24px}.matrix-result{gap:9px}.matrix-question{padding:16px 12px}}
-
-@font-face{font-family:"Inquiry Math";src:url(data:font/woff;base64,d09GRk9UVE8AAAkgAA0AAAAACzAAAfWBAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAADkAAABIEAAATh5WIDG0dERUYAAAgUAAAAFgAAABYAEQAFR1BPUwAACCwAAAAQAAAAEAAZAAxHU1VCAAAIPAAAABoAAAAabYx0f01BVEgAAAhYAAAAsQAAASgLUDU4T1MvMgAAAZAAAABKAAAAYB8yIJpjbWFwAAADSAAAADEAAAA8ABZRzmhlYWQAAAEwAAAANgAAADYYh11DaGhlYQAAAWgAAAAfAAAAJAYcAYBobXR4AAAJDAAAABQAAAAUCPwAkW1heHAAAAGIAAAABgAAAAYABVAAbmFtZQAAAdwAAAFpAAACzkKpVEFwb3N0AAADfAAAABMAAAAg/ycAKAABAAAAAfWB9WIaiV8PPPUACwPoAAAAANAvZ/IAAAAA5wu9AgAd/zMCDwK2AAAACAACAAAAAAAAeJxjYGRgYFb7b8dwgsmGQZaBgYmfASiCAlgBSUcCogAAAFAAAAUAAHicY2BhmsE4gYGVgYepi2k3AwNDD4RmvM9gyMjEwMDEwMrMAAdMUAwHB/4DAbPafzuGE7wvuL8ARRhBwozrmVYzKAAhIwC2tg/+AAB4nIWRT0/CQBDFHwU1evDkyVPDSRPAP9GDHjViNChEqjHeUEppIEDaGpSP7Sfwt9stqBfTdOfN23lvZnclbehFZZUqm1LpS3K4pCpZjj1tezsOl7XlVR2uqOHVHF7Trlf4rFv+UlPN9KlEsSINlcnXsQ51xFrny/EJ7IDKhNhSj6pYE/AdXF8hfJ6ZnSGorUBN4ivOvi7UYL1l900jFHOlxFg12I7d66JLtMBpTM0C1Qi2h2t/WdNBYZiV3tce2cT2CenbQz0gm9o1gHsmvlNtJkzBEXEKMyPbt64Butjuze35TN88T+w0Ia5G37dOE3da354zJF7rkekDUNPOktkbijlFSJbaGnOPvsUmM3ecMcG5DvgyXCMmMb0j8oFzScHjXz6GKbrV6dbWvUUt3fCKV2Rd1gbaDztF8V5m4oxTxPil7P//fg8wEXONyRNev6EznfKvlD91har+R/fkbj12b7T0+QZ5IG8TAAAAeJxjYGBgYmBgYAFiEQZmBi4wzcMAAhoMEMDEwHjFD4j9gWxGIJ0KxGlANjMAUeMFMgAAAHicY2BmAIP/KgwaDFgAAB7pAU8AeJx1VF1MU2cYbikdR6m40TVxySyfc3O60DL/yJgXW2SAP4AIyMAI7kBPaWk5hXNOxbb8tfL/WttCKSAVPPy0TlIgdAScM2NmE3+T6cLFluxKJ1sWb0j0HHIutlO8XHbzvMn3vt/7vM/7fPmkkvg4iVQq3ZaLM0Yyz6IjKDIPZwyaQqLaasapWO4jPkXCIym/I45/T8ZvixfOKGRRRfw1AefH14/J+c+23n03vjaZz3xLgonNJAmSLRKl5B3JLmmKNF2aY937xYEDWRuYHcP0gxuYXkJQtNFCor3ajIMZmZY6G2WsNjBo38d792k0Ih5AeguFNuZCrwdDscnQieJsVGlDh7XoGF5lsjTQJmMqKtCiIoayE+Yqu82EcFIXOykw4uRGHu0WeSoJA27WI4seFROlyEqL9Kiasljr6D1aVGww0qjBQpmQGCnCTOA0oUNWUqRFjIFAOaeKilG2hWRQrrGKIGkCaTSIJghkYJi6T9PSGGu11kJVp+nFEjrN/LqGTotd02SfyC/W5B7NzMovytIy55kNXTqCwY1mWvs/e/+PbInoRKdMIo8tOF7ilKqkv8fNCitJma0sr2Gl0Sfc5ScyvoPbqep3QZfaCT2dXU32Y7aCSqiDrkkYBdbdF1jA2D9mOCTvDYMbPBBs6bcDDY3WLqttlgxVACZsEt4UPhR2aW4f/TVlFG55lp/04dM1N2EaxsaGp4Izg/dBrNrOnVShzUnC5xvsnH5e+u0y1/qLjN/PTauel/x8SF0OlWStGVvhfpADBJrVDBy+UN99oae1B2xYix8u33S3OdXQ5jJ2nMMyhN/kLWWdDjBgqUt5K9xmbiu3h3tfnbmggoIaIcFG1Bwpr9aBEWpCsAIjMDJ8H2NX5T4W3P7Adw8XL0/CDIRq4TiWRLayg884/Nkgm3xtNX+CW1stmlC+4sd5her7giGj+iQYSloY6tGpfhKwnYWCinIOAKT0wSW32x95+WgiIvafdsFJMNuP6AXkyDPgZ6EdGDg3iCnXJ7zsVQhjIWtfYy1Vbyq/1bCgfgQzjy/5BvQzumXA1n7kVBMxD1Jc0N3Z3VaDcmgT6MAxBRFgfazoQYTbLvdNjq0+Bi+Mw9VmTPnK0tFAAY05AudDanbqSjQlSZAJODv/dJ7lP2nwi1rCbX8aHgSWueMPlC+X+GZ+t+pKk79RNNrR7mrs7rhg7rRhDYcqhCPyzsavso5CKbQuwCzcCN6LPB3+xhOAUUz5YmnRNFuWqhc+cMVEq/vhots7HPor+nUE+iAIYALKWd92vmqHrRDOwL77tXcAm4NIMBxu/rLldFVJvZEgy6EJKi7Z54ZhEIYGMOXaUr+/fxBGsOt1HidT4zhdtqC/p16DtedhTo79zSfLPUPia+vFkqwsnxnkSAiE3xAqLyaos7J/+kexCRSJ0c3RRNbv9XgGvD6FIuob8nh9Ho/P1+tRbFkfeZt/obqrjP1E+6G9u72nAysTSuUdNuhutJ8trnRYoAyabsMc3Jrito7duH5ncTYKD2EoA9qxxH8BBS8i5gAAAAABAAAADAAAAAAAAAACAAEAAQAEAAEAAAABAAAACgAMAA4AAAAAAAAAAQAAAAoAFgAYAAFtYXRoAAgAAAAAAAAAAAAAeJxljTEKwkAUROcvCUgQqyAiAbGzlFQWliJ4A23EXsHWM1hbiJWN2HkCKysP4AG8hSAIvmQXBWUZ5v0/s7sySYnu1tRQeZzGqXZsnpJdJLeFH/AYv+Jz1IYXvqN9yHo+1xIducfOzvgBn+An9iu44TsuvFd0bf3T6/hu6YFtis/+9x/O0eY7W1163eC+Kso0gKpyquEZMtgpUqrIWszF7yPUhR2pkYk04ajs6w1RpRytAAAAARgAAAIRACgBrQAvAjwAHQHqAB0=) format("woff");font-style:normal;font-weight:400;font-display:swap}
-var{font-family:"Inquiry Math","Cambria Math",serif;font-style:normal;font-weight:400;font-synthesis:none}.matrix-column var{font-size:1em}.math-matrix::before,.math-matrix::after{border:0;width:14px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 100' preserveAspectRatio='none'%3E%3Cpath d='M14 1 C-2 22 -2 78 14 99' fill='none' stroke='%2314214d' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center/100% 100% no-repeat}.math-matrix::after{transform:scaleX(-1)}.matrix-result{display:flex;flex-wrap:nowrap;white-space:nowrap;gap:12px}.matrix-result>*{flex:0 0 auto}.matrix-polynomial{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;flex-wrap:nowrap}.matrix-polynomial>*{flex:0 0 auto}.matrix-polynomial var{margin-left:-4px}@media(max-width:600px){.matrix-result{gap:10px}.matrix-polynomial{gap:8px}}
-.row-calculate{white-space:nowrap;font-size:14px;padding:7px 10px}.score-input-table th:first-child,.score-input-table td:first-child{position:sticky;left:0;background:#f5f8ff;z-index:1}.score-input-table th:first-child{background:#eaf0ff}
-.plot-reference{margin:20px 0 24px}.plot-reference h4{margin:0 0 10px}.plot-reference table{min-width:320px}
-.fill-all-row{margin-top:20px}
-.fill-toolbar{background:#fff1e8;border:2px solid #ffc5a8;border-radius:16px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px}.fill-toolbar strong{font-size:18px}.fill-toolbar p{margin:4px 0 0;color:var(--sub);font-size:14px}.fill-toolbar button{white-space:nowrap}#fill-toolbar-status:not(:empty){flex-basis:100%;font-size:14px;color:var(--green);font-weight:700}@media(max-width:600px){.fill-toolbar button{width:100%}}
-.pair-caption{margin:18px 0;font-size:15px}.pair-caption strong{color:var(--navy)}.pair-table td,.pair-table th{padding:13px 10px}.pair-table td:last-child{font-weight:750}.pair-tie-note{font-size:13px}.student-picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:14px 0}.student-picker button{background:#f2f5fb;border:2px solid var(--line);color:var(--sub);padding:8px 3px;font-size:14px}.student-picker .selected{background:#fff1e8;border-color:var(--orange);color:#85320c}.cohort-pair-scroll{max-height:460px;margin-top:10px}.cohort-pair-table{min-width:570px;font-size:14px}.cohort-pair-table thead{position:sticky;top:0;z-index:2}.cohort-pair-table td{padding:7px 5px}.current-student{background:#fff1e8}.student-row-button{padding:3px 7px;background:transparent;color:var(--blue);font-size:14px}.pair-simulator h3{font-size:23px}@media(max-width:600px){.pair-table td,.pair-table th{font-size:14px;padding:12px 6px}.pair-caption{font-size:13px}.pair-simulator h3{font-size:21px}}
-.weight-distribution{margin-top:20px}.weight-distribution h4{margin-bottom:6px}.distribution-caption,.distribution-boundaries{font-size:13px;color:var(--sub);margin:6px 0}.distribution-legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;font-weight:700;margin-bottom:8px}.mean-key{color:#ad4a00}.numberline-tick{font:14px "Malgun Gothic",sans-serif;fill:#566079}.numberline-count{font:12px "Malgun Gothic",sans-serif;fill:#14214d;font-weight:700}.numberline-average-label{font:14px "Malgun Gothic",sans-serif;fill:#ad4a00;font-weight:700}.weight-numberline{overflow:visible}.weight-distribution small{display:block;font-size:12px;color:var(--sub)}
-</style></head>
-<body><header><span class="badge">AI × 공통수학</span><h1>선택의 수학 <small>AI 추천 탐구실</small></h1><button id="export" class="outline light">기록 내려받기</button><button id="reset" class="outline light">초기화</button></header>
-<nav aria-label="차시 선택" id="tabs"></nav><main><div class="intro"><span id="eyebrow"></span><h2 id="title"></h2><p id="description"></p></div><div id="content"></div></main><footer>가상 데이터로 탐구하는 추천 모형 · 진행 기록은 이 브라우저에 저장됩니다. <span id="save-status" role="status"></span></footer><div id="toast" role="status" aria-live="polite"></div><script>'use strict';
-const $ = s => document.querySelector(s);
-const KEY='ai-math-inquiry-v1', INITIAL=10000000;
-const labels=['A','B','C','D'], colors=['#2f5fe0','#8a3fd6','#14a06f','#d27814'];
-const products=[[10,5],[8,6],[6,9],[3,10]];
-const PAIRS=[[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]];
-const companies=['반도체 설계','메모리','반도체 장비','소재','전력 반도체','신생 팹리스','패키징','수출 기업','센서'];
-const returns=[[.10,.05,-.05,-.10,-.03,-.50,.05,-.70,-.30],[-.04,.08,.03,.02,-.06,.15,.04,.12,-.02],[.03,-.08,.06,.12,.04,-.2,.02,-.15,.09],[.08,.02,-.04,.03,.10,.05,-.03,.06,.02],[-.02,.06,.08,-.05,.03,-.12,.07,.04,-.06]];
-const news=[['AI 반도체 수요 증가 전망','해외 규제 논의… 수출 기업의 불확실성 확대'],['설비 투자 확대 계획 발표','급락 종목의 반등을 기대하는 시선과 우려 공존'],['신소재 개발 소식, 공급 확대 기대','수요 전망 하향… 메모리 업계 긴장'],['전력 효율 개선 기술에 관심 집중','공급망 안정화 소식… 기업별 영향은 다를까?'],['신규 기기 출시로 센서 수요 기대','이익 실현 매물 출회 가능성… 마지막 날의 선택']];
-function fresh(){return {version:1,tab:0,x:.5,stock:0,day:0,cash:INITIAL,shares:Array(9).fill(0),prices:Array(9).fill(100000),history:[],est:[Array(25).fill(null),Array(25).fill(null)],cursor:[0,0],guess:[.5,.5],notes:{},matrixDone:false,rangeDone:false};}
-let state=fresh();
-try{const saved=JSON.parse(localStorage.getItem(KEY));if(saved?.version===1&&saved.est?.length===2&&saved.shares?.length===9)state={...state,...saved};}catch{ /* Storage can be unavailable. */ }
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));$('#save-status').textContent='자동 저장됨';}catch{$('#save-status').textContent='저장 불가 · 기록 내려받기를 이용하세요.';}}
-function toast(t){$('#toast').textContent=t;$('#toast').style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').style.display='none',3200);}
-const money=n=>(Math.round(n)||0).toLocaleString('ko-KR')+'원', pct=n=>(n*100).toFixed(2)+'%';
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const scores=x=>products.map(([a,b])=>a*x+b*(1-x));
-function winners(x){const s=scores(x),m=Math.max(...s);return labels.filter((_,i)=>Math.abs(s[i]-m)<1e-8);}
-function mean(c){const a=state.est[c].filter(v=>v!==null);return a.length?a.reduce((a,b)=>a+b,0)/a.length:null;}
-// Reproducible fictional cohorts: 20/5 preferences, in shuffled order.
-function cohort(c){return Array.from({length:25},(_,i)=>{const j=(i*7+3)%25;const high=c===0?j<20:j>=20;const x=high?.70+((j*13+c*7)%31)/100:((j*11+c*3)%31)/100;return {x:Math.round(x*100)/100,choice:winners(x),comparisons:pairChoices(x)};});}
-const cohorts=[cohort(0),cohort(1)];
-const titles=['같은 시장, 다른 수익률','나의 선호를 행렬로 표현하면?','선택을 보고 가중치를 추정하자','다른 반에도 잘 맞는 추천기일까?'];
-const descriptions=['뉴스를 읽고 투자한 뒤, 자산에서 차지하는 비중이 결과에 미치는 영향을 탐구합니다.','무게와 크기의 중요도를 바꾸며 행렬·그래프·부등식을 연결합니다.','1반의 선택 데이터로 가중치를 추정하고, 대표 가중치를 만들어 봅니다.','1반과 2반의 데이터로 만든 추천기를 비교하고, 데이터의 중요성을 설명합니다.'];
-function note(id,prompt){return `<h4>${prompt}</h4><label class="sr-only" for="note-${id}">${prompt}</label><textarea id="note-${id}" data-note="${id}" placeholder="관찰한 결과와 그 이유를 써 보세요.">${esc(state.notes[id]||'')}</textarea>`;}
-function render(){ $('#tabs').innerHTML=titles.map((t,i)=>`<button data-tab="${i}" class="${state.tab===i?'active':''}" aria-current="${state.tab===i?'step':'false'}"><span class="number">${i+1}</span>${['투자와 비중','행렬과 선택','가중치 추정','데이터와 추천'][i]}</button>`).join('');$('#eyebrow').textContent=`LESSON 0${state.tab+1} · 예상 → 조작 → 확인 → 설명`;$('#title').textContent=titles[state.tab];$('#description').textContent=descriptions[state.tab];$('#content').innerHTML=fillToolbar()+[lesson1,lesson2,()=>estimateView(0),lesson4][state.tab]();italicizeVariables($('#content'));save();}
-function svgPlot(series,{min=0,max=10,xlabels=['0','0.25','0.5','0.75','1'],xlabel='무게 가중치 x',ylabel='종합점수'}={}){const w=600,h=310,l=55,r=25,t=28,b=48;const px=x=>l+x*(w-l-r),py=y=>h-b-(y-min)/(max-min)*(h-t-b);let s=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(ylabel)} 그래프"><text x="${l}" y="16" class="plotlabel">${esc(ylabel)}</text>`;for(let i=0;i<=4;i++){const v=min+(max-min)*i/4;s+=`<line x1="${l}" y1="${py(v)}" x2="${w-r}" y2="${py(v)}" stroke="#d8deec"/><text x="${l-8}" y="${py(v)+4}" text-anchor="end" class="plotlabel">${Number(v.toFixed(1))}</text>`;}xlabels.forEach((v,i)=>s+=`<text x="${px(i/(xlabels.length-1||1))}" y="${h-26}" text-anchor="middle" class="plotlabel">${v}</text>`);for(const [i,line]of series.entries()){s+=`<polyline fill="none" stroke="${line.color||colors[i%4]}" stroke-width="3" points="${line.values.map((v,j)=>`${px(j/(line.values.length-1||1))},${py(v)}`).join(' ')}"/>`;}return s+`<text x="${w/2}" y="${h-3}" text-anchor="middle" class="plotlabel">${esc(xlabel)}</text></svg>`;}
-function tradingPanel(){const i=state.stock,done=false;return `<section class="card"><div class="row between"><h3>${done?'5일간의 투자 완료':`${state.day+1}일차 · 아침 뉴스`}</h3><span class="pill">가상 투자 · 실제 시세 아님</span></div>${done?'<p>거래 기록과 전체 자산을 확인하고, 하루의 결과를 비중으로 설명해 보세요.</p>':`<details><summary>📰 오늘의 뉴스 읽기</summary><ul>${news[state.day].map(t=>`<li>${t}</li>`).join('')}</ul><p class="muted">뉴스는 결과를 보장하지 않습니다. 마감 후 예상 밖의 소식이 있을 수 있습니다.</p></details>`}<div class="stockgrid">${companies.map((c,j)=>`<button class="stock ${i===j?'selected':''}" data-stock="${j}">${String.fromCharCode(65+j)} 기업<small>${c}</small><small>보유 ${state.shares[j]}주</small></button>`).join('')}</div><h4>${String.fromCharCode(65+i)} 기업 거래</h4><p class="muted">종목 가격은 비공개이며, 아래 주문 금액으로 살 수 있는 정수 주식을 계산합니다. 수수료는 없습니다.</p><label for="budget">주문 예산</label> <input id="budget" type="number" min="0" step="100000" value="1000000" style="width:170px"> <span class="muted">원</span><div class="row" style="margin-top:12px"><button data-trade="buy" ${done?'disabled':''}>예산만큼 매수</button><button data-trade="allbuy" class="outline" ${done?'disabled':''}>전액 매수</button><button data-trade="sell" class="outline" ${done?'disabled':''}>보유 전량 매도</button></div><button id="close-day" class="orange" style="margin-top:18px;width:100%" ${done?'disabled':''}>${done?'5일차 마감 완료':'거래를 마치고 오늘 장 마감 →'}</button></section>`;}
-function investmentDay(){const latest=Math.min(state.day+1,5);return Number.isInteger(state.reviewDay)&&state.reviewDay>=1&&state.reviewDay<=latest?state.reviewDay:latest;}
-function daySteps(selected){return `<div class="day-steps" role="group" aria-label="투자 일차 선택">${Array.from({length:5},(_,i)=>{const day=i+1,complete=day<=state.day,available=complete||day===state.day+1;return `<button data-investment-day="${day}" class="${day===selected?'selected':''}" aria-pressed="${day===selected}" ${available?'':'disabled'}><b>${day}일차</b><small>${complete?'마감 기록':available?'거래하기':'진행 전'}</small></button>`;}).join('')}</div>`;}
-function lesson1(){const selected=investmentDay(),h=state.history[selected-1],total=h?h.total:state.cash+state.shares.reduce((a,n,i)=>a+n*state.prices[i],0);return `${daySteps(selected)}<div class="grid"><div class="stack">${h?`<section class="card"><span class="pill">${selected}일차 · 마감 기록</span><h3 style="margin-top:16px">이날 선택한 종목과 투자 결과</h3><p>${h.weights.map((w,i)=>w>0?String.fromCharCode(65+i):null).filter(Boolean).join(' · ')||'매수한 종목 없음 · 현금 보유'}</p><p class="muted">마감 기록을 보고 있습니다. 다음 거래일에서 매수·매도를 계속할 수 있습니다.</p><div class="row">${selected>1?`<button class="outline" data-investment-day="${selected-1}">← ${selected-1}일차</button>`:''}${selected<Math.min(state.day+1,5)?`<button class="orange" data-investment-day="${selected+1}">${selected+1}일차 ${selected<state.day?'기록':'거래하기'} →</button>`:''}</div></section>`:tradingPanel()}<section class="card"><h3>1~5일차 자산 변화</h3>${state.history.length?svgPlot([{values:[100,...state.history.map(h=>h.total/INITIAL*100)],color:'#2f5fe0'}],{min:Math.min(70,...state.history.map(h=>h.total/INITIAL*100))-5,max:Math.max(110,...state.history.map(h=>h.total/INITIAL*100))+5,xlabels:['시작',...state.history.map((_,i)=>`${i+1}일`)],xlabel:'마감 시점',ylabel:'초기 자산 = 100'}):'<p class="muted">첫 장 마감 후 그래프가 나타납니다.</p>'}</section></div><div class="stack"><section class="card hero"><div class="label">${selected}일차 ${h?'마감':'현재'} 총자산</div><div class="metric">${money(total)}</div><p>초기 자금 ${money(INITIAL)} · ${selected}일차까지 누적 수익률 ${pct(total/INITIAL-1)}</p></section><section class="card" id="day-result"><h3>${selected}일차 · 선택 종목과 수익률</h3>${h?dailyResult(h):'<p class="muted">오늘 거래를 마치고 장 마감을 누르면 선택 종목의 수익률과 전체 자산 수익률이 나타납니다.</p>'}</section>${selected===5&&h?`<section class="card" id="investment-reflection"><span class="pill">5일차 · 마무리 질문</span><button id="fill-stock-note" class="outline">예시 답안 채우기</button>${note('stock','내가 선택한 종목들의 하루 수익률의 평균과 전체 자산의 하루 수익률은 왜 다를까?')}</section>`:''}</div></div>`;}
-function dailyResult(h){const held=h.rates.map((rate,i)=>({rate,i})).filter(({i})=>h.weights[i]>0),average=held.length?held.reduce((sum,s)=>sum+s.rate,0)/held.length:null;const start=h.day===1?INITIAL:state.history[h.day-2].total;return `<div class="compare day-metrics"><div><div class="label">선택 종목 단순평균</div><div class="metric">${average===null?'—':pct(average)}</div><small>${held.length?held.map(({i})=>String.fromCharCode(65+i)).join(' · '):'보유 종목 없음'}</small></div><div><div class="label">전체 자산 하루 수익률</div><div class="metric">${pct(h.return)}</div><small>하루 손익 ${money(h.total-start)}</small></div></div><div class="scroll"><table><thead><tr><th>선택 종목</th><th>하루 수익률</th><th>투자 비중</th><th>내 손익</th></tr></thead><tbody>${held.map(({rate:r,i})=>`<tr><td>${String.fromCharCode(65+i)}</td><td class="${r>=0?'good':'bad'}">${r>=0?'+':''}${pct(r)}</td><td>${pct(h.weights[i])}</td><td>${money(h.profits[i])}</td></tr>`).join('')}<tr><td>현금</td><td>0.00%</td><td>${pct(h.cashWeight)}</td><td>0원</td></tr><tr class="total-row"><td>전체 자산</td><td>${pct(h.return)}</td><td>100.00%</td><td>${money(h.total-start)}</td></tr></tbody></table></div><p class="muted">${h.day}일차 시작 자산 ${money(start)} → 마감 자산 ${money(h.total)}</p>${h.day===1?'<div class="notice">장 마감 속보 · 수출 제한과 자금 조달 악재로 일부 기업 급락.</div>':''}`;}
-function trade(type){if(state.day>=5)return;const i=state.stock,p=state.prices[i];if(type==='sell'){if(!state.shares[i])return toast('보유 주식이 없습니다.');state.cash+=state.shares[i]*p;state.shares[i]=0;}else{const budget=type==='allbuy'?state.cash:Number($('#budget').value);if(!Number.isFinite(budget)||budget<=0)return toast('0보다 큰 예산을 입력하세요.');if(budget>state.cash+.001)return toast('현금보다 큰 예산입니다.');const n=Math.floor((budget+.000001)/p);if(!n)return toast('한 주를 살 수 있는 예산이 필요합니다.');state.shares[i]+=n;state.cash-=n*p;}render();toast('거래가 반영되었습니다.');}
-function closeDay(){if(state.day>=5)return;const start=state.cash+state.shares.reduce((a,n,i)=>a+n*state.prices[i],0),rates=returns[state.day],weights=state.shares.map((n,i)=>n*state.prices[i]/start),profits=state.shares.map((n,i)=>n*state.prices[i]*rates[i]);state.prices=state.prices.map((p,i)=>p*(1+rates[i]));const total=state.cash+state.shares.reduce((a,n,i)=>a+n*state.prices[i],0);state.history.push({day:state.day+1,rates,weights,profits,cashWeight:state.cash/start,total,return:total/start-1,prices:[...state.prices]});state.day++;state.reviewDay=state.day;render();}
-function scoreCards(x){const s=scores(x),win=winners(x);return `<div class="choices">${labels.map((l,i)=>`<div class="${win.includes(l)?'winner':''}"><b>${l}</b><br>${s[i].toFixed(2)}<br><small>${win.includes(l)?'★ 추천':'점'}</small></div>`).join('')}</div>`;}
-const mathSteps=['가중치 정하기','행렬 만들기','점수표 채우기','좌표평면에 점 찍기','제외할 제품 찾기','부등식으로 선택하기'];
-function mathState(){if(!state.math)state.math={step:0,done:Array(6).fill(false),answers:{},points:{}};return state.math;}
-function mathUnlocked(){const m=mathState(),i=m.done.findIndex(v=>!v);return i<0?5:i;}
-function mathInput(key,label,extra=''){const m=mathState();return `<input type="number" step="any" class="math-input" data-math-answer="${key}" aria-label="${label}" value="${esc(m.answers[key]??'')}" ${extra}>`;}
-function productTable(){return `<div class="scroll"><table><thead><tr><th>만족도</th>${labels.map(l=>`<th>노트북 ${l}</th>`).join('')}</tr></thead><tbody><tr><td>가벼운 정도</td>${products.map(p=>`<td>${p[0]}</td>`).join('')}</tr><tr><td>크기</td>${products.map(p=>`<td>${p[1]}</td>`).join('')}</tr></tbody></table></div>`;}
-function mathGraph(partial=false){if(!partial)return scorePlot();const m=mathState();let svg=svgPlot([],{min:0,max:10});let shapes='';products.forEach(([a,b],i)=>{const pts=[0,.5,1].filter(x=>m.points[`${i}-${x}`]).map(x=>[55+x*520,262-scores(x)[i]/10*234]);if(pts.length===3)shapes+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${colors[i]}" stroke-width="2"/>`;shapes+=pts.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="5" fill="${colors[i]}"/>`).join('');});return svg.replace('</svg>',shapes+'</svg>');}
-function mathLegend(){return `<div class="legend">${labels.map((l,i)=>`<span><i class="swatch" style="background:${colors[i]}"></i>노트북 ${l}</span>`).join('')}</div>`;}
-function mathActivity(step){const m=mathState();switch(step){
-case 0:return `<h3>① 무엇을 더 중요하게 생각하나요?</h3><p>같은 점수표라도 중요하게 생각하는 기준에 따라 선택은 달라질 수 있습니다.</p>${productTable()}<div class="checkpoint">무게 가중치 x + 크기 가중치 y = 1<br>0 ≤ x ≤ 1, y = 1 − x</div><label for="weight">무게 가중치 x = <b id="x-label">${state.x.toFixed(2)}</b></label><input id="weight" type="range" min="0" max="1" step=".01" value="${state.x}"><div class="row between"><span>← 크기 중시</span><span>무게 중시 →</span></div><p>크기 가중치 y = <b id="y-label">${(1-state.x).toFixed(2)}</b></p>${note('weight-reason','내가 이 가중치를 정한 이유는?')}<button data-math-check="0">가중치 정하기 완료</button>`;
-case 1:return `<h3>② 종합점수를 행렬로 만들어 보세요</h3>${productTable()}<p>점수 행렬과 가중치 열행렬을 곱한 뒤, <var>a</var><var>x</var> + <var>b</var> 꼴로 정리하세요. 빈칸에는 음수도 입력할 수 있습니다.</p><div class="matrix-tasks">${products.map((p,i)=>`<section class="checkpoint matrix-question" aria-label="노트북 ${labels[i]} 행렬 문제"><h4>노트북 ${labels[i]}</h4><div class="matrix-equation"><span class="math-matrix matrix-row" aria-label="1행 2열 점수 행렬">${mathInput(`m${i}0`,`${labels[i]} 무게 만족도`)}${mathInput(`m${i}1`,`${labels[i]} 크기 만족도`)}</span><span class="math-operator">×</span><span class="math-matrix matrix-column" aria-label="2행 1열 가중치 행렬"><span><var>x</var></span><span>1 − <var>x</var></span></span></div><div class="matrix-result"><span class="math-operator">=</span><span class="matrix-polynomial">${mathInput(`m${i}2`,`${labels[i]} x의 계수`)}<var>x</var><span>+</span>${mathInput(`m${i}3`,`${labels[i]} 상수항`)}</span></div><div class="row matrix-check-row"><button data-matrix-check="${i}" class="outline">정답 확인</button><div id="matrix-verdict-${i}" class="matrix-verdict" role="status">${matrixVerdict(i)}</div></div></section>`).join('')}</div><div class="row"><button id="fill-matrix-answers" class="outline">정답 전체 채우기</button><button data-math-check="1">전체 정답 확인</button></div>`;
-case 2:return `<h3>③ 가중치별 종합점수를 계산해 보세요</h3><p>x에 0, 0.1, …, 1을 넣어 점수표를 완성하세요. 직접 계산하거나 각 행의 계산 버튼으로 네 제품의 점수를 한꺼번에 구할 수 있습니다.</p><div class="checkpoint">A = 5x + 5　 B = 2x + 6<br>C = 9 − 3x　 D = 10 − 7x</div><div class="scroll"><table class="score-input-table"><thead><tr><th>x</th>${labels.map(l=>`<th>노트북 ${l}</th>`).join('')}<th>한꺼번에 계산</th></tr></thead><tbody>${Array.from({length:11},(_,r)=>`<tr><td>${(r/10).toFixed(1)}</td>${labels.map((l,i)=>`<td>${mathInput(`t${r}-${i}`,`x=${(r/10).toFixed(1)}, 노트북 ${l} 점수`)}</td>`).join('')}<td><button class="outline row-calculate" data-calculate-row="${r}" aria-label="가중치 ${(r/10).toFixed(1)}의 네 제품 점수 계산">이 행 계산</button></td></tr>`).join('')}</tbody></table></div><button data-math-check="2" style="margin-top:16px">점수표 확인</button>`;
-case 3:return `<h3>④ 표의 값을 좌표평면에 옮겨 보세요</h3><p>각 제품에서 x = 0, 0.5, 1인 세 점을 찍습니다. 직접 입력한 점이 모이면 제품별 직선이 나타납니다.</p><section class="plot-reference" aria-labelledby="plot-reference-title"><h4 id="plot-reference-title">내가 완성한 표</h4><div class="scroll"><table><thead><tr><th>x</th>${labels.map(l=>`<th>${l}</th>`).join('')}</tr></thead><tbody>${[0,5,10].map(r=>`<tr><td>${r/10}</td>${labels.map((_,i)=>`<td>${esc(m.answers[`t${r}-${i}`])}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section><div id="student-plot">${mathGraph(true)}</div>${mathLegend()}<div class="row" style="margin-top:20px"><label>제품 <select id="plot-product">${labels.map((l,i)=>`<option value="${i}">${l}</option>`).join('')}</select></label><label>x <select id="plot-x"><option>0</option><option>0.5</option><option>1</option></select></label><label>점수 <input id="plot-y" type="number" step="any" aria-label="찍을 점의 종합점수"></label><button id="add-math-point">점 찍기</button></div><p id="point-count">${Object.keys(m.points).length} / 12개 점 완료</p>`;
-case 4:return `<h3>⑤ 선택에서 제외할 수 있는 제품은?</h3>${mathGraph()}${mathLegend()}<p>어떤 x에서도 종합점수가 가장 높아지지 않는 제품을 찾아보세요.</p><label>제외할 제품 <select id="excluded" data-math-answer="excluded"><option value="">선택하세요</option>${labels.map(l=>`<option ${m.answers.excluded===l?'selected':''}>${l}</option>`).join('')}</select></label>${note('exclude-reason','그래프에서 어떤 점을 보고 판단했나요?')}<button data-math-check="4">선택 확인</button>`;
-case 5:return `<h3>⑥ 어떤 가중치에서 어떤 제품이 최선일까요?</h3>${mathGraph()}${mathLegend()}<p>해당 제품의 점수가 나머지 제품의 점수 이상이 되도록 부등식을 세우고, 조건을 동시에 만족하는 x의 범위를 구하세요.</p><div class="checkpoint"><b>A가 최선일 조건</b><br>5x + 5 ≥ 2x + 6<br>5x + 5 ≥ 9 − 3x<br>5x + 5 ≥ 10 − 7x<br>0 ≤ x ≤ 1</div><details><summary>C와 D의 비교 부등식 보기</summary><p>C: 9 − 3x ≥ 5x + 5, 9 − 3x ≥ 2x + 6, 9 − 3x ≥ 10 − 7x<br>D: 10 − 7x ≥ 5x + 5, 10 − 7x ≥ 2x + 6, 10 − 7x ≥ 9 − 3x</p></details><div class="range-tasks">${['A','C','D'].map(l=>`<p><b>노트북 ${l}</b> ${mathInput(`r${l}0`,`${l} 최소 가중치`,'min="0" max="1"')} ≤ x ≤ ${mathInput(`r${l}1`,`${l} 최대 가중치`,'min="0" max="1"')}</p>`).join('')}</div><button data-math-check="5">선택 범위 확인</button>${note('matrix','가중치에 따라 추천이 바뀌는 이유를 설명해 보세요.')}`;
-}}
-function lesson2(){const m=mathState();m.step=Math.min(m.step,mathUnlocked());const step=m.step;return `<div class="math-steps" role="group" aria-label="행렬과 선택 활동 단계">${mathSteps.map((label,i)=>`<button data-math-step="${i}" class="${i===step?'selected':''}" aria-pressed="${i===step}" ${i>mathUnlocked()?'disabled':''}><span>${m.done[i]?'✓':i+1}</span>${label}</button>`).join('')}</div><section class="card math-activity"><div class="row between"><span class="pill">활동 ${step+1} / 6</span><span class="muted">${m.done.filter(Boolean).length}개 활동 완료</span></div><div style="margin-top:18px">${mathActivity(step)}</div><div class="row fill-all-row">${step!==1?`<button id="fill-math-activity" class="outline">${step===0?'예시 답안 채우기':'정답 전체 채우기'}</button>`:''}</div><div id="math-feedback" role="status">${m.done[step]?'<div class="feedback">이 활동을 완료했습니다. 다음 단계로 이동할 수 있습니다.</div>':''}</div><div class="row between math-navigation"><button class="outline" data-math-step="${step-1}" ${step===0?'disabled':''}>← 이전 활동</button>${step<5?`<button id="math-next" class="orange" data-math-step="${step+1}" ${!m.done[step]?'disabled':''}>다음 활동 →</button>`:`<button class="orange" data-tab="2" ${!m.done[5]?'disabled':''}>3차시 · 가중치 추정으로 →</button>`}</div></section>`;}
-function italicizeVariables(root){const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);for(const node of nodes){if(node.parentElement.closest('var,textarea,input,select,svg,script,style'))continue;const text=node.textContent,re=/(?<![A-Za-z])[xy](?![A-Za-z])/g;if(!re.test(text))continue;re.lastIndex=0;const fragment=document.createDocumentFragment();let last=0;for(const match of text.matchAll(re)){fragment.append(text.slice(last,match.index));const variable=document.createElement('var');variable.textContent=match[0];fragment.append(variable);last=match.index+1;}fragment.append(text.slice(last));node.replaceWith(fragment);}const glyphs={a:'𝑎',b:'𝑏',x:'𝑥',y:'𝑦'};root.querySelectorAll('var').forEach(el=>{const key=el.textContent;if(glyphs[key]){el.setAttribute('aria-label',key);el.textContent=glyphs[key];}});}
-function matrixCorrect(i){const answers=mathState().answers,[a,b]=products[i];return [a,b,a-b,b].every((v,j)=>String(answers[`m${i}${j}`]??'').trim()!==''&&Number.isFinite(Number(answers[`m${i}${j}`]))&&Math.abs(Number(answers[`m${i}${j}`])-v)<1e-7);}
-function matrixVerdict(i){const grade=mathState().grades?.[i];return grade===true?'<span class="verdict-correct">✓ 정답입니다.</span>':grade===false?'<span class="verdict-wrong">✕ 오답입니다. 표시된 칸을 다시 확인하세요.</span>':'<span class="muted">답을 입력한 뒤 확인하세요.</span>';}
-function checkMatrix(i){const m=mathState(),[a,b]=products[i];m.grades??={};m.grades[i]=matrixCorrect(i);[a,b,a-b,b].forEach((v,j)=>{const el=$(`[data-math-answer="m${i}${j}"]`),ok=el.value.trim()!==''&&Math.abs(Number(el.value)-v)<1e-7;el.classList.toggle('answer-error',!ok);el.classList.toggle('answer-correct',ok);el.setAttribute('aria-invalid',String(!ok));});$(`#matrix-verdict-${i}`).innerHTML=matrixVerdict(i);if(products.every((_,n)=>m.grades[n]===true&&matrixCorrect(n))){m.done[1]=true;$('#math-next').disabled=false;mathFeedback(true,'정답입니다! 네 제품의 행렬과 식을 모두 완성했습니다. 다음 활동으로 이동하세요.');document.querySelectorAll('.math-steps [data-math-step]').forEach(el=>el.disabled=Number(el.dataset.mathStep)>mathUnlocked());}save();}
-function mathFeedback(ok,message){$('#math-feedback').innerHTML=`<div class="${ok?'feedback':'notice'}"><b>${mathState().step===0?'✓ 확인 완료':ok?'✓ 정답':'✕ 오답'}</b> · ${message}</div>`;}
-function checkMath(step){const m=mathState(),a=m.answers,valid=(key,value)=>a[key]!==undefined&&String(a[key]).trim()!==''&&Number.isFinite(Number(a[key]))&&Math.abs(Number(a[key])-value)<1e-7;let errors=[];
-if(step===1)products.forEach(([v,w],i)=>[v,w,v-w,w].forEach((n,j)=>{if(!valid(`m${i}${j}`,n))errors.push(`m${i}${j}`);}));
-if(step===2)for(let r=0;r<=10;r++)scores(r/10).forEach((n,i)=>{if(!valid(`t${r}-${i}`,n))errors.push(`t${r}-${i}`);});
-if(step===4&&a.excluded!=='B')errors.push('excluded');
-if(step===5)Object.entries({A:[.5,1],C:[.25,.5],D:[0,.25]}).forEach(([l,vals])=>vals.forEach((n,i)=>{if(!valid(`r${l}${i}`,n))errors.push(`r${l}${i}`);}));
-if(step===1){m.grades??={};products.forEach((_,i)=>{m.grades[i]=matrixCorrect(i);$(`#matrix-verdict-${i}`).innerHTML=matrixVerdict(i);});save();}
-if(errors.length){document.querySelectorAll('[data-math-answer]').forEach(el=>{const bad=errors.includes(el.dataset.mathAnswer);el.classList.toggle('answer-error',bad);el.classList.toggle('answer-correct',!bad);el.setAttribute('aria-invalid',String(bad));});mathFeedback(false,step===4?'그래프에서 각 제품이 가장 높은 점수를 갖는 구간이 있는지 살펴보세요.':`아직 확인이 필요한 칸이 ${errors.length}개 있습니다. 표시된 칸을 다시 계산해 보세요.`);return;}
-m.done[step]=true;render();mathFeedback(true,step===5?'탐구 완료! 경계 x = 0.25, 0.5에서는 두 제품이 공동 추천됩니다. 이제 내가 구한 범위가 선택과 어떻게 연결되는지 설명해 보세요.':step===4?'맞아요. B는 다른 제품보다 가장 높은 점수를 갖는 구간이 없습니다. 다음 활동에서 선택 범위를 부등식으로 확인합니다.':'확인했습니다! 다음 활동으로 이동해 보세요.');}
-function fillMathActivity(){const m=mathState(),step=m.step;if(step===0){state.notes['weight-reason']=`나는 무게 가중치를 ${state.x.toFixed(2)}, 크기 가중치를 ${(1-state.x).toFixed(2)}로 정했다. 두 가중치의 합이 1이 되도록 나의 선호를 표현했다.`;}if(step===2)for(let r=0;r<=10;r++)scores(r/10).forEach((v,i)=>m.answers[`t${r}-${i}`]=String(Number(v.toFixed(2))));if(step===3){products.forEach((_,i)=>[0,.5,1].forEach(x=>m.points[`${i}-${x}`]=true));m.done[3]=true;}if(step===4){m.answers.excluded='B';state.notes['exclude-reason']='B의 그래프는 가중치가 0부터 1까지 변하는 동안 가장 위에 오는 구간이 없으므로 최선의 선택이 될 수 없다.';}if(step===5){Object.entries({A:[.5,1],C:[.25,.5],D:[0,.25]}).forEach(([l,vs])=>vs.forEach((v,i)=>m.answers[`r${l}${i}`]=String(v)));state.notes.matrix='가중치는 제품의 특성을 얼마나 중요하게 반영할지를 나타낸다. 각 제품의 종합점수는 가중치에 대한 일차식이며, 가중치가 변하면 점수의 대소 관계와 추천이 달라진다. 경계에서는 두 제품이 공동 추천된다.';}if(step!==3)for(let i=step;i<6;i++)m.done[i]=false;render();$('#math-feedback').innerHTML='<div class="feedback">'+(step===0?'예시 답안을 채웠습니다. 자신의 생각에 맞게 수정하세요.':step===3?'12개 점을 모두 채웠습니다. 다음 활동으로 이동할 수 있습니다.':'이 활동의 정답을 모두 채웠습니다. 정답 확인 버튼으로 확인하세요.')+'</div>';}
-function fillCohort(c){state.est[c]=cohorts[c].map(s=>s.x);state.guess[c]=state.est[c][state.cursor[c]];state.notes['estimate'+c]='여섯 쌍의 선택을 모두 설명하는 가중치가 여러 개일 수 있으므로, 선택만으로 실제 가중치를 하나로 확정할 수 없다. 여기서는 여섯 선택을 설명할 수 있는 값을 추정한다.';}
-function fillToolbar(){const example=state.tab!==1||mathState().step===0;return `<section class="fill-toolbar" aria-label="전체 답안 채우기"><div><strong>답안 한 번에 채우기</strong><p>${example?'이 활동은 정답이 하나가 아니므로 예시 답안을 채웁니다.':'현재 활동의 모든 빈칸에 정답을 채웁니다.'}</p></div><button id="fill-current-activity" class="orange">정답 전체 채우기</button><div id="fill-toolbar-status" role="status"></div></section>`;}
-function fillCurrentActivity(){if(state.tab===1){if(mathState().step===1)mathClick({id:'fill-matrix-answers',dataset:{}});else fillMathActivity();return;}if(state.tab===2){fillCohort(0);render();$('#fill-toolbar-status').textContent='1반 학생 25명의 추정값 예시를 모두 채웠습니다.';return;}if(state.tab===3){if(class2Open)fillCohort(1);else{fillCohort(0);fillCohort(1);state.notes.compare='집단의 선호 분포에 따라 추정 가중치의 평균과 추천이 달라질 수 있다. 학급 평균 하나로 모든 학생의 선호를 설명할 수는 없다.';state.notes.newdata='추천 대상 집단의 다양한 학생에게서 선호와 선택 데이터를 모아야 한다.';}render();$('#fill-toolbar-status').textContent='추정값과 마무리 질문의 예시 답안을 채웠습니다.';return;}state.notes.stock='선택 종목의 단순평균은 종목을 같은 비중으로 계산하지만 전체 자산 수익률은 실제 투자 금액의 비중과 현금 비중을 반영하므로 두 값은 달라질 수 있다.';render();$('#fill-toolbar-status').textContent=state.day===5?'5일차 마무리 질문의 예시 답안을 채웠습니다.':'마무리 질문의 예시 답안을 저장했습니다. 5일차 마감 후 표시됩니다. 투자 선택에는 정해진 정답이 없습니다.';}
-function mathClick(b){const m=mathState();if(b.id==='fill-current-activity'){fillCurrentActivity();return true;}if(b.id==='fill-math-activity'){fillMathActivity();return true;}if(b.dataset.fillCohort!==undefined){fillCohort(Number(b.dataset.fillCohort));render();toast('25명의 추정값 예시를 채웠습니다. 유일한 정답은 아닙니다.');return true;}if(b.id==='fill-all-cohorts'){fillCohort(0);fillCohort(1);render();toast('두 반의 추정값 예시를 채웠습니다.');return true;}if(b.id==='fill-stock-note'){state.notes.stock='선택 종목의 단순평균은 각 종목을 같은 비중으로 계산하지만, 전체 자산 수익률은 실제로 투자한 금액의 비중을 반영한다. 또한 전체 자산에는 수익률이 0%인 현금도 포함되므로 두 수익률은 달라질 수 있다.';render();return true;}if(b.id==='fill-compare-notes'){state.notes.compare='두 반의 선호 분포가 다르면 추정 가중치의 평균과 추천이 달라질 수 있다. 학급 평균 하나로 모든 학생의 선호를 설명할 수 없으며, 추천기를 만든 집단과 다른 집단의 일치율을 비교해야 한다.';state.notes.newdata='추천 대상 학교의 다양한 학생에게서 무게·크기 선호와 실제 선택을 수집하고, 학년이나 사용 목적 등에 따른 차이도 살펴봐야 한다.';render();return true;}if(b.id==='fill-matrix-answers'){products.forEach(([a,c],i)=>[a,c,a-c,c].forEach((v,j)=>m.answers[`m${i}${j}`]=String(v)));m.grades={};for(let i=1;i<6;i++)m.done[i]=false;render();$('#math-feedback').innerHTML='<div class="feedback">네 제품의 정답을 모두 채웠습니다. 전체 정답 확인 버튼으로 확인하세요.</div>';return true;}if(b.dataset.calculateRow!==undefined){const row=Number(b.dataset.calculateRow);if(Number.isInteger(row)&&row>=0&&row<=10){scores(row/10).forEach((score,i)=>m.answers[`t${row}-${i}`]=String(Number(score.toFixed(2))));for(let i=2;i<6;i++)m.done[i]=false;render();$('#math-feedback').innerHTML=`<div class="feedback">가중치 <var>x</var> = ${(row/10).toFixed(1)}의 네 제품 점수를 계산했습니다. 전체 점수표를 완성한 뒤 정답을 확인하세요.</div>`;italicizeVariables($('#content'));}return true;}if(b.dataset.matrixCheck!==undefined){checkMatrix(Number(b.dataset.matrixCheck));return true;}if(b.dataset.mathStep!==undefined){const next=Number(b.dataset.mathStep);if(next>=0&&next<=mathUnlocked()){m.step=next;render();$('#content').scrollIntoView({block:'start',behavior:'smooth'});}return true;}if(b.dataset.mathCheck!==undefined){checkMath(Number(b.dataset.mathCheck));return true;}if(b.id==='add-math-point'){const i=Number($('#plot-product').value),x=Number($('#plot-x').value),raw=$('#plot-y').value;if(raw===''||!Number.isFinite(Number(raw))||Math.abs(Number(raw)-scores(x)[i])>1e-7){mathFeedback(false,'표에서 해당 제품의 점수를 다시 확인해 보세요. 가로축은 가중치, 세로축은 종합점수입니다.');return true;}m.points[`${i}-${x}`]=true;m.done[3]=Object.keys(m.points).length===12;const product=$('#plot-product').value,xValue=$('#plot-x').value;render();$('#plot-product').value=product;$('#plot-x').value=xValue;mathFeedback(true,m.done[3]?'12개 점을 모두 찍었습니다. 다음 활동에서 그래프를 비교해 보세요.':'점이 추가되었습니다. 다른 제품이나 x값을 골라 계속 찍어 보세요.');return true;}return false;}
-function scorePlot(){return svgPlot(products.map(([a,b],i)=>({values:[b,a],color:colors[i]})),{min:0,max:10});}
-function pairChoices(x){const s=scores(x);return PAIRS.map(([a,b])=>Math.abs(s[a]-s[b])<1e-8?'동점':s[a]>s[b]?labels[a]:labels[b]);}
-function pairMatches(guess,actual){const predicted=pairChoices(guess),observed=pairChoices(actual);return predicted.reduce((n,v,i)=>n+(v===observed[i]?1:0),0);}
-function pairTable(c){const idx=state.cursor[c],g=state.guess[c],student=cohorts[c][idx],actual=pairChoices(student.x),predicted=pairChoices(g);return `<table class="pair-table"><thead><tr><th>비교</th><th>학생의 선택</th><th>내 가중치의 예측</th></tr></thead><tbody>${PAIRS.map(([a,b],i)=>{const ok=predicted[i]===actual[i];return `<tr><td>${labels[a]} vs ${labels[b]}</td><td><b>${actual[i]}</b></td><td class="${ok?'good':'bad'}"><span aria-label="${ok?'일치':'불일치'}">${ok?'✓':'✕'}</span> ${predicted[i]}</td></tr>`;}).join('')}</tbody></table>`;}
-function estimateView(c){const idx=state.cursor[c],g=state.guess[c],count=state.est[c].filter(v=>v!==null).length,m=mean(c),all=count===25;return `<div class="grid pair-layout"><div class="stack"><section class="card pair-simulator"><div class="row between"><span class="pill">${c+1}반 · ${idx+1}번 학생</span><span>선택 데이터 6개</span></div><h3 style="margin-top:18px">선택을 설명하는 가중치는 얼마일까?</h3><p class="muted">학생이 두 제품 중 고른 결과를 보고, 무게 가중치를 움직여 여섯 선택을 설명해 보세요.</p><div class="row between"><label for="guess">무게 가중치 <var>x</var></label><b id="guess-label">${g.toFixed(2)}</b></div><input id="guess" data-class="${c}" type="range" min="0" max="1" step=".01" value="${g}"><div class="row between"><small>0 · 크기 중시</small><small>0.5</small><small>1 · 무게 중시</small></div><div class="row between pair-caption"><span>크기 가중치 <span id="guess-complement">${(1-g).toFixed(2)}</span></span><strong id="pair-count" aria-live="polite">예측 일치 ${pairMatches(g,cohorts[c][idx].x)} / 6</strong></div><div id="pair-table">${pairTable(c)}</div><p class="muted pair-tie-note">두 점수가 같으면 ‘동점’으로 예측합니다. 학생의 선택도 동점일 때만 일치로 셉니다.</p><div class="row between"><button id="reset-guess" class="outline" data-class="${c}">가중치 초기화</button><button id="submit-guess" data-class="${c}">추정값 ${state.est[c][idx]===null?'저장':'수정'}</button></div><div id="guess-feedback" role="status"></div><div class="row between" style="margin-top:20px"><button class="outline" data-student="-1" data-class="${c}" ${idx===0?'disabled':''}>← 이전 학생</button><span>${idx+1} / 25</span><button class="outline" data-student="1" data-class="${c}" ${idx===24?'disabled':''}>다음 학생 →</button></div></section><section class="card">${note('estimate'+c,'여섯 선택을 모두 설명해도 실제 가중치를 하나로 확정할 수 있을까?')}</section></div><div class="stack"><section class="card"><div class="row between"><h3>25명의 선택과 추정 기록</h3><span class="pill">${count} / 25명 저장</span></div><p class="muted">학생 번호를 누르면 해당 학생의 여섯 선택을 보며 추정할 수 있습니다.</p><div class="student-picker" role="group" aria-label="학생 선택">${Array.from({length:25},(_,i)=>`<button data-pair-student="${i}" data-class="${c}" class="${i===idx?'selected':''}" aria-pressed="${i===idx}">${i+1}${state.est[c][i]!==null?' ✓':''}</button>`).join('')}</div><div class="progress"><div style="width:${count*4}%"></div></div><div class="row between"><span>추정값 평균</span><b class="metric">${m===null?'—':m.toFixed(3)}</b></div><button class="outline" data-fill-cohort="${c}" style="margin:14px 0">추정값 예시 전체 채우기</button><div class="scroll cohort-pair-scroll"><table class="cohort-pair-table"><thead><tr><th>학생</th>${PAIRS.map(([a,b])=>`<th>${labels[a]}${labels[b]}</th>`).join('')}<th>추정 <var>x</var></th><th>일치</th>${all?'<th>실제 <var>x</var></th>':''}</tr></thead><tbody>${cohorts[c].map((student,i)=>`<tr class="${i===idx?'current-student':''}"><td><button data-pair-student="${i}" data-class="${c}" class="student-row-button">${i+1}번</button></td>${pairChoices(student.x).map(choice=>`<td>${choice}</td>`).join('')}<td>${state.est[c][i]===null?'—':state.est[c][i].toFixed(2)}</td><td>${state.est[c][i]===null?'—':`${pairMatches(state.est[c][i],student.x)}/6`}</td>${all?`<td>${student.x.toFixed(2)}</td>`:''}</tr>`).join('')}</tbody></table></div>${all?`<div class="feedback">25명의 추정을 완료했습니다. 실제 가중치와의 평균 절대 차이는 ${(state.est[c].reduce((a,v,i)=>a+Math.abs(v-cohorts[c][i].x),0)/25).toFixed(3)}입니다. 여섯 선택이 같더라도 가중치는 여러 값일 수 있습니다.</div>${distribution(c)}`:'<p class="muted">25명의 추정값을 모두 저장하면 실제 가중치와 분포를 확인할 수 있습니다.</p>'}${c===0?'<button data-tab="3" class="orange" style="margin-top:16px">4차시 · 다른 반에 적용 →</button>':'<button id="back-compare" class="orange" style="margin-top:16px">학급 비교로 돌아가기</button>'}</section></div></div>`;}
-let class2Open=false;
-function accuracy(source,target){const m=mean(source);return m===null?null:cohorts[target].reduce((sum,s)=>sum+pairMatches(m,s.x),0);}
-function distribution(c){
- const values=state.est[c],m=mean(c),groups=new Map(),px=x=>40+x*520;
- values.forEach((v,i)=>{if(v!==null){const key=Number(v.toFixed(2));if(!groups.has(key))groups.set(key,[]);groups.get(key).push(i+1);}});
- const boundaryDC=`distribution-dc-${c}`,boundaryCA=`distribution-ca-${c}`;
- const bands=[{from:0,to:.25,label:'D',index:3},{from:.25,to:.5,label:'C',index:2},{from:.5,to:1,label:'A',index:0}];
- const dots=[...groups.entries()].sort(([a],[b])=>a-b).map(([v,students])=>{const best=winners(v),fill=best.length===1?colors[labels.indexOf(best[0])]:`url(#${v===.25?boundaryDC:boundaryCA})`;return `<g class="weight-point" data-weight="${v}" data-best="${best.join(',')}"><title>${students.map(i=>`${i}번`).join(', ')} · 가중치 ${v.toFixed(2)} · ${best.join('·')} ${best.length>1?'공동 ':''}최적 · ${students.length}명</title><circle cx="${px(v)}" cy="100" r="${students.length>1?7:5}" fill="${fill}" stroke="#14214d" stroke-width="${best.length>1?1.8:.7}"/>${students.length>1?`<text x="${px(v)}" y="91" text-anchor="middle" class="numberline-count">${students.length}명</text>`:''}</g>`;}).join('');
- const bestMean=m===null?[]:winners(m);
- return `<section class="weight-distribution"><h4>${c+1}반 추정 가중치 분포</h4><p class="distribution-caption">점의 위치는 추정 가중치, 색은 그 가중치에서 최적인 노트북입니다.</p><svg class="weight-numberline" viewBox="0 0 600 178" role="img" aria-label="${c+1}반 추정 가중치 수직선. 0부터 0.25까지 D, 0.25부터 0.5까지 C, 0.5부터 1까지 A가 최적이며 두 경계에서는 공동 최적입니다."><defs><linearGradient id="${boundaryDC}"><stop offset="50%" stop-color="${colors[3]}"/><stop offset="50%" stop-color="${colors[2]}"/></linearGradient><linearGradient id="${boundaryCA}"><stop offset="50%" stop-color="${colors[2]}"/><stop offset="50%" stop-color="${colors[0]}"/></linearGradient></defs>${bands.map(b=>`<g class="optimal-band" data-best="${b.label}"><rect x="${px(b.from)}" y="46" width="${(b.to-b.from)*520}" height="34" fill="${colors[b.index]}" opacity=".15"/><text x="${px((b.from+b.to)/2)}" y="68" text-anchor="middle" fill="${colors[b.index]}" font-size="16" font-weight="800">${b.label} 최적</text></g>`).join('')}<line x1="40" y1="100" x2="560" y2="100" stroke="#64708d" stroke-width="1.5"/>${[0,.25,.5,.75,1].map(v=>`<line x1="${px(v)}" y1="95" x2="${px(v)}" y2="107" stroke="#64708d"/><text x="${px(v)}" y="126" text-anchor="middle" class="numberline-tick">${v}</text>`).join('')}${[.25,.5].map(v=>`<line x1="${px(v)}" y1="81" x2="${px(v)}" y2="94" stroke="#64708d" stroke-dasharray="3 3"/>`).join('')}${dots}${m===null?'':`<g class="weight-average"><title>평균 가중치 ${m.toFixed(3)} · ${bestMean.join('·')} ${bestMean.length>1?'공동 ':''}최적</title><line x1="${px(m)}" y1="29" x2="${px(m)}" y2="111" stroke="#d46513" stroke-width="2.5" stroke-dasharray="5 3"/><path d="M ${px(m)-6} 27 L ${px(m)+6} 27 L ${px(m)} 35 Z" fill="#d46513"/><text x="${px(m)}" y="18" text-anchor="${m<.15?'start':m>.85?'end':'middle'}" class="numberline-average-label">평균 ${m.toFixed(3)} · ${bestMean.join('·')} 최적</text></g>`}<text x="40" y="163" text-anchor="start" class="numberline-tick">0 · 크기 중시</text><text x="560" y="163" text-anchor="end" class="numberline-tick">1 · 무게 중시</text></svg><div class="distribution-legend">${bands.map(b=>`<span><i class="swatch" style="background:${colors[b.index]}"></i>노트북 ${b.label}</span>`).join('')}<span class="mean-key">▼ 평균 가중치</span></div><p class="distribution-boundaries">0.25에서는 C·D, 0.5에서는 A·C 공동 최적입니다. B는 최적인 구간이 없습니다.</p><small>같은 가중치의 점은 한 위치에 모아 인원수를 표시합니다.${groups.size===0?' 아직 저장한 추정값이 없습니다.':''}</small></section>`;
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>초신성 데이터로 설명하는 우주의 팽창</title>
+<style>
+:root{--blue:#2563eb;--ink:#14233d;--muted:#5d6a82;--line:#dbe3ef;--bg:#f4f7fc;--soft:#eaf2ff;--green:#0e9f7b;--orange:#ea7a2c;--red:#d94848}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.6}
+header{background:linear-gradient(120deg,#eef4ff,#f6f1ff);border-bottom:1px solid var(--line)}
+header>div{max-width:1180px;margin:auto;padding:22px 24px}
+.badge{display:inline-block;background:#14233d;color:#fff;border-radius:7px;padding:2px 9px;font-size:13px;font-weight:800}
+h1{margin:8px 0 4px;font-size:27px}
+header p,.lead{color:var(--muted);margin:0}
+nav{display:flex;gap:8px;overflow-x:auto;background:#fff;padding:12px max(18px,calc((100% - 1144px)/2));position:sticky;top:0;z-index:3;border-bottom:1px solid var(--line)}
+nav button{flex:0 0 auto;display:flex;align-items:center;gap:7px;white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 13px 6px 6px;color:var(--muted);font-weight:700}
+nav button b{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:50%;background:#dbe3ef;font-size:13px}
+nav button small{font-size:11px;font-weight:600;color:#8a96ab}
+nav button.active{border-color:var(--blue);color:var(--blue);background:#eff5ff}
+nav button.active b,nav button.done b{background:var(--blue);color:#fff}
+main{max-width:1180px;margin:22px auto 100px;padding:0 18px}
+.stage{background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 10px 30px #1e3a5f0d}
+.tag{color:var(--blue);background:#e5efff;border-radius:20px;padding:5px 11px;font-weight:800;font-size:14px}
+.stage h2{font-size:25px;margin:14px 0 6px}
+.lesson{border:1px solid var(--line);border-radius:18px;padding:22px;margin:20px 0;line-height:1.75}
+.lesson h3{margin:0 0 10px}
+.lesson h4{margin:18px 0 8px}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:#f8fafc;border-radius:10px;padding:10px 15px;font-weight:700;color:var(--ink)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+input,select,textarea{border:1px solid #cbd5e1;border-radius:9px;padding:9px 10px;background:#fff;color:var(--ink)}
+textarea{width:100%;resize:vertical;margin-top:6px}
+.controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:16px 0}
+.controls label{font-weight:700;font-size:14px}
+.controls label input,.controls label select{display:block;width:190px;margin-top:6px}
+.controls>input{width:140px}
+.note{color:var(--muted);font-size:14px}
+.center{text-align:center}
+.msg{margin:6px 0 0;font-weight:700;min-height:1.4em}
+.msg.good{color:var(--green)}.msg.bad{color:var(--red)}
+.uses{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.uses div{background:var(--soft);border-radius:14px;padding:14px}
+.uses b,.uses span,.uses em{display:block}
+.uses span{font-size:14px;color:var(--muted);margin:4px 0}
+.uses em{font-style:normal;font-size:13px;font-weight:800;color:var(--blue)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.chips details{background:#fff7ed;border:1px solid #fcd9b6;border-radius:12px;padding:6px 12px;font-size:14px;color:#7a3e0e}
+.chips summary{cursor:pointer;font-weight:800}
+.chips summary::before{content:"AI 용어 · ";font-weight:600}
+.qbox{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+.qbox p{margin:0 0 6px}
+.radios{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.radios label{display:flex;gap:8px;align-items:center;cursor:pointer}
+.square{font-size:20px;text-align:center}
+.square input{width:80px;text-align:center}
+.terms{background:#ecfdf7;border:1px solid #a7e3cf;border-radius:14px;padding:16px;margin-top:14px}
+.terms h4{margin:0 0 8px}
+.terms table{min-width:0}
+.terms td{text-align:left}
+.terms td:first-child{font-weight:800;color:#08765d;white-space:nowrap}
+.rule{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:14px;padding:14px 18px;margin:16px 0}
+.rule ol{margin:6px 0 0;padding-left:22px}
+.stats,.calculation{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+.calculation{grid-template-columns:repeat(3,1fr)}
+.stats.one{grid-template-columns:1fr 1fr;margin:0 0 12px}
+.stats>div,.calculation>div{border:1px solid var(--line);border-radius:14px;padding:13px}
+.stats small,.stats b,.calculation b{display:block}
+.stats b{font-size:18px;margin-top:4px;word-break:keep-all}
+.calculation b{font-size:19px;color:var(--blue);margin-top:6px}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:14px;margin-top:16px;max-height:480px}
+.tablewrap.small{max-height:none;margin-top:12px}
+.tablewrap.log{max-height:300px}
+table{border-collapse:collapse;width:100%;min-width:560px}
+.tablewrap.small table{min-width:0}
+th,td{padding:9px 11px;border-bottom:1px solid var(--line);text-align:center}
+thead{position:sticky;top:0;background:#f7f9fc;z-index:1}
+.sort{border:0;background:transparent;padding:0}
+.pill{display:inline-block;border-radius:20px;padding:2px 9px;font-size:13px;font-weight:800}
+.pill.train{background:#e5efff;color:#1d4ed8}.pill.test{background:#fff1e6;color:#b45309}
+td input{width:105px}
+.ok{border-color:var(--green);background:#ecfdf7}.bad{border-color:var(--red);background:#fff1f1}
+.formula-grid,.plot-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0}
+.plot-layout{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+.formula,.math{background:#10284c;color:#fff;border-radius:17px;padding:20px;text-align:center;font-size:21px;line-height:1.8}
+.math{font-size:19px;margin:12px 0}
+.formula small{display:block;color:#93c5fd;font-size:14px}
+.formula .note{font-size:13px;color:#dbeafe}
+.frac{display:inline-flex;vertical-align:middle;flex-direction:column;line-height:1.25}
+.frac span:first-child{border-bottom:1px solid #fff}
+.source{margin:12px 0;border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.source summary{font-weight:800;cursor:pointer}
+.canvasbox{border:1px solid var(--line);border-radius:16px;padding:8px;min-width:0}
+.canvasbox.inner{margin:12px 0}
+canvas{display:block;width:100%}
+canvas.tall{height:420px}
+canvas.short{height:240px}
+aside{border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+.sliderlabel{display:block;font-weight:800;margin-bottom:6px}
+input[type=range]{width:100%;padding:0;border:0;margin:8px 0 4px}
+.sums{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.sums div,.sse{background:#eef4ff;border-radius:12px;padding:12px}
+.sums b,.sse b{display:block;font-size:22px;color:var(--blue)}
+.counter{font-size:40px;color:var(--blue);font-weight:900;margin:4px 0 14px}
+.wide{width:100%;margin-bottom:10px}
+#pointList{max-height:290px;overflow:auto;display:grid;gap:6px;margin-bottom:10px}
+#pointList button{text-align:left;padding:8px;font-size:14px}
+#pointList button.done{background:#e9fbf5;color:#08765d}
+.calcout{background:#eef4ff;border-radius:12px;padding:10px 14px;font-weight:700}
+.legend{font-size:13px;color:var(--muted);margin:6px 4px 0;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.dot.train{background:#2563eb}.dot.test{background:#ea7a2c}.dot.all{background:#94a3b8}
+.lineKey{display:inline-block;width:22px;height:0;border-top:3px solid #ef513b;margin-right:4px;vertical-align:middle}
+.lineKey.near{border-color:#0e9f7b}.lineKey.wide{border-color:#7c3aed}.lineKey.light{border-top:2px dashed #64748b}
+.warning{padding:14px 16px;border:1px solid #f6c85f;background:#fff9e8;border-radius:14px;line-height:1.7;margin-top:14px}
+.map td{text-align:left}
+.teacher-only{display:none}
+body.teacher .teacher-only{display:inline-block}
+body.teacher .wide.teacher-only{display:block}
+footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:11px 24px;display:flex;justify-content:space-between;align-items:center;gap:10px;z-index:5}
+#toast{text-align:center;color:var(--muted);font-size:14px}
+i{font-family:"Times New Roman",serif;font-style:italic}
+@media(max-width:760px){
+h1{font-size:21px}
+.stage{padding:18px;border-radius:16px}
+.lesson{padding:16px}
+.formula-grid,.plot-layout{grid-template-columns:1fr}
+.uses,.calculation{grid-template-columns:1fr}
+.stats{grid-template-columns:1fr 1fr}
+canvas.tall{height:330px}
+canvas.short{height:220px}
+footer{padding:9px 12px}
+#toast{font-size:12px;max-width:50%}
+.controls label input,.controls label select{width:150px}
 }
-function lesson4(){if(class2Open)return estimateView(1);const ready=state.est.map(a=>a.every(v=>v!==null));return `<div class="grid"><div class="stack"><section class="card"><h3>① 1반 가중치로 2반의 여섯 선택 예측하기</h3>${ready[0]?`<p>1반 평균 가중치 <b>${mean(0).toFixed(3)}</b>를 2반 학생 25명에게 적용합니다.</p><div class="metric">${accuracy(0,1)} / 150개 일치</div><p>선택 예측 일치율 <b>${pct(accuracy(0,1)/150)}</b></p><div class="matchgrid">${cohorts[1].map((s,i)=>{const matches=pairMatches(mean(0),s.x);return `<div class="match ${matches===6?'':'no'}">${i+1}번<br>${matches} / 6 일치</div>`;}).join('')}</div><details><summary>1반 평균 가중치의 비교별 예측 보기</summary><table><thead><tr><th>비교</th><th>예측</th></tr></thead><tbody>${pairChoices(mean(0)).map((choice,i)=>`<tr><td>${labels[PAIRS[i][0]]} vs ${labels[PAIRS[i][1]]}</td><td>${choice}</td></tr>`).join('')}</tbody></table></details>`:'<div class="notice">먼저 3차시에서 1반 학생 25명의 가중치를 추정해 주세요.</div><button data-tab="2">1반 추정으로 이동</button>'}<p class="muted">학생 25명 × 비교 6개 = 총 150개 선택을 비교합니다. 동점은 별도 선택으로 취급합니다.</p></section><section class="card"><h3>② 2반의 선택으로 다시 추정하기</h3><p>2반에서도 AB·AC·AD·BC·BD·CD 선택을 보고 학생별 가중치를 추정합니다.</p><button id="open-class2" ${!ready[0]?'disabled':''}>2반 추정 활동 ${ready[1]?'다시 보기':'시작'} →</button>${distribution(0)}${distribution(1)}</section></div><div class="stack"><section class="card"><h3>③ 두 가중치 모형 교차 비교</h3><button id="fill-all-cohorts" class="outline">두 반 추정값 예시 전체 채우기</button><p class="muted">각 학급에서 추정한 가중치의 평균으로 여섯 선택을 예측합니다.</p><div class="scroll"><table><thead><tr><th>모형의 데이터</th><th>1반 적용</th><th>2반 적용</th></tr></thead><tbody>${[0,1].map(c=>`<tr><td>${c+1}반</td>${[0,1].map(t=>`<td>${ready[c]?`${accuracy(c,t)} / 150<br>${pct(accuracy(c,t)/150)}`:'추정 미완료'}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="notice">가중치를 추정한 학급에 다시 적용한 결과와 다른 학급에서의 결과를 구분하세요.</div><details><summary>가상 데이터 구성</summary><p>1반: 무게 중시 20명·크기 중시 5명<br>2반: 무게 중시 5명·크기 중시 20명</p><p>무게 중시는 <var>x</var> = 0.70~1.00, 크기 중시는 <var>x</var> = 0.00~0.30입니다. 학생의 여섯 선택은 동일한 숨겨진 가중치로 생성됩니다.</p></details></section><section class="card"><h3>④ 어떤 데이터로 추정했나요?</h3><button id="fill-compare-notes" class="outline">마무리 예시 답안 채우기</button>${note('compare','두 반에서 추정한 가중치와 선택 예측 결과가 같거나 달라진 이유는?')}${note('newdata','다른 학교에 적용하려면 어떤 데이터를 더 모아야 할까?')}<div class="feedback">선택 데이터로 가중치를 추정하는 단순화된 모형입니다. 여섯 선택을 모두 설명해도 가중치가 하나로 결정되지 않을 수 있으며, 학급 평균 하나로 모든 학생의 선호를 설명할 수는 없습니다.</div><button id="export-bottom" class="orange">탐구 기록 내려받기</button></section></div></div>`;}
-$('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b){state.tab=Number(b.dataset.tab);class2Open=false;render();}});
-$('#content').addEventListener('input',e=>{const t=e.target;if(t.dataset.mathAnswer){const m=mathState();const matrixKey=t.dataset.mathAnswer.match(/^m([0-3])[0-3]$/);if(matrixKey){if(m.grades)delete m.grades[matrixKey[1]];const verdict=$(`#matrix-verdict-${matrixKey[1]}`);if(verdict)verdict.innerHTML=matrixVerdict(Number(matrixKey[1]));t.closest('.matrix-question').querySelectorAll('.math-input').forEach(el=>{el.classList.remove('answer-correct','answer-error');el.removeAttribute('aria-invalid');});}m.answers[t.dataset.mathAnswer]=t.value;for(let i=m.step;i<6;i++)m.done[i]=false;if($('#math-next'))$('#math-next').disabled=true;const finish=$('.math-navigation [data-tab]');if(finish)finish.disabled=true;document.querySelectorAll('.math-steps [data-math-step]').forEach(el=>el.disabled=Number(el.dataset.mathStep)>mathUnlocked());if($('#math-feedback'))$('#math-feedback').innerHTML='';t.classList.remove('answer-error');t.removeAttribute('aria-invalid');save();}if(t.dataset.note){state.notes[t.dataset.note]=t.value;save();}if(t.id==='weight'){state.x=Number(t.value);$('#x-label').textContent=state.x.toFixed(2);if($('#y-label'))$('#y-label').textContent=(1-state.x).toFixed(2);save();}if(t.id==='guess'){const c=Number(t.dataset.class);state.guess[c]=Number(t.value);$('#guess-label').textContent=state.guess[c].toFixed(2);$('#pair-table').innerHTML=pairTable(c);if($('#guess-feedback'))$('#guess-feedback').innerHTML='';$('#guess-complement').textContent=(1-state.guess[c]).toFixed(2);$('#pair-count').textContent=`예측 일치 ${pairMatches(state.guess[c],cohorts[c][state.cursor[c]].x)} / 6`;save();}});
-$('#content').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;
-if(mathClick(b))return;
-if(b.dataset.tab){state.tab=Number(b.dataset.tab);class2Open=false;render();}
-if(b.dataset.stock!==undefined){state.stock=Number(b.dataset.stock);render();}
-if(b.dataset.investmentDay){const day=Number(b.dataset.investmentDay);if(day>=1&&day<=Math.min(state.day+1,5)){state.reviewDay=day;render();}}
-if(b.dataset.trade)trade(b.dataset.trade);
-if(b.id==='close-day')closeDay();
-if(b.dataset.student){const c=Number(b.dataset.class);state.cursor[c]=Math.max(0,Math.min(24,state.cursor[c]+Number(b.dataset.student)));state.guess[c]=state.est[c][state.cursor[c]]??.5;render();}
-if(b.dataset.pairStudent!==undefined){const c=Number(b.dataset.class),i=Number(b.dataset.pairStudent);if(i>=0&&i<25){state.cursor[c]=i;state.guess[c]=state.est[c][i]??.5;render();}}
-if(b.id==='reset-guess'){const c=Number(b.dataset.class);state.guess[c]=.5;render();}
-if(b.id==='submit-guess'){const c=Number(b.dataset.class),i=state.cursor[c],g=state.guess[c];state.est[c][i]=g;render();const n=pairMatches(g,cohorts[c][i].x);$('#guess-feedback').innerHTML=`<div class="${n===6?'feedback':'notice'}">${n===6?'✓ 여섯 선택을 모두 설명하는 추정값입니다.':`${n} / 6개 선택이 일치합니다. 추정값은 저장되었으며 다시 수정할 수 있습니다.`} 다음 학생도 추정해 보세요.</div>`;}
-if(b.id==='open-class2'){class2Open=true;render();}
-if(b.id==='back-compare'){class2Open=false;render();}
-if(b.id==='export-bottom')download();
-});
-function download(){const payload={...state,exportedAt:new Date().toISOString(),cohorts,summary:{comparisonOrder:PAIRS.map(([a,b])=>labels[a]+labels[b]),agreementUnit:"pairwise choices",comparisonsPerClass:150,meanWeights:[mean(0),mean(1)],agreementCounts:[[accuracy(0,0),accuracy(0,1)],[accuracy(1,0),accuracy(1,1)]]}};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='선택의수학_탐구기록.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('탐구 기록을 내려받았습니다.');}
-$('#export').onclick=download;
-$('#reset').onclick=()=>{if(confirm('이 브라우저의 모든 탐구 기록을 초기화할까요? 필요한 기록은 먼저 내려받으세요.')){state=fresh();class2Open=false;render();toast('새 탐구를 시작합니다.');}};
-render();
-</script></body></html>
+
+</style>
+</head>
+<body>
+<header><div><span class="badge">AI × 수학</span><h1>초신성 데이터로 설명하는 우주의 팽창</h1><p>AI는 데이터로 어떻게 학습하고 예측할까요? 표본을 뽑고, 손실함수를 줄이고, 처음 보는 초신성을 예측해 봅니다.</p></div></header>
+<nav id="tabs" aria-label="활동 단계"></nav>
+<main>
+
+<!-- STEP 0 -->
+<section class="stage" data-step="0">
+<span class="tag">1차시 · STEP 0</span>
+<h2>점 3개로 AI의 학습과 예측 체험하기</h2>
+<p class="lead">AI가 예측을 하려면 먼저 데이터를 잘 설명하는 모델을 찾아야 합니다. 세 점 (1, 1), (2, 3), (3, 7)을 가장 잘 설명하는 직선 <i>y</i> = <i>ax</i>를 찾아봅시다.</p>
+<div class="uses">
+<div><b>① 요약하기</b><span>여러 자료를 간단한 식 하나로 나타냅니다.</span><em>AI 용어: 모델</em></div>
+<div><b>② 예측하기</b><span>아직 관찰하지 않은 값을 식으로 추측합니다.</span><em>AI 용어: 예측</em></div>
+<div><b>③ 오차 줄이기</b><span>예측과 실제의 차이가 가장 작은 식을 찾습니다.</span><em>AI 용어: 학습</em></div>
+</div>
+
+<div class="lesson">
+<h3>1. 직선을 움직이며 오차 살펴보기</h3>
+<div class="plot-layout">
+<div class="canvasbox"><canvas id="toyPlot" class="tall"></canvas></div>
+<aside>
+<label class="sliderlabel">기울기 <i>a</i> = <b id="toyAval">1.00</b></label>
+<input id="toyA" type="range" min="0" max="4" step="0.05" value="1">
+<div class="tablewrap small"><table><thead><tr><th><i>x</i></th><th>실제값 <i>y</i></th><th>예측값 <i>ax</i></th><th>오차<br><i>ax</i> − <i>y</i></th><th>오차²</th></tr></thead><tbody id="toyRows"></tbody></table></div>
+<div class="sums"><div><small>오차의 합</small><b id="toySum">–</b></div><div><small>오차제곱합 <i>S</i>(<i>a</i>)</small><b id="toySSE">–</b></div></div>
+</aside>
+</div>
+<div class="qbox"><p><b>Q1.</b> 오차의 합은 6<i>a</i> − 11입니다. 오차의 합이 0이 되는 <i>a</i>의 값을 구해 보세요. (소수 둘째 자리까지)</p>
+<div class="controls"><input id="toyZero" type="number" step="0.01" inputmode="decimal" aria-label="오차의 합이 0이 되는 a"><button class="primary" id="toyZeroCheck">확인</button><button class="teacher-only" id="toyFill">정답 채우기(교사용)</button></div><p class="msg" id="toyZeroMsg"></p></div>
+</div>
+
+<div class="lesson">
+<h3>2. 손실함수 <i>S</i>(<i>a</i>)가 가장 작은 곳 찾기</h3>
+<p>오차를 그냥 더하면 양수와 음수가 서로 지워집니다. 그래서 오차를 제곱해서 더한 <b>오차제곱합</b>을 씁니다. AI에서는 이렇게 "얼마나 틀렸는지"를 재는 함수를 <b>손실함수</b>라고 합니다.</p>
+<div class="math"><i>S</i>(<i>a</i>) = (<i>a</i> − 1)² + (2<i>a</i> − 3)² + (3<i>a</i> − 7)²</div>
+<div class="plot-layout">
+<div><p><b>Q2.</b> 표를 완성하세요.</p>
+<div class="tablewrap small"><table><thead><tr><th><i>a</i></th><th><i>S</i>(<i>a</i>)</th></tr></thead><tbody id="toyLossRows"></tbody></table></div>
+<div class="controls"><button class="primary" id="toyTableCheck">표 확인</button></div><p class="msg" id="toyTableMsg"></p></div>
+<div class="canvasbox"><canvas id="toyLoss" class="short"></canvas></div>
+</div>
+<div class="qbox"><p><b>Q3.</b> 식을 전개하면 <i>S</i>(<i>a</i>) = 14<i>a</i>² − 56<i>a</i> + 59입니다. 완전제곱식으로 나타내 보세요.</p>
+<p class="square"><i>S</i>(<i>a</i>) = 14(<i>a</i> − <input id="sqA" type="number" step="any" aria-label="꼭짓점의 a 좌표">)² + <input id="sqB" type="number" step="any" aria-label="최솟값"></p>
+<div class="controls"><button class="primary" id="sqCheck">확인</button></div><p class="msg" id="sqMsg"></p></div>
+</div>
+
+<div class="lesson">
+<h3>3. 학습한 모델로 예측하기</h3>
+<div class="qbox"><p><b>Q4.</b> 학습으로 찾은 모델로 <i>x</i> = 4일 때의 <i>y</i>를 예측해 보세요.</p>
+<div class="controls"><input id="toyPred" type="number" step="any" aria-label="x가 4일 때 예측값"><button class="primary" id="toyPredCheck">확인</button></div><p class="msg" id="toyPredMsg"></p></div>
+<div class="terms" id="toyTerms" hidden>
+<h4>방금 한 일을 AI 용어로 바꾸면</h4>
+<table><tbody>
+<tr><td>모델</td><td>자료를 설명하는 식 <i>y</i> = <i>ax</i></td></tr>
+<tr><td>매개변수</td><td>데이터로부터 정해야 하는 값 <i>a</i></td></tr>
+<tr><td>손실함수</td><td>얼마나 틀렸는지 재는 함수 <i>S</i>(<i>a</i>)</td></tr>
+<tr><td>학습</td><td>손실함수가 가장 작아지는 <i>a</i> = 2 찾기</td></tr>
+<tr><td>예측</td><td>학습한 모델로 <i>x</i> = 4일 때 <i>y</i> = 8 계산하기</td></tr>
+</tbody></table>
+<p>다음 차시에는 같은 과정을 실제 초신성 관측 자료로 해 봅니다.</p>
+</div>
+</div>
+</section>
+
+<!-- STEP 1 -->
+<section class="stage" data-step="1" hidden>
+<span class="tag">2차시 · STEP 1</span>
+<h2>탐구할 초신성 표본을 뽑으세요</h2>
+<p class="lead">Ia형 초신성 1,048개의 관측 자료(Pantheon 표본)가 이 파일 안에 들어 있어 휴대폰에서도 바로 쓸 수 있습니다.</p>
+<div class="chips"><details><summary>학습 데이터</summary>모델이 매개변수를 정할 때 쓰는 자료</details><details><summary>검증 데이터</summary>학습에 쓰지 않고 남겨 두었다가 예측 실력을 평가할 때 쓰는 자료</details></div>
+<div class="qbox"><p><b>먼저 예상해 보세요.</b> 지구에서 멀리 있는 초신성일수록 멀어지는 속도(후퇴속도)는 어떻게 될까요?</p>
+<div class="radios" id="guessBox"><label><input type="radio" name="guess" value="inc"> 커진다</label><label><input type="radio" name="guess" value="dec"> 작아진다</label><label><input type="radio" name="guess" value="none"> 관계없다</label></div></div>
+<div class="controls">
+<label>자료 범위<select id="range"><option value="near">가까운 초신성 (z &lt; 0.1)</option><option value="all">전체 초신성</option></select></label>
+<label><span id="countLabel">표본 개수</span><input id="count" type="number" min="20" value="30"></label>
+<button class="primary" id="pick">무작위 표본 뽑기</button>
+</div>
+<p class="note">뽑은 표본의 80%는 <b>학습용</b>, 20%는 <b>검증용</b>으로 자동으로 나뉩니다. 검증용 자료는 학습하는 동안 쓰지 않고 남겨 두었다가 STEP 6에서 모델의 예측 실력을 평가할 때 씁니다.</p>
+<div class="stats" id="sampleStats">
+<div><small>선택한 표본</small><b id="stN">–</b></div>
+<div><small>적색편이 <i>zcmb</i>의 범위 · 평균</small><b id="stZ">–</b></div>
+<div><small>가장 밝은 초신성 (<i>mb</i> 최소)</small><b id="stBright">–</b></div>
+<div><small>가장 큰 <i>zcmb</i></small><b id="stFar">–</b></div>
+</div>
+<div class="tablewrap"><table><thead><tr><th>번호</th><th>Ia형 초신성</th><th><button class="sort" data-key="z">적색편이 <i>zcmb</i> <span>↕</span></button></th><th><button class="sort" data-key="m">겉보기등급 <i>mb</i> <span>↕</span></button></th><th>용도</th></tr></thead><tbody id="sampleRows"><tr><td colspan="5">예상을 고른 뒤 표본을 뽑아 주세요.</td></tr></tbody></table></div>
+</section>
+
+<!-- STEP 2 -->
+<section class="stage" data-step="2" hidden>
+<span class="tag">2차시 · STEP 2</span>
+<h2>후퇴속도 <i>v</i>와 거리 <i>r</i>을 계산하세요</h2>
+<p class="lead">관측값 <i>zcmb</i>와 <i>mb</i>를 AI가 다룰 수 있는 수치(특성)로 바꾸는 단계입니다.</p>
+<div class="formula-grid">
+<div class="formula"><small>후퇴속도</small><i>v</i> = <i>c</i> × <i>zcmb</i><br><span class="note"><i>c</i> = 3 × 10<sup>5</sup> km/s</span></div>
+<div class="formula"><small>거리</small><i>r</i> = 10<sup>(<i>mb</i> − 5.7)/5</sup> (Mpc)<br><span class="note">Ia형 초신성의 절대등급을 −19.3으로 가정한 식</span></div>
+</div>
+<details class="source"><summary>수식 보기: 거리 공식은 어떻게 나왔을까? (심화 · 상용로그)</summary>
+<p>겉보기등급 <i>m</i>, 절대등급 <i>M</i>, 거리 <i>d</i>(pc) 사이에는 <i>m</i> − <i>M</i> = 5 log <i>d</i> − 5가 성립합니다. <i>M</i> = −19.3을 넣으면</p>
+<p class="center"><i>mb</i> + 19.3 = 5 log <i>d</i> − 5 → log <i>d</i> = (<i>mb</i> + 24.3)/5</p>
+<p>1 Mpc = 10<sup>6</sup> pc이므로 log <i>r</i> = (<i>mb</i> + 24.3)/5 − 6 = (<i>mb</i> − 5.7)/5, 즉 <i>r</i> = 10<sup>(<i>mb</i> − 5.7)/5</sup>입니다.</p>
+<p class="note">상용로그는 고등학교 2학년 대수 내용이므로 평가 대상에서 제외합니다.</p>
+</details>
+<details class="source"><summary>유의할 점: <i>v</i> = <i>cz</i>는 어디까지 맞을까?</summary>
+<p><i>v</i> = <i>cz</i>는 적색편이가 작을 때(대략 <i>z</i> &lt; 0.1)만 잘 맞는 근사식입니다. 먼 은하의 적색편이는 우주 공간의 팽창으로 생기기 때문에, <i>z</i>가 큰 자료에 이 식을 그대로 쓰면 속도가 지나치게 크게 계산됩니다. <i>z</i> &gt; 1이면 빛의 속도보다 큰 값이 나오기도 합니다.</p>
+</details>
+<div class="tablewrap"><table><thead><tr><th>초신성</th><th>용도</th><th><i>zcmb</i></th><th><i>mb</i></th><th><i>v</i> (km/s)</th><th><i>r</i> (Mpc)</th><th>확인</th></tr></thead><tbody id="calcRows"></tbody></table></div>
+<div class="controls"><button class="primary" id="checkCalc">계산 확인</button><button id="fillCalc">모두 계산하기</button><span id="calcMsg" class="msg"></span></div>
+</section>
+
+<!-- STEP 3 -->
+<section class="stage" data-step="3" hidden>
+<span class="tag">2차시 · STEP 3</span>
+<h2>점을 찍고 모델을 정하세요</h2>
+<p class="lead">학습용 초신성의 (<i>r</i>, <i>v</i>)를 좌표평면에 찍어 경향을 관찰합니다. 가로축은 거리 <i>r</i>(Mpc), 세로축은 후퇴속도 <i>v</i>(km/s)입니다.</p>
+<div class="chips"><details><summary>모델</summary>자료 사이의 관계를 나타내는 식</details><details><summary>매개변수</summary>모델 안에서 데이터로부터 정해야 하는 값</details></div>
+<div class="plot-layout">
+<div class="canvasbox"><canvas id="plot" class="tall"></canvas></div>
+<aside><small>찍은 점 (학습용)</small><div class="counter"><span id="plotted">0</span> / <span id="plotTotal">0</span></div><button class="primary wide" id="plotAll">모든 점 한 번에 찍기</button><div id="pointList"></div><button class="wide" id="resetPlot">다시 찍기</button></aside>
+</div>
+<div class="lesson" id="modelCard" hidden>
+<h3>관찰하고 모델 정하기</h3>
+<div class="qbox"><p><b>Q1.</b> 점들의 경향으로 알맞은 것은?</p>
+<div class="radios"><label><input type="radio" name="trend" value="inc"> 거리가 멀수록 후퇴속도가 커진다</label><label><input type="radio" name="trend" value="dec"> 거리가 멀수록 후퇴속도가 작아진다</label><label><input type="radio" name="trend" value="none"> 거리와 후퇴속도는 관계없다</label></div>
+<div class="controls"><button class="primary" id="trendCheck">확인</button></div><p class="msg" id="trendMsg"></p></div>
+<div class="qbox"><p><b>Q2.</b> 직선의 식은 보통 <i>y</i> = <i>mx</i> + <i>b</i>로 씁니다. 우리는 절편 <i>b</i>를 빼고 <i>v</i> = <i>ar</i>로 두려고 합니다. 그 이유로 가장 알맞은 것은?</p>
+<div class="radios"><label><input type="radio" name="model" value="origin"> 거리가 0이면 후퇴속도도 0이어야 하므로</label><label><input type="radio" name="model" value="easy"> 절편이 있으면 계산할 수 없으므로</label><label><input type="radio" name="model" value="few"> 자료의 개수가 적으므로</label></div>
+<div class="controls"><button class="primary" id="modelCheck">확인</button></div><p class="msg" id="modelMsg"></p></div>
+</div>
+</section>
+
+<!-- STEP 4 -->
+<section class="stage" data-step="4" hidden>
+<span class="tag">2차시 · STEP 4</span>
+<h2>사람이 학습하기: 손실함수가 가장 작은 <i>a</i> 찾기</h2>
+<p class="lead">모델 <i>v</i> = <i>ar</i>의 기울기 <i>a</i>를 움직이며 손실함수 <i>S</i>(<i>a</i>) = Σ(<i>ar</i><sub>i</sub> − <i>v</i><sub>i</sub>)²이 가장 작아지는 값을 찾아 저장하세요.</p>
+<div class="chips"><details><summary>손실함수</summary>모델의 예측이 실제와 얼마나 다른지 재는 함수. 여기서는 오차제곱합</details></div>
+<div class="plot-layout">
+<div class="canvasbox"><canvas id="linePlot" class="tall"></canvas></div>
+<aside>
+<label class="sliderlabel">기울기 <i>a</i> = <b id="aval">–</b> km/s/Mpc</label>
+<input id="slope" type="range" min="0" max="150" step="0.1" value="20">
+<div class="sse"><small>손실함수 <i>S</i>(<i>a</i>)</small><b id="sse">–</b></div>
+<div class="canvasbox inner"><canvas id="lossPlot" class="short"></canvas></div>
+<button class="primary wide" id="saveGuess">이 값을 내 추정값으로 저장</button>
+<button class="wide teacher-only" id="bestGuess">최솟값으로 이동(교사용)</button>
+<p class="msg" id="guessMsg"></p>
+</aside>
+</div>
+</section>
+
+<!-- STEP 5 -->
+<section class="stage" data-step="5" hidden>
+<span class="tag">2차시 · STEP 5</span>
+<h2>기계가 학습하기: 규칙으로 <i>a</i>를 고쳐 나가기</h2>
+<p class="lead">이번에는 컴퓨터가 정해진 규칙에 따라 <i>a</i>를 스스로 고쳐 나갑니다. 컴퓨터는 그래프 전체를 보지 못하고, 지금 위치 주변의 손실만 계산할 수 있습니다.</p>
+<div class="chips"><details><summary>학습(최적화)</summary>손실함수가 작아지는 방향으로 매개변수를 반복해서 고쳐 나가는 과정</details></div>
+<div class="rule"><b>컴퓨터의 학습 규칙</b><ol><li>시작값 <i>a</i>와 이동 폭 <i>h</i>를 정한다.</li><li><i>S</i>(<i>a</i> − <i>h</i>), <i>S</i>(<i>a</i>), <i>S</i>(<i>a</i> + <i>h</i>)를 계산한다.</li><li>세 값 중 가장 작은 쪽으로 <i>a</i>를 옮긴다.</li><li>지금 자리가 가장 작으면 이동 폭 <i>h</i>를 절반으로 줄인다.</li><li><i>h</i>가 0.01보다 작아지면 멈춘다.</li></ol></div>
+<div class="controls">
+<label>시작값 <i>a</i><input id="gdStart" type="number" step="1" value="20"></label>
+<label>이동 폭 <i>h</i><input id="gdH" type="number" step="1" value="10"></label>
+<button id="gdReset">처음부터</button><button id="gdStep">한 단계 진행</button><button class="primary" id="gdRun">끝까지 진행</button>
+</div>
+<div class="plot-layout">
+<div class="canvasbox"><canvas id="gdPlot" class="tall"></canvas></div>
+<aside>
+<div class="stats one"><div><small>반복 횟수</small><b id="gdIter">0</b></div><div><small>현재 <i>a</i></small><b id="gdA">–</b></div><div><small>이동 폭 <i>h</i></small><b id="gdHval">–</b></div><div><small>현재 <i>S</i>(<i>a</i>)</small><b id="gdS">–</b></div></div>
+<p class="msg" id="gdMsg">‘한 단계 진행’을 눌러 보세요.</p>
+</aside>
+</div>
+<div class="tablewrap log"><table><thead><tr><th>반복</th><th><i>a</i></th><th><i>h</i></th><th><i>S</i>(<i>a</i> − <i>h</i>)</th><th><i>S</i>(<i>a</i>)</th><th><i>S</i>(<i>a</i> + <i>h</i>)</th><th>결정</th></tr></thead><tbody id="gdRows"></tbody></table></div>
+
+<div id="compareCard" hidden>
+<div class="lesson">
+<h3>세 가지 방법으로 구한 <i>a</i> 비교</h3>
+<div class="calculation"><div>내가 찾은 <i>a</i> (STEP 4)<b id="cmpMine">–</b></div><div>기계가 찾은 <i>a</i><b id="cmpGd">–</b></div><div>수학으로 구한 <i>a</i><b id="cmpFormula">–</b></div></div>
+<h4>수학으로 확인하기: 이차함수의 최솟값</h4>
+<p><i>S</i>(<i>a</i>) = Σ(<i>ar</i><sub>i</sub> − <i>v</i><sub>i</sub>)²을 전개하면 <i>a</i>에 대한 이차함수입니다.</p>
+<div class="math"><i>S</i>(<i>a</i>) = (Σ<i>r</i><sub>i</sub>²)<i>a</i>² − 2(Σ<i>r</i><sub>i</sub><i>v</i><sub>i</sub>)<i>a</i> + Σ<i>v</i><sub>i</sub>²<br>→ <i>a</i> = <span class="frac"><span>Σ<i>r</i><sub>i</sub><i>v</i><sub>i</sub></span><span>Σ<i>r</i><sub>i</sub>²</span></span>일 때 최소</div>
+<p>1차시의 14(<i>a</i> − 2)² + 3과 같은 원리입니다. 학습용 자료로 계산하면</p>
+<div class="calculation"><div>Σ<i>r</i><sub>i</sub><i>v</i><sub>i</sub><b id="dotRV">–</b></div><div>Σ<i>r</i><sub>i</sub>²<b id="dotRR">–</b></div><div><i>a</i> = Σ<i>r</i><sub>i</sub><i>v</i><sub>i</sub> ÷ Σ<i>r</i><sub>i</sub>²<b id="bestA">–</b></div></div>
+<details class="source"><summary>심화: 벡터의 내적과 정사영으로 구하기 (고급대수)</summary>
+<p>거리와 속도 자료를 벡터 <b><i>r</i>⃗ = (<i>r</i><sub>1</sub>, …, <i>r</i><sub>n</sub>)</b>, <b><i>v</i>⃗ = (<i>v</i><sub>1</sub>, …, <i>v</i><sub>n</sub>)</b>으로 두면 <i>S</i>(<i>a</i>) = |<i>a</i><i>r</i>⃗ − <i>v</i>⃗|²입니다. <i>a</i><i>r</i>⃗가 <i>v</i>⃗에 가장 가까울 때 오차 벡터는 <i>r</i>⃗에 수직이므로</p>
+<p class="center">(<i>v</i>⃗ − <i>a</i><i>r</i>⃗) · <i>r</i>⃗ = 0 → <i>a</i> = (<i>v</i>⃗ · <i>r</i>⃗) ÷ (<i>r</i>⃗ · <i>r</i>⃗)</p>
+<p class="note">교육과정 범위 밖의 내용이므로 평가 대상에서 제외합니다.</p>
+</details>
+</div>
+<div class="lesson">
+<h3>기울기 <i>a</i> 해석하기</h3>
+<div class="qbox"><p>거리가 1 Mpc 멀어질 때 후퇴속도는 약 몇 km/s 커질까요? (소수 첫째 자리까지)</p>
+<div class="controls"><input id="answerA" type="number" step="0.1" aria-label="1 Mpc당 후퇴속도 증가량"><span>km/s</span><button class="primary" id="checkA">확인</button><button class="teacher-only" id="fillA">정답 채우기(교사용)</button></div><p class="msg" id="answerMsg"></p></div>
+<div class="terms" id="hubbleNote" hidden></div>
+</div>
+</div>
+</section>
+
+<!-- STEP 6 -->
+<section class="stage" data-step="6" hidden>
+<span class="tag">3차시 · STEP 6</span>
+<h2>학습한 모델로 예측하고 평가하기</h2>
+<p class="lead">학습에 쓰지 않고 남겨 두었던 <b>검증용 초신성</b>으로 모델의 예측 실력을 평가합니다. 모델: <b id="modelEq">–</b></p>
+<div class="chips"><details><summary>예측</summary>학습한 모델에 새로운 입력을 넣어 결과를 계산하는 것</details><details><summary>일반화</summary>학습에 쓰지 않은 새로운 자료에서도 모델이 잘 맞는 정도</details></div>
+<div class="lesson">
+<h3>1. 검증용 초신성 하나 예측하기</h3>
+<div class="qbox"><p id="pred1Q">–</p>
+<div class="controls"><input id="pred1" type="number" step="any" aria-label="예측한 후퇴속도"><span>km/s</span><button class="primary" id="pred1Check">확인</button></div><p class="msg" id="pred1Msg"></p></div>
+</div>
+<div class="lesson" id="testResults" hidden>
+<h3>2. 검증용 초신성 전체 평가</h3>
+<div class="plot-layout">
+<div class="canvasbox"><canvas id="testPlot" class="tall"></canvas><p class="legend"><span class="dot train"></span>학습용 <span class="dot test"></span>검증용 <span class="lineKey"></span>모델 <i>v</i> = <i>ar</i></p></div>
+<aside>
+<div class="stats one"><div><small>학습용 자료의 평균 오차</small><b id="maeTrain">–</b></div><div><small>검증용 자료의 평균 오차</small><b id="maeTest">–</b></div></div>
+<p class="note">평균 오차는 |예측값 − 실제값|의 평균이고, 괄호 안은 실제값에 대한 비율입니다.</p>
+<div class="qbox"><p>학습에 쓰지 않은 검증용 자료에서도 모델이 비슷하게 맞았나요? 그렇게 판단한 이유는?</p><textarea id="note6" rows="3" placeholder="관찰한 결과와 이유를 써 보세요."></textarea></div>
+</aside>
+</div>
+<div class="tablewrap"><table><thead><tr><th>검증용 초신성</th><th><i>r</i> (Mpc)</th><th>실제 <i>v</i></th><th>예측 <i>v</i> = <i>ar</i></th><th>오차</th></tr></thead><tbody id="testRows"></tbody></table></div>
+</div>
+<div class="lesson">
+<h3>3. 거리를 모르는 은하의 거리 예측하기</h3>
+<p>천문학자들은 허블 법칙을 이용해, 적색편이만 측정한 은하까지의 거리를 추정합니다. <i>v</i> = <i>cz</i>로 속도를 구한 뒤 <i>r</i> = <i>v</i> ÷ <i>a</i>로 계산합니다.</p>
+<div class="controls"><label>적색편이 <i>z</i><input id="newZ" type="number" step="0.005" min="0" max="0.1" value="0.03"></label><div class="calcout" id="newOut">–</div></div>
+<div class="qbox"><p><b>Q.</b> 적색편이가 <i>z</i> = 0.02인 은하까지의 거리는 약 몇 Mpc일까요? (정수로)</p>
+<div class="controls"><input id="pred2" type="number" step="any" aria-label="예측한 거리"><span>Mpc</span><button class="primary" id="pred2Check">확인</button><button class="teacher-only" id="fill6">정답 채우기(교사용)</button></div><p class="msg" id="pred2Msg"></p></div>
+</div>
+</section>
+
+<!-- STEP 7 -->
+<section class="stage" data-step="7" hidden>
+<span class="tag">3차시 · STEP 7</span>
+<h2>표본을 바꾸면 모델도 바뀔까?</h2>
+<p class="lead">AI 모델은 어떤 데이터로 학습했는지에 따라 달라집니다. 조건을 바꿔 여러 번 학습시키고 결과를 기록해 봅시다. 여기서는 컴퓨터가 계산과 학습을 한 번에 처리합니다.</p>
+<div class="chips"><details><summary>데이터 편향</summary>학습 데이터가 한쪽으로 치우쳐 모델이 다른 상황에서 잘 맞지 않게 되는 것</details></div>
+<div class="rule"><b>실험해 보기</b><ol><li>같은 조건으로 세 번 학습시키면 <i>a</i>는 얼마나 달라질까?</li><li>표본 수를 20개와 150개로 바꾸면 <i>a</i>의 흔들림은 어떻게 달라질까?</li><li>가까운 초신성, 전체, 먼 초신성으로 학습시키면 <i>a</i>는 어떻게 달라질까?</li></ol></div>
+<div class="controls">
+<label>자료 범위<select id="expRange"><option value="near">가까운 초신성 (z &lt; 0.1)</option><option value="all">전체 초신성</option><option value="far">먼 초신성 (z ≥ 0.3)</option></select></label>
+<label>표본 개수<input id="expCount" type="number" min="20" value="30"></label>
+<button class="primary" id="expRun">새 표본으로 학습하기</button>
+</div>
+<div class="canvasbox"><canvas id="histPlot" class="short"></canvas></div>
+<div class="tablewrap log"><table><thead><tr><th>회차</th><th>자료 범위</th><th>표본 수</th><th>최대 <i>z</i></th><th>학습한 <i>a</i></th><th>검증 평균 오차</th></tr></thead><tbody id="histRows"></tbody></table></div>
+<div class="lesson">
+<h3>전체 자료로 보는 직선 모델의 한계</h3>
+<p>초신성 1,048개를 모두 찍고, 가까운 초신성으로 학습한 모델과 전체로 학습한 모델을 함께 그렸습니다.</p>
+<div class="canvasbox"><canvas id="allPlot" class="tall"></canvas><p class="legend"><span class="dot all"></span>초신성 1,048개 <span class="lineKey near"></span>가까운 초신성으로 학습 <span class="lineKey wide"></span>전체로 학습 <span class="lineKey light"></span>빛의 속도</p></div>
+<div class="warning" id="limitText"></div>
+</div>
+<div class="lesson">
+<h3>AI 원리로 돌아가기</h3>
+<div class="tablewrap"><table class="map"><thead><tr><th>우리가 한 일</th><th>AI 용어</th><th>실제 AI와 다른 점</th></tr></thead><tbody>
+<tr><td>표본을 학습용과 검증용으로 나눔</td><td>학습 데이터, 검증 데이터</td><td>실제로는 훨씬 많은 자료를 씀</td></tr>
+<tr><td>관계를 <i>v</i> = <i>ar</i>로 정함</td><td>모델, 매개변수</td><td>실제 모델은 매개변수가 수백만 개 이상</td></tr>
+<tr><td>오차제곱합 <i>S</i>(<i>a</i>)를 정의함</td><td>손실함수</td><td>문제에 따라 다른 손실함수도 씀</td></tr>
+<tr><td>양옆을 비교하며 <i>a</i>를 고침</td><td>학습(최적화)</td><td>실제로는 미분을 이용한 경사하강법을 주로 씀</td></tr>
+<tr><td>검증용 초신성과 새 은하를 예측함</td><td>예측, 일반화</td><td>원리는 같음</td></tr>
+<tr><td>자료 범위에 따라 <i>a</i>가 달라짐</td><td>데이터 편향</td><td>원리는 같음</td></tr>
+</tbody></table></div>
+<div class="qbox"><p><b>성찰 1.</b> AI(컴퓨터)는 왜 이 <i>a</i>를 골랐을까요? 손실함수라는 말을 넣어 설명해 보세요.</p><textarea rows="3" placeholder="나의 설명"></textarea></div>
+<div class="qbox"><p><b>성찰 2.</b> 가까운 초신성으로 학습한 모델이 먼 은하의 속도를 잘 예측하지 못하는 이유는 무엇일까요?</p><textarea rows="3" placeholder="나의 설명"></textarea></div>
+</div>
+</section>
+
+</main>
+<footer><button id="prev" hidden>← 이전</button><span id="toast">STEP 0부터 시작해 보세요.</span><button class="primary" id="next" disabled>다음 →</button></footer>
+<script>
+'use strict';
+/* Pantheon Ia형 초신성 표본: [이름, zcmb, mb] */
+const DATA=[["03D1au",0.50309,22.93445],["03D1ax",0.4948,22.8802],["03D1co",0.67767,24.0377],["03D1ew",0.8665,24.34685],["03D1fq",0.79857,24.3605],["03D3ay",0.37144,22.28785],["03D3bl",0.35582,22.05915],["03D4ag",0.2836,21.40915],["03D4au",0.4664,23.21635],["03D4cx",0.94688,24.41155],["03D4cz",0.69315,23.79645],["03D4di",0.89693,24.40275],["03D4fd",0.78904,24.2188],["03D4gg",0.59027,23.3354],["04D1dc",0.21075,20.64495],["04D1ff",0.85852,24.1237],["04D1hx",0.55875,23.1648],["04D1iv",0.9964,24.69965],["04D1jg",0.58294,23.34385],["04D1ks",0.79656,23.85445],["04D1ow",0.91348,24.37895],["04D1pd",0.94846,24.66675],["04D1pp",0.73362,23.8481],["04D1qd",0.7656,24.10805],["04D1rx",0.98341,24.828],["04D1si",0.70064,23.7492],["04D2al",0.83814,24.1545],["04D2cf",0.3706,22.1401],["04D2fs",0.35858,21.95965],["04D2gc",0.52278,23.15915],["04D2iu",0.70198,23.7115],["04D2kr",0.74613,23.8056],["04D2mh",0.59185,23.2429],["04D3co",0.62063,23.5114],["04D3dd",1.00279,25.0798],["04D3do",0.61064,23.47615],["04D3fk",0.35833,21.9694],["04D3gt",0.45155,22.4159],["04D3hn",0.5526,22.98515],["04D3ks",0.75068,23.763],["04D3lu",0.82269,24.3356],["04D3ml",0.95076,24.68515],["04D3nh",0.34052,21.9463],["04D3ny",0.81072,24.0795],["04D4an",0.61124,23.7392],["04D4bq",0.54831,22.8926],["04D4dw",1.02879,24.7289],["04D4gg",0.42244,22.35675],["04D4hu",0.70115,23.90875],["04D4ic",0.68517,23.844],["04D4ih",0.93189,24.54795],["04D4im",0.74909,23.81055],["04D4jr",0.4684,22.73255],["04D4jw",0.95886,24.80665],["05D1az",0.84053,24.22255],["05D1cc",0.56276,23.2428],["05D1cl",0.82854,24.39785],["05D1dx",0.57875,23.22495],["05D1em",0.8645,24.3693],["05D1er",0.85851,24.4442],["05D1hm",0.58575,23.5694],["05D1ix",0.48881,22.8653],["05D1ke",0.68866,23.6132],["05D2ab",0.32454,21.79365],["05D2ah",0.18538,20.4558],["05D2bt",0.68196,23.59755],["05D2bw",0.92223,24.355],["05D2cb",0.42866,22.751],["05D2ck",0.69998,23.95255],["05D2dt",0.57584,23.38495],["05D2dy",0.51176,23.11305],["05D2ec",0.64191,23.62155],["05D2hc",0.35157,22.2272],["05D2ie",0.34957,22.14445],["05D2mp",0.35527,22.23665],["05D2nn",0.87217,24.3402],["05D2ob",0.92624,24.7687],["05D3cf",0.41957,22.59095],["05D3cq",0.89073,24.1804],["05D3dd",0.48057,22.7752],["05D3gp",0.5806,23.36785],["05D3ha",0.80569,24.09575],["05D3hs",0.66464,23.6337],["05D3jb",0.74566,24.00735],["05D3jk",0.73669,23.77845],["05D3jr",0.37053,22.04575],["05D3kp",0.85073,24.31865],["05D3kx",0.21946,20.8469],["05D3lb",0.64764,23.6259],["05D3lr",0.6006,23.4022],["05D3mn",0.7607,23.92525],["05D3mx",0.47057,22.804],["05D4af",0.49737,22.9275],["05D4av",0.50736,22.9705],["05D4bf",0.58728,23.44375],["05D4bj",0.69915,23.77905],["05D4cn",0.76108,24.05415],["05D4cs",0.78805,24.1069],["05D4dt",0.40547,22.564],["05D4dy",0.80804,24.55735],["05D4ej",0.58328,23.6081],["05D4ev",0.72013,24.0226],["05D4fg",0.83699,24.3054],["05D4gw",0.80603,24.2544],["06D2bk",0.50074,23.0505],["06D2cc",0.53378,22.9345],["06D2ce",0.82212,24.1676],["06D2fb",0.12531,19.4684],["06D2gb",0.44368,22.57415],["06D3cc",0.68366,23.9441],["06D3do",0.72668,23.90005],["06D3ed",0.40455,22.44625],["06D3em",0.69065,23.7527],["06D3et",0.57661,23.2437],["06D3gh",0.72068,23.87645],["06D4bo",0.55031,23.16815],["06D4ce",0.84797,24.3105],["06D4co",0.43544,22.36675],["06D4dh",0.30158,21.64245],["03D1aw",0.58073,23.52355],["03D1bp",0.34593,22.11525],["03D1fc",0.33094,21.7829],["03D3aw",0.44956,22.78895],["03D3ba",0.29172,21.47215],["03D3cd",0.46127,22.62945],["03D4at",0.63222,23.66065],["03D4cj",0.26862,21.1762],["03D4cy",0.92491,24.7416],["03D4dh",0.62522,23.46015],["03D4dy",0.60825,23.3767],["03D4gf",0.57828,23.2373],["04D1aj",0.71963,23.82525],["04D1de",0.7666,24.24705],["04D1hd",0.36791,22.24455],["04D1hy",0.84852,24.33175],["04D1jd",0.7766,24.0942],["04D1kj",0.58375,23.2686],["04D1oh",0.58873,23.30085],["04D1pc",0.76859,24.2078],["04D1pg",0.5138,23.12745],["04D1pu",0.63771,23.37],["04D1rh",0.43487,22.5623],["04D1sa",0.58375,23.46355],["04D1sk",0.66206,23.74875],["04D2an",0.62189,23.4108],["04D2fp",0.41664,22.5154],["04D2gb",0.45169,22.36265],["04D2gp",0.73401,24.04855],["04D2ja",0.74202,24.26275],["04D2mc",0.34957,21.74],["04D2mj",0.51476,23.18845],["04D3cy",0.64364,23.60755],["04D3df",0.47058,22.65205],["04D3ez",0.26349,21.15515],["04D3fq",0.7427,23.92255],["04D3gx",0.91075,24.6116],["04D3kr",0.33753,21.9137],["04D3lp",0.98377,24.92305],["04D3mk",0.81369,24.26675],["04D3nc",0.81773,24.3431],["04D3nr",0.96075,24.5736],["04D3oe",0.75669,24.03965],["04D4bk",0.87796,24.42165],["04D4dm",0.80902,24.20795],["04D4fx",0.62723,23.4134],["04D4hf",0.93389,24.7653],["04D4ib",0.69715,23.78265],["04D4id",0.76706,24.3849],["04D4ii",0.86397,24.39625],["04D4in",0.51434,22.98745],["04D4ju",0.47039,23.1005],["04D4jy",0.9279,24.7789],["05D1cb",0.63071,23.4092],["05D1ck",0.6157,23.56625],["05D1dn",0.56475,23.2891],["05D1ee",0.55775,23.2494],["05D1eo",0.73561,24.06925],["05D1hk",0.26199,21.15835],["05D1if",0.76159,23.97575],["05D1iz",0.85852,24.54425],["05D1kl",0.55875,23.6061],["05D2ac",0.48072,22.74835],["05D2ay",0.92224,24.57175],["05D2bv",0.47572,22.6952],["05D2by",0.8932,24.5781],["05D2ci",0.6319,23.1617],["05D2ct",0.73602,24.02845],["05D2dw",0.41865,22.38625],["05D2eb",0.53578,22.98355],["05D2fq",0.73501,24.09175],["05D2he",0.60987,23.5447],["05D2le",0.70198,23.8387],["05D2my",0.9833,24.78095],["05D2nt",0.75905,24.0557],["05D3ax",0.64364,23.6045],["05D3ci",0.51559,23.02365],["05D3cx",0.80569,24.0139],["05D3dh",0.8007,23.82255],["05D3gv",0.71565,23.84395],["05D3hh",0.76668,24.2307],["05D3ht",0.90173,24.5128],["05D3jh",0.71868,23.68915],["05D3jq",0.5796,23.1779],["05D3km",0.96074,24.80925],["05D3kt",0.64864,23.53665],["05D3la",0.93675,24.4717],["05D3lc",0.46156,22.76265],["05D3mh",0.67065,23.78495],["05D3mq",0.24649,21.16055],["05D4ag",0.63822,23.49005],["05D4be",0.53532,23.06945],["05D4bi",0.77307,24.17605],["05D4bm",0.3705,22.15255],["05D4cq",0.69916,23.88895],["05D4cw",0.3735,22.11185],["05D4dw",0.85298,24.3052],["05D4ef",0.60326,23.58805],["05D4ek",0.53433,22.9223],["05D4ff",0.40048,22.2601],["05D4fo",0.3715,22.20135],["05D4hn",0.83999,24.0253],["06D2ca",0.53278,23.059],["06D2cd",0.93225,24.704],["06D2ck",0.55381,23.2838],["06D2ga",0.84214,24.3261],["06D3bz",0.72767,23.8687],["06D3df",0.44255,22.67285],["06D3dt",0.28251,21.5746],["06D3el",0.51961,23.03865],["06D3en",1.0608,24.6873],["06D3fp",0.26849,21.24725],["06D3gn",0.2505,21.1763],["06D4ba",0.69816,23.7924],["06D4bw",0.73012,23.7684],["06D4cl",0.99781,24.6122],["06D4cq",0.40946,22.451],["744",0.12679,19.5429],["1112",0.25577,21.3344],["1241",0.08859,18.64345],["1371",0.11782,19.19345],["1580",0.18356,20.2951],["1794",0.14055,19.871],["2031",0.15171,19.7933],["2102",0.094,18.889],["2165",0.28631,21.6827],["2422",0.26318,21.3576],["2635",0.14167,19.79675],["2689",0.16053,19.9329],["2916",0.1229,19.3948],["2992",0.1262,19.36855],["3080",0.17331,20.15345],["3087",0.16448,20.03175],["3317",0.16018,19.92285],["3377",0.24488,20.86815],["3451",0.24805,20.98175],["4046",0.27511,21.37075],["4241",0.33015,21.9321],["4679",0.3307,21.82885],["5103",0.1604,19.98615],["5533",0.21861,20.87005],["5549",0.12005,19.36835],["5635",0.17818,20.72835],["5957",0.279,21.50115],["5994",0.18562,20.48365],["6057",0.06641,17.9881],["6108",0.25769,21.2775],["6196",0.27946,21.2773],["6315",0.2655,21.0609],["6422",0.18478,20.37525],["6558",0.05715,17.65695],["6924",0.32601,21.6733],["7147",0.10902,19.1721],["7243",0.20299,20.7001],["7779",0.37949,22.13745],["7847",0.21198,20.68915],["8495",0.21327,20.78295],["8921",0.14393,19.83575],["9032",0.25218,21.1678],["9457",0.25641,21.2758],["9467",0.2186,20.976],["12779",0.07883,18.5397],["12781",0.08328,18.7438],["12856",0.17008,20.2489],["12881",0.23643,20.87655],["12883",0.30538,21.3803],["12898",0.08286,18.5179],["12927",0.18905,20.2039],["12950",0.08162,18.511],["12972",0.25626,21.2564],["13005",0.12631,19.58525],["13038",0.1028,19.16175],["13044",0.1244,19.4784],["13136",0.37003,22.46065],["13152",0.20192,20.38595],["13254",0.18004,20.68245],["13411",0.16163,20.1359],["13578",0.22644,20.8771],["13610",0.29649,21.4449],["13689",0.24999,21.20115],["13736",0.14864,19.91815],["13796",0.14711,19.776],["14019",0.2149,21.20185],["14024",0.14462,19.8106],["14108",0.13226,19.9293],["14331",0.2195,21.00055],["14397",0.38447,22.40575],["14421",0.1742,20.3461],["14451",0.17772,20.20345],["14735",0.29911,21.51975],["14871",0.1187,19.44875],["14979",0.17685,20.2397],["15057",0.24526,21.3752],["15129",0.1959,20.54825],["15161",0.24832,21.09655],["15213",0.30617,21.77705],["15219",0.24616,21.1569],["15234",0.13527,19.9671],["15259",0.21028,20.6402],["15287",0.23603,21.1547],["15301",0.17831,20.37535],["15354",0.22043,20.81795],["15383",0.31468,21.8201],["15421",0.1846,20.55175],["15440",0.2611,21.2036],["15443",0.18122,20.21145],["15456",0.38003,22.03255],["15461",0.1846,20.38765],["15467",0.20824,20.65465],["15583",0.17746,20.33625],["15776",0.31555,21.7168],["15868",0.24954,21.1676],["15901",0.20324,20.6509],["16021",0.12347,19.4198],["16032",0.20314,20.64385],["16073",0.15352,20.1226],["16093",0.33398,21.9349],["16099",0.19582,20.5286],["16106",0.24943,21.0769],["16116",0.1549,20.0251],["16165",0.15625,19.98785],["16206",0.15819,19.81685],["16211",0.309,21.8114],["16213",0.24828,21.1261],["16281",0.18484,20.31575],["17168",0.18353,20.5074],["17215",0.18212,20.37965],["17218",0.17675,20.28545],["17220",0.17748,20.0718],["17240",0.0718,18.0121],["17366",0.13796,19.66285],["17389",0.16941,20.46515],["17464",0.24527,20.7198],["17497",0.14406,19.81665],["17552",0.25163,21.2338],["17784",0.03743,16.7708],["17791",0.27716,21.8807],["17809",0.28712,21.2668],["17811",0.19845,20.61015],["17825",0.16031,20.07605],["17875",0.21053,21.0136],["17884",0.23753,21.0147],["18030",0.15499,20.14265],["18241",0.0939,18.94955],["18323",0.15253,20.08555],["18325",0.25693,21.2741],["18466",0.21231,20.80065],["18486",0.24583,20.88445],["18602",0.13679,19.76485],["18617",0.32529,21.9051],["18697",0.10643,19.09035],["18721",0.4008,22.30585],["18749",0.1891,20.4864],["18804",0.19731,20.4352],["18809",0.12783,19.5616],["18835",0.12291,19.44025],["18855",0.12687,19.59325],["18927",0.21311,20.67635],["18940",0.21075,20.727],["18945",0.26826,21.4883],["18965",0.20431,20.66435],["19002",0.26991,21.2859],["19023",0.24162,20.98075],["19027",0.2908,21.236],["19067",0.35306,21.81675],["19128",0.28509,21.60225],["19230",0.21929,20.6719],["19282",0.17537,20.24765],["19341",0.23517,20.9929],["19353",0.15298,19.99965],["19425",0.20982,20.90475],["19596",0.29121,21.51945],["19632",0.31353,21.8225],["19775",0.13672,19.7402],["19794",0.29532,21.7708],["19818",0.30369,21.49625],["19913",0.20532,20.73155],["19953",0.12175,19.34125],["19969",0.17424,20.2369],["19990",0.24862,21.2028],["20039",0.2453,21.1159],["20084",0.13816,19.8495],["20088",0.24288,21.02795],["20111",0.24237,21.18455],["20142",0.31437,21.3618],["20227",0.2754,21.4485],["20245",0.30004,21.4204],["20364",0.21735,20.89395],["20581",0.20311,20.5734],["20687",0.19005,20.4061],["21006",0.29003,21.3714],["21033",0.22796,20.83435],["21042",0.31032,21.45975],["21062",0.13712,20.12265],["21502",0.08798,18.6796],["722",0.08534,18.62285],["762",0.19024,20.6486],["774",0.09278,18.8576],["1032",0.12891,19.58985],["1253",0.26136,21.1668],["2017",0.26132,21.4559],["2246",0.1957,20.61715],["2308",0.14723,19.83975],["2330",0.21154,21.14485],["2372",0.17972,20.30175],["2440",0.1907,20.6928],["2533",0.3385,21.7897],["2561",0.11762,19.41925],["2789",0.28854,21.5295],["2943",0.26377,21.2679],["3199",0.24931,21.38165],["3452",0.22939,20.8794],["3592",0.08575,18.608],["4000",0.27631,21.62545],["4577",0.36165,22.1744],["5391",0.30006,21.62535],["5395",0.11659,19.38465],["5550",0.15474,19.83105],["5717",0.2501,21.2982],["5736",0.25149,21.209],["5751",0.12941,19.5471],["5844",0.30894,21.72385],["6137",0.29859,21.66705],["6192",0.27057,21.3419],["6249",0.29318,21.57975],["6304",0.18988,20.46505],["6406",0.12368,19.4023],["6649",0.31262,21.63085],["6699",0.3088,21.83605],["6780",0.20244,20.60265],["6933",0.21139,20.6247],["6936",0.1787,20.4025],["7143",0.30317,21.872],["7473",0.21432,20.8217],["7475",0.32007,21.6956],["7512",0.21791,20.9318],["7876",0.07523,18.2988],["8046",0.2574,21.37115],["8213",0.18446,20.3647],["8719",0.11639,19.29475],["10028",0.06481,17.87655],["10434",0.10298,19.16045],["10805",0.04437,16.92415],["12843",0.16576,19.9345],["12853",0.16799,20.0523],["12855",0.17043,20.12375],["12860",0.12029,19.52005],["12928",0.13855,19.76995],["12971",0.23353,20.92065],["12977",0.24615,21.0223],["13025",0.22259,21.0804],["13045",0.17893,20.2809],["13070",0.19694,20.5818],["13072",0.22889,20.99445],["13099",0.26419,21.45355],["13135",0.1034,19.10195],["13305",0.21313,20.73185],["13354",0.1568,19.944],["13506",0.24317,21.24885],["13511",0.23823,21.2481],["13641",0.20827,20.70195],["13655",0.25085,21.4064],["13727",0.2251,20.861],["13757",0.28707,21.45405],["13830",0.32944,21.65335],["13835",0.24575,21.128],["13894",0.11981,19.65185],["13934",0.32891,22.21015],["14157",0.21037,20.57655],["14212",0.20284,20.7349],["14261",0.28403,21.2982],["14284",0.18046,20.13755],["14298",0.26043,21.31275],["14437",0.14774,19.8403],["14456",0.32753,21.80515],["14481",0.24177,21.3452],["14846",0.22308,20.93075],["14984",0.18261,20.58185],["15132",0.15286,20.0024],["15171",0.13806,19.70325],["15201",0.2071,21.03995],["15203",0.20291,20.64165],["15222",0.19777,20.49105],["15229",0.2223,20.9356],["15356",0.27307,21.30625],["15365",0.18628,20.52515],["15425",0.15933,19.83815],["15433",0.21911,20.8854],["15453",0.17354,20.4812],["15466",0.2441,20.96025],["15508",0.13366,19.59395],["15584",0.28313,21.4441],["15648",0.17365,20.3284],["15674",0.1963,20.70795],["15704",0.36924,22.26255],["15872",0.20562,20.5658],["15897",0.17371,20.28215],["16069",0.12672,19.526],["16072",0.284,21.474],["16100",0.19358,20.5958],["16185",0.10036,18.95705],["16232",0.37386,22.3047],["16259",0.11787,19.35185],["16276",0.1919,20.5315],["16350",0.23657,21.01435],["17171",0.15881,19.99615],["17186",0.07877,18.7576],["17208",0.13847,19.99935],["17223",0.23359,20.88475],["17253",0.1567,20.02475],["17258",0.08833,18.4809],["17280",0.12995,19.79635],["17332",0.18223,20.3359],["17340",0.25654,21.13985],["17435",0.21651,20.8123],["17605",0.14519,19.90865],["17629",0.13653,19.58645],["17801",0.20493,20.934],["18091",0.36939,22.04745],["18415",0.12924,19.61205],["18463",0.26658,21.33225],["18485",0.27805,21.3866],["18604",0.17461,20.5056],["18612",0.11376,19.1271],["18650",0.11229,19.38095],["18740",0.15333,19.8424],["18768",0.1965,20.7379],["18787",0.18914,20.88525],["18807",0.17708,20.47675],["19008",0.21731,20.7809],["19101",0.18542,20.33785],["19174",0.16382,20.0237],["19207",0.2569,21.34695],["19543",0.1218,19.58065],["19616",0.16514,20.09405],["19658",0.1984,20.6407],["19702",0.26828,21.39935],["19757",0.40078,22.165],["19940",0.14566,19.6731],["19968",0.05573,17.56165],["19992",0.22425,21.16495],["20040",0.28622,21.42305],["20048",0.18365,20.55265],["20064",0.1036,18.96075],["20106",0.33096,22.03],["20144",0.2184,20.76195],["20345",0.26327,21.035],["20430",0.16267,20.2483],["20625",0.10689,19.2184],["20764",0.16503,20.0849],["21034",0.10757,19.24475],["22075",0.12913,19.5083],["2001ah",0.05948,17.71775],["2001az",0.04093,17.0528],["2001da",0.01705,14.85645],["2001en",0.01531,14.59755],["2001fe",0.01472,14.6158],["2001gb",0.02673,15.97105],["2001G",0.01732,14.8718],["2001ic",0.04437,16.72085],["2001V",0.01567,14.4307],["2002bf",0.02477,15.6593],["2002bz",0.038,16.7664],["2002ck",0.0299,16.2413],["2002cr",0.01012,13.90745],["2002de",0.0258,16.1648],["2002dp",0.01038,14.0496],["2002eu",0.03791,16.5851],["2002G",0.03507,16.45115],["2002ha",0.01268,14.4486],["2002he",0.02525,15.82815],["2002kf",0.01908,15.3534],["2003ae",0.03489,16.36835],["2003ch",0.0295,16.3438],["2003cq",0.03416,16.57565],["2003fa",0.04067,16.7928],["2003hu",0.07515,17.8882],["2003ic",0.05581,17.23215],["2003it",0.02529,15.7896],["2003iv",0.03501,16.6581],["2003U",0.02846,16.0051],["2004as",0.0328,16.64085],["2004L",0.03378,16.38795],["2005hc",0.04597,17.2822],["2005hf",0.04341,16.93145],["2005hj",0.05684,17.73355],["2005ki",0.02024,15.2868],["2005lu",0.03191,16.59205],["2005lz",0.0415,16.9967],["2005mc",0.02639,15.93305],["2005ms",0.02651,16.06745],["2005na",0.02689,15.87545],["2006ac",0.02349,15.6236],["2006ah",0.05067,17.57225],["2006ak",0.04093,16.7302],["2006al",0.06877,18.16815],["2006ax",0.01754,14.9841],["2006bb",0.02557,15.8607],["2006bq",0.02189,15.53085],["2006bw",0.03155,16.1279],["2006cj",0.06845,18.31035],["2006cp",0.02249,15.56975],["2006cq",0.04949,17.32405],["2006en",0.03161,16.3736],["2006gr",0.03434,16.61295],["2006gt",0.04486,17.2055],["2006hb",0.01531,14.74935],["2006is",0.03048,16.25295],["2006je",0.03837,16.9021],["2006mo",0.03682,16.77055],["2006mp",0.0221,15.7795],["2006N",0.01402,14.64805],["2006oa",0.0589,17.792],["2006ob",0.05895,17.7707],["2006on",0.06888,18.1778],["2006or",0.0204,15.7067],["2006qo",0.02894,16.02685],["2006sr",0.02384,15.7013],["2006td",0.01451,14.89705],["2006te",0.03292,16.452],["2007ae",0.06455,17.78945],["2007ap",0.01663,15.01385],["2007ar",0.05359,17.4687],["2007bd",0.03163,16.21965],["2007co",0.02751,15.9978],["2007cq",0.02559,15.5514],["2007F",0.02401,15.78645],["2007O",0.03713,16.56045],["2008af",0.03408,16.39975],["2008bf",0.02454,15.6001],["2008L",0.01697,14.91335],["2007A",0.01629,15.17685],["2007aj",0.03184,16.34225],["2007cb",0.037,16.74885],["2007cc",0.02932,15.8648],["2007fb",0.0174,15.26595],["2007hu",0.03578,16.59205],["2007is",0.02845,16.04785],["2007kh",0.05035,17.2903],["2007kk",0.04269,16.93325],["2007ob",0.03212,16.23615],["2007su",0.02752,16.0669],["2007ux",0.03049,16.28725],["2008C",0.01724,14.9294],["2008Y",0.07063,18.05925],["2008ac",0.05344,17.62205],["2008ar",0.02878,16.10835],["2008at",0.03518,16.42245],["2008bw",0.03348,16.4802],["2008by",0.04651,17.18185],["2008bz",0.06119,17.9246],["2008cf",0.04714,17.16275],["2008ds",0.0212,15.4466],["2008fr",0.04028,16.8206],["2008gb",0.03863,16.86145],["2008gl",0.03314,16.39225],["2009D",0.02414,15.68035],["2009ad",0.02837,16.1044],["2009an",0.01043,13.9248],["2009ds",0.02038,15.42955],["2008050",0.0471,16.9842],["2008051",0.03984,16.7074],["2009kk",0.0122,14.4566],["2009kq",0.01271,14.2811],["2009le",0.01763,14.9354],["2009na",0.02171,15.502],["2009nq",0.01572,14.86115],["2010A",0.01972,15.27645],["2010H",0.01678,14.92685],["2010Y",0.01226,14.4674],["2010dt",0.05322,17.57915],["PTF10bjs",0.03055,15.88935],["2004ef",0.03001,16.1733],["2004eo",0.01506,14.6193],["2004ey",0.0153,14.6705],["2004gu",0.04713,17.1679],["2005be",0.03411,16.515],["2005bo",0.0152,14.53545],["2005el",0.01504,14.69915],["2005eq",0.02763,16.23455],["2005iq",0.03359,16.59355],["2005kc",0.01447,14.6408],["2005M",0.02547,15.86575],["2006bh",0.01082,14.0086],["2006ef",0.01741,15.1],["2006ej",0.02031,15.30565],["2006eq",0.04819,17.4344],["2006et",0.02223,15.3918],["2006ev",0.02811,16.3465],["2006lu",0.05458,17.4521],["2006py",0.05721,17.60445],["2007bc",0.02091,15.36595],["2007ca",0.01454,14.99535],["2007nq",0.0431,16.97675],["2008bq",0.03273,16.3843],["2008gp",0.03399,16.35135],["2008hv",0.01382,14.47835],["1993ac",0.05092,17.42035],["1993ae",0.01752,15.0558],["1994M",0.02482,15.64995],["1994Q",0.0288,16.09165],["1994S",0.01568,14.7589],["1995ak",0.02197,15.36745],["1996bl",0.03426,16.4701],["1996bv",0.01698,14.6697],["1996C",0.02752,16.23595],["1997dg",0.03438,16.6071],["1997E",0.01318,14.55605],["1997Y",0.01726,14.9156],["1998dk",0.01209,13.9791],["1998dx",0.05418,17.3218],["1998ec",0.0197,15.45455],["1998ef",0.01662,14.6312],["1998eg",0.02398,15.8239],["1999cc",0.03144,16.31895],["1999dq",0.01291,14.1903],["1999ef",0.03827,16.99715],["1999ej",0.01532,14.9486],["1999X",0.02643,15.91835],["2000B",0.0202,15.02285],["2000cf",0.0373,16.8196],["2000cn",0.02348,15.66265],["2000dk",0.01635,14.8831],["2000fa",0.02275,15.5348],["000006",0.23027,21.0138],["000011",0.38164,22.52675],["000034",0.2534,21.09145],["000091",0.15269,19.93715],["000142",0.43673,22.84545],["000190",0.10242,19.15365],["000199",0.37164,22.12745],["000215",0.46664,22.7822],["000236",0.19602,20.50135],["000420",0.31156,21.7417],["010026",0.0322,16.472],["020027",0.10989,19.29245],["020096",0.22562,20.723],["020176",0.26051,21.22765],["030066",0.22556,20.8629],["040137",0.44758,22.59905],["040166",0.44007,22.85455],["040782",0.33742,21.74045],["050005",0.52851,22.8422],["050203",0.57613,23.2359],["050251",0.38775,22.3891],["050293",0.36001,21.92755],["050301",0.34701,21.7912],["050607",0.43927,22.56615],["070955",0.34923,21.8575],["080723",0.43015,22.5444],["090201",0.50818,22.7793],["091869",0.28845,21.4826],["100090",0.17281,20.49025],["100163",0.31774,21.8387],["100213",0.27509,21.50715],["100405",0.10293,18.90405],["110033",0.20584,20.5539],["110478",0.2646,21.2449],["110536",0.23466,20.8644],["110567",0.21434,20.73405],["110719",0.42784,23.03515],["110734",0.40214,22.2536],["120085",0.32218,21.54775],["120094",0.45173,22.72345],["120336",0.16139,20.07365],["120400",0.35161,22.05965],["120585",0.249,21.02715],["130308",0.08223,18.52945],["130514",0.10588,19.1167],["130862",0.33293,22.0508],["140181",0.10227,19.0531],["150509",0.29282,21.4896],["151034",0.13269,19.53775],["160039",0.27088,21.22425],["160099",0.10044,19.0807],["160197",0.35363,22.1458],["160200",0.42353,22.599],["170428",0.30012,21.71085],["180166",0.14761,19.88745],["180561",0.22853,20.96525],["190230",0.1388,19.82205],["190260",0.14343,19.88005],["300105",0.09201,18.9547],["310025",0.1568,20.1239],["310042",0.23851,21.19555],["310073",0.14949,20.15155],["310091",0.50718,22.9937],["310161",0.25249,21.20755],["310238",0.28397,21.3163],["310574",0.2368,21.0224],["320258",0.34092,21.88785],["330022",0.26388,21.064],["330089",0.34872,22.1162],["330128",0.32095,21.71485],["330146",0.13523,19.80745],["340334",0.30666,21.88165],["350047",0.23362,21.21045],["350078",0.30078,21.91835],["350083",0.36783,21.9904],["350233",0.1694,20.2554],["350316",0.07976,18.337],["350548",0.1806,20.3864],["360112",0.18071,20.34675],["360140",0.23086,21.03315],["360156",0.04582,17.29255],["370098",0.22146,20.7853],["370308",0.20073,20.5274],["370333",0.0755,18.378],["370356",0.02627,15.98385],["370369",0.19141,20.055],["370428",0.1777,20.3552],["370563",0.18542,20.5371],["380279",0.34931,22.02925],["380378",0.27131,21.30945],["390264",0.29212,21.17535],["390471",0.37051,21.7944],["420100",0.09641,18.8215],["420159",0.18058,20.2752],["420258",0.27446,21.3734],["420407",0.2451,21.2589],["420417",0.36135,21.9082],["430004",0.23152,20.92185],["440008",0.14648,19.91105],["440042",0.15948,20.18505],["440162",0.41929,22.4583],["440509",0.31894,21.66595],["450175",0.51941,22.97595],["460003",0.15069,19.9375],["460037",0.30249,21.6135],["460105",0.21073,20.73865],["470008",0.23943,20.71895],["470041",0.3318,21.7581],["470232",0.20072,20.72485],["470244",0.36082,22.1621],["480064",0.24275,21.3408],["480464",0.22146,20.82175],["490008",0.12068,19.3688],["490521",0.3416,21.88605],["500004",0.25051,21.0268],["500057",0.38054,22.1535],["500100",0.31079,21.81735],["500504",0.1994,20.3968],["510251",0.24001,21.0934],["510457",0.50275,22.89585],["510578",0.37013,22.10035],["510638",0.27001,21.36745],["520019",0.26312,21.391],["520023",0.26801,21.22475],["520062",0.30801,21.95175],["520077",0.25001,21.3768],["520188",0.28051,21.3787],["530112",0.3148,21.9041],["530219",0.3284,22.1329],["540163",0.32944,21.9869],["550041",0.25848,21.13905],["550096",0.22448,20.6681],["550154",0.21079,20.9208],["550218",0.38734,22.2944],["560087",0.30642,21.6875],["560121",0.36491,22.2065],["560152",0.2488,21.1327],["570025",0.2988,21.39335],["570062",0.12365,19.5741],["580235",0.33159,21.7689],["580275",0.38246,22.18595],["580300",0.24074,21.13115],["590005",0.17144,20.2873],["200132",0.2088,20.859],["350180",0.2896,21.715],["000010",0.24599,21.1466],["000014",0.13659,19.76145],["000038",0.15062,19.8557],["000137",0.1187,19.26765],["000174",0.24494,21.05305],["000196",0.3507,21.9623],["000202",0.61992,23.4834],["000220",0.21986,20.83145],["010010",0.09929,19.1829],["020090",0.40996,22.4668],["030006",0.50276,22.81425],["040150",0.38171,22.31495],["040201",0.27989,21.2969],["040780",0.23071,20.74845],["050003",0.42693,22.5594],["050201",0.55014,23.1391],["050291",0.32531,21.96765],["050296",0.35092,22.00245],["050303",0.32832,21.97245],["050580",0.45059,22.4503],["070242",0.06441,18.09975],["080064",0.06559,17.91255],["080646",0.31811,21.8116],["090037",0.14539,20.2551],["090275",0.13947,19.7799],["100101",0.42967,22.75515],["100206",0.21641,20.59575],["100358",0.36616,21.88675],["110425",0.38083,22.2063],["110430",0.42086,22.47585],["110460",0.19958,20.61175],["110484",0.5109,22.8206],["110542",0.42696,22.6189],["110716",0.31579,21.9342],["110721",0.57824,23.2802],["120044",0.48176,23.0166],["120086",0.39267,22.18855],["120143",0.17359,20.08825],["120369",0.33059,21.9984],["120444",0.29948,21.70345],["120586",0.22943,20.95825],["130755",0.29291,21.54425],["140152",0.20861,20.59295],["150254",0.27509,21.2869],["150457",0.30337,21.66825],["160070",0.35902,22.19585],["160126",0.3602,21.8702],["160198",0.34902,21.98165],["160214",0.63056,23.3169],["170078",0.32092,22.0192],["180313",0.51002,22.84675],["190209",0.36646,22.0067],["190340",0.13823,19.7944],["300179",0.1792,20.54675],["310039",0.17157,20.22],["310051",0.27047,21.2356],["310090",0.34688,22.23255],["310146",0.47942,22.6131],["310188",0.31894,21.9169],["310260",0.51879,22.9578],["320099",0.3799,22.18215],["320469",0.37089,22.13805],["330023",0.18152,20.474],["330083",0.22374,20.75105],["340229",0.14135,19.8422],["350027",0.30567,21.68485],["350050",0.40471,22.12805],["350080",0.28578,21.43725],["350192",0.30156,21.5859],["350235",0.26388,21.2319],["350374",0.50091,22.9717],["350630",0.30525,21.64295],["360139",0.38598,22.28245],["360145",0.1986,20.6442],["370066",0.09121,18.75805],["370329",0.47796,22.9261],["370344",0.33159,21.831],["370367",0.47175,22.70965],["370394",0.33081,21.7726],["370498",0.26088,21.3572],["370566",0.07141,18.15745],["370595",0.18141,20.426],["380318",0.33829,21.91315],["390259",0.12211,19.37365],["390449",0.25012,21.1135],["390627",0.16046,20.16235],["420196",0.29843,21.99485],["420352",0.38887,22.11805],["420414",0.29245,21.4687],["430003",0.32841,21.6655],["440005",0.30549,21.6995],["440050",0.28546,21.46645],["440236",0.42886,22.4792],["440285",0.17967,20.481],["440643",0.18959,20.50025],["450082",0.24849,21.19025],["450339",0.40927,22.48095],["460064",0.24146,20.85675],["470015",0.33748,21.8791],["470043",0.0706,18.48435],["470110",0.34546,21.9593],["480184",0.3306,21.98705],["490007",0.05495,17.60185],["490037",0.42359,22.37855],["500038",0.1072,19.19495],["500065",0.2854,21.2265],["500301",0.32553,21.91925],["500511",0.33493,21.74575],["510113",0.2909,21.30595],["510266",0.44058,22.4238],["510550",0.24111,21.09055],["510597",0.46101,22.75035],["520022",0.11944,19.33475],["520041",0.54539,23.34415],["520071",0.41155,22.6089],["530037",0.26848,21.34225],["530086",0.04976,17.35275],["530251",0.41131,22.5817],["550005",0.07369,18.2355],["550059",0.31841,22.0816],["550137",0.4193,22.16135],["550202",0.42028,22.49015],["560027",0.43885,22.46285],["560054",0.4804,22.68865],["560150",0.1998,20.66375],["570022",0.30143,21.81235],["570056",0.2902,21.4412],["580104",0.3092,21.58775],["580270",0.2956,21.7291],["580276",0.33848,21.88335],["590031",0.3786,22.21555],["590194",0.0896,18.72405],["520016",0.4507,22.6586],["380199",0.4604,22.8011],["vespesian",1.206,25.73935],["washington",1.33,25.6034],["carter",1.54,25.9072],["Primo",1.55,26.00705],["geta",1.7,26.0592],["stone",1.8,26.2011],["colfax",2.26,26.877],["wilson",1.914,26.1609],["Aphrodite",1.3,25.52015],["Borg",1.34,25.4652],["Eagle",1.02,24.88235],["Frodo",0.735,23.70605],["Gabi",1.12,25.0639],["Koekemoer",1.23,25.28615],["Lancaster",1.23,25.4985],["Manipogo",0.854,24.3128],["Mcguire",1.37,25.5159],["Ombo",0.9752,24.7061],["Patuxent",0.97,25.11545],["Rakke",0.74,23.8446],["Sasquatch",1.39,25.36305],["Thoth",1.305,25.2642],["Vilas",0.935,24.2666],["SCP05D0",1.014,24.85445],["SCP05D6",1.315,25.54235],["SCP06C0",1.092,24.63835]];
+/* ---------- 기본 설정 ---------- */
+const C = 300000;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const TEACHER = new URLSearchParams(location.search).has('teacher');
+if (TEACHER) document.body.classList.add('teacher');
+const RANGES = {
+  near: { label: '가까운 초신성', test: o => o[1] < 0.1 },
+  all: { label: '전체', test: () => true },
+  far: { label: '먼 초신성', test: o => o[1] >= 0.3 }
+};
+const pool = k => DATA.filter(RANGES[k].test);
+const feat = o => ({ name: o[0], z: o[1], m: o[2], v: C * o[1], r: 10 ** ((o[2] - 5.7) / 5) });
+const STEPS = [['원리 체험', '1차시'], ['표본 뽑기', '2차시'], ['v·r 계산', '2차시'], ['모델 정하기', '2차시'], ['사람이 학습', '2차시'], ['기계가 학습', '2차시'], ['예측·평가', '3차시'], ['표본 바꾸기', '3차시']];
+const S = {
+  step: 0, unlocked: 0,
+  toy: { zero: false, table: false, square: false, predict: false },
+  range: 'near', rows: [], sortKey: null, sortDir: 1, calcOK: false,
+  marked: new Set(), trendOK: false, modelOK: false,
+  best: 0, saved: null, gd: null, interpOK: false, pred1OK: false, pred2OK: false, history: []
+};
+const train = () => S.rows.filter(r => r.role === 'train');
+const test = () => S.rows.filter(r => r.role === 'test');
+const slopeOf = rows => rows.reduce((s, q) => s + q.r * q.v, 0) / rows.reduce((s, q) => s + q.r * q.r, 0);
+const sse = (a, rows) => rows.reduce((s, q) => s + (a * q.r - q.v) ** 2, 0);
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const fmt = (n, d = 0) => n.toLocaleString('ko-KR', { minimumFractionDigits: d, maximumFractionDigits: d });
+const trim = (n, d) => n.toLocaleString('ko-KR', { maximumFractionDigits: d });
+function fmtBig(s) {
+  if (s === 0) return '0';
+  if (Math.abs(s) >= 1e8) return trim(s / 1e8, Math.abs(s) >= 1e10 ? 0 : 1) + '억';
+  if (Math.abs(s) >= 1e4) return trim(s / 1e4, 1) + '만';
+  return trim(s, Math.abs(s) < 10 ? 2 : 0);
+}
+const kfmt = v => v === 0 ? '0' : Math.abs(v) >= 1000 ? fmt(v / 1000, v % 1000 ? 1 : 0) + 'k' : fmt(v, Math.abs(v) < 10 && v % 1 ? 1 : 0);
+function setMsg(id, ok, text) { const el = $(id); el.className = 'msg ' + (ok ? 'good' : 'bad'); el.innerHTML = text; }
+function toast(t) { $('#toast').textContent = t; }
+
+/* ---------- 그래프 도구 ---------- */
+function ticks(a, b, n = 5) {
+  const raw = (b - a) / n, mag = 10 ** Math.floor(Math.log10(raw)), f = raw / mag;
+  const step = (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * mag, out = [];
+  for (let t = Math.ceil(a / step) * step; t <= b + step * 1e-9; t += step) out.push(+t.toFixed(10));
+  return out;
+}
+function chart(c, o) {
+  const rect = c.getBoundingClientRect(), d = devicePixelRatio || 1, W = rect.width, H = rect.height;
+  c.width = Math.round(W * d); c.height = Math.round(H * d);
+  const g = c.getContext('2d'); g.setTransform(d, 0, 0, d, 0, 0); g.clearRect(0, 0, W, H);
+  const p = { l: o.left || 58, r: 12, t: 14, b: 42 };
+  const X = v => p.l + (v - o.xmin) / (o.xmax - o.xmin) * (W - p.l - p.r);
+  const Y = v => H - p.b - (v - o.ymin) / (o.ymax - o.ymin) * (H - p.t - p.b);
+  g.font = '11px system-ui,sans-serif'; g.lineWidth = 1;
+  for (const t of ticks(o.xmin, o.xmax, W < 420 ? 4 : 6)) {
+    g.strokeStyle = '#e5ebf4'; g.beginPath(); g.moveTo(X(t), p.t); g.lineTo(X(t), H - p.b); g.stroke();
+    g.fillStyle = '#66738b'; g.textAlign = 'center'; g.fillText((o.xfmt || kfmt)(t), X(t), H - p.b + 15);
+  }
+  for (const t of ticks(o.ymin, o.ymax, 5)) {
+    g.strokeStyle = '#e5ebf4'; g.beginPath(); g.moveTo(p.l, Y(t)); g.lineTo(W - p.r, Y(t)); g.stroke();
+    g.fillStyle = '#66738b'; g.textAlign = 'right'; g.fillText((o.yfmt || kfmt)(t), p.l - 6, Y(t) + 4);
+  }
+  g.strokeStyle = '#94a3b8'; g.beginPath(); g.moveTo(p.l, p.t); g.lineTo(p.l, H - p.b); g.lineTo(W - p.r, H - p.b); g.stroke();
+  g.fillStyle = '#475569'; g.font = '12px system-ui,sans-serif'; g.textAlign = 'center';
+  g.fillText(o.xlabel || '', (p.l + W - p.r) / 2, H - 6);
+  g.save(); g.translate(13, (p.t + H - p.b) / 2); g.rotate(-Math.PI / 2); g.fillText(o.ylabel || '', 0, 0); g.restore();
+  return {
+    g, W, H, p, X, Y,
+    clip() { g.save(); g.beginPath(); g.rect(p.l, p.t, W - p.l - p.r, H - p.t - p.b); g.clip(); },
+    unclip() { g.restore(); },
+    dot(x, y, r, col, stroke) { g.beginPath(); g.arc(X(x), Y(y), r, 0, 7); g.fillStyle = col; g.fill(); if (stroke) { g.strokeStyle = stroke; g.lineWidth = 1.5; g.stroke(); } },
+    line(x1, y1, x2, y2, col, w = 1, dash) { g.save(); g.strokeStyle = col; g.lineWidth = w; if (dash) g.setLineDash(dash); g.beginPath(); g.moveTo(X(x1), Y(y1)); g.lineTo(X(x2), Y(y2)); g.stroke(); g.restore(); },
+    curve(f, x1, x2, col, w = 2) { g.save(); g.strokeStyle = col; g.lineWidth = w; g.beginPath(); for (let i = 0; i <= 120; i++) { const x = x1 + (x2 - x1) * i / 120; i ? g.lineTo(X(x), Y(f(x))) : g.moveTo(X(x), Y(f(x))); } g.stroke(); g.restore(); },
+    text(t, x, y, col, align = 'left') { g.fillStyle = col; g.textAlign = align; g.font = '12px system-ui,sans-serif'; g.fillText(t, X(x), Y(y)); }
+  };
+}
+const axisMax = () => { const all = S.rows; return { xm: Math.max(...all.map(q => q.r)) * 1.08, ym: Math.max(...all.map(q => q.v)) * 1.08 }; };
+
+/* ---------- 단계 이동 ---------- */
+$('#tabs').innerHTML = STEPS.map(([t, k], i) => `<button data-tab="${i}"><b>${i}</b><span>${t}<br><small>${k}</small></span></button>`).join('');
+function nav() {
+  $$('#tabs button').forEach((b, i) => {
+    b.classList.toggle('active', i === S.step); b.classList.toggle('done', i < S.step);
+    b.disabled = !TEACHER && i > S.unlocked;
+  });
+  $('#prev').hidden = S.step === 0;
+  $('#next').disabled = !(S.step < S.unlocked || TEACHER || S.step === 7);
+  $('#next').textContent = S.step === 7 ? '처음부터' : '다음 →';
+  const act = $('#tabs .active'); if (act) $('#tabs').scrollTo({ left: act.offsetLeft - ($('#tabs').clientWidth - act.offsetWidth) / 2, behavior: 'smooth' });
+}
+function unlock(n, msg) { S.unlocked = Math.max(S.unlocked, n); if (msg) toast(msg); nav(); }
+const RENDER = [];
+function openStep(n) {
+  if (n > S.unlocked && !TEACHER) return;
+  if (n >= 2 && !S.rows.length) { toast('먼저 STEP 1에서 표본을 뽑아 주세요.'); n = 1; }
+  S.step = n;
+  $$('.stage').forEach(x => x.hidden = +x.dataset.step !== n);
+  nav(); scrollTo(0, 0);
+  requestAnimationFrame(() => RENDER[n] && RENDER[n]());
+}
+$('#tabs').onclick = e => { const b = e.target.closest('[data-tab]'); if (b && !b.disabled) openStep(+b.dataset.tab); };
+$('#prev').onclick = () => openStep(Math.max(0, S.step - 1));
+$('#next').onclick = () => S.step === 7 ? location.reload() : openStep(S.step + 1);
+let resizeTimer; addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => RENDER[S.step] && RENDER[S.step](), 120); });
+
+/* ---------- STEP 0: 점 3개 ---------- */
+const TOY = [[1, 1], [2, 3], [3, 7]], TOY_AS = [1, 1.5, 2, 2.5, 3];
+const toyS = a => TOY.reduce((s, [x, y]) => s + (a * x - y) ** 2, 0);
+$('#toyLossRows').innerHTML = TOY_AS.map(a => `<tr><td>${a}</td><td><input data-ta="${a}" type="number" step="any" inputmode="decimal" aria-label="S(${a})"></td></tr>`).join('');
+function drawToy() {
+  const a = +$('#toyA').value;
+  $('#toyAval').textContent = a.toFixed(2);
+  $('#toyRows').innerHTML = TOY.map(([x, y]) => { const e = a * x - y; return `<tr><td>${x}</td><td>${y}</td><td>${(a * x).toFixed(2)}</td><td>${e.toFixed(2)}</td><td>${(e * e).toFixed(2)}</td></tr>`; }).join('');
+  $('#toySum').textContent = (6 * a - 11).toFixed(2);
+  $('#toySSE').textContent = toyS(a).toFixed(2);
+  const z = chart($('#toyPlot'), { xmin: 0, xmax: 4.5, ymin: 0, ymax: 10, xlabel: 'x', ylabel: 'y', xfmt: t => t, yfmt: t => t, left: 40 });
+  z.clip();
+  TOY.forEach(([x, y]) => z.line(x, y, x, a * x, '#ef9a8a', 2, [5, 4]));
+  z.line(0, 0, 4.5, 4.5 * a, '#ef513b', 3);
+  z.unclip();
+  TOY.forEach(([x, y]) => z.dot(x, y, 6, '#2563eb'));
+  if (S.toy.predict) { z.dot(4, 8, 7, '#0e9f7b', '#fff'); z.text('예측 (4, 8)', 3.55, 8.6, '#08765d'); }
+}
+function drawToyLoss() {
+  const z = chart($('#toyLoss'), { xmin: 0.5, xmax: 3.5, ymin: 0, ymax: 30, xlabel: 'a', ylabel: 'S(a)', xfmt: t => t, yfmt: t => t, left: 40 });
+  if (S.toy.table) { z.clip(); z.curve(toyS, 0.5, 3.5, '#7c3aed'); z.unclip(); }
+  $$('[data-ta]').forEach(el => { const a = +el.dataset.ta; if (el.classList.contains('ok')) z.dot(a, toyS(a), 5, '#7c3aed'); });
+  if (S.toy.square) { z.dot(2, 3, 7, '#0e9f7b', '#fff'); z.text('최소 (2, 3)', 2, 9, '#08765d', 'center'); }
+}
+RENDER[0] = () => { drawToy(); drawToyLoss(); };
+$('#toyA').oninput = drawToy;
+function toyDone() { if (Object.values(S.toy).every(Boolean)) unlock(1, '1차시 완료! 다음 차시에는 실제 초신성 자료로 같은 과정을 해 봅니다.'); }
+$('#toyZeroCheck').onclick = () => {
+  const v = +$('#toyZero').value;
+  if ($('#toyZero').value !== '' && Math.abs(v - 11 / 6) <= 0.011) {
+    S.toy.zero = true;
+    setMsg('#toyZeroMsg', true, `✓ <i>a</i> = 11/6 ≈ 1.83입니다. 그런데 슬라이더를 1.85 근처에 두고 보면, 오차의 합은 거의 0인데 오차는 (+, +, −)로 남아 있습니다. 양수와 음수 오차가 서로 지워졌을 뿐입니다. 이때 오차제곱합은 약 ${toyS(11 / 6).toFixed(2)}입니다.`);
+    toyDone();
+  } else setMsg('#toyZeroMsg', false, '6<i>a</i> − 11 = 0을 풀어 보세요.');
+};
+$('#toyTableCheck').onclick = () => {
+  let good = 0;
+  $$('[data-ta]').forEach(el => { const ok = el.value !== '' && Math.abs(+el.value - toyS(+el.dataset.ta)) < 0.01; el.classList.toggle('ok', ok); el.classList.toggle('bad', !ok); if (ok) good++; });
+  if (good === 5) { S.toy.table = true; setMsg('#toyTableMsg', true, '✓ 점을 이으면 아래로 볼록한 포물선이 됩니다. 가장 낮은 곳은 어디일까요?'); toyDone(); }
+  else setMsg('#toyTableMsg', false, `${good} / 5개 정답입니다. 빨간 칸을 다시 계산해 보세요.`);
+  drawToyLoss();
+};
+$('#sqCheck').onclick = () => {
+  if (+$('#sqA').value === 2 && +$('#sqB').value === 3 && $('#sqA').value !== '' && $('#sqB').value !== '') {
+    S.toy.square = true; setMsg('#sqMsg', true, '✓ <i>a</i> = 2일 때 <i>S</i>(<i>a</i>)가 최솟값 3을 가집니다. 손실함수가 가장 작아지는 <i>a</i>를 찾는 것, 이것이 <b>학습</b>입니다.'); toyDone(); drawToyLoss();
+  } else setMsg('#sqMsg', false, '14<i>a</i>² − 56<i>a</i> = 14(<i>a</i>² − 4<i>a</i>)로 묶어 완전제곱식을 만들어 보세요.');
+};
+$('#toyPredCheck').onclick = () => {
+  if ($('#toyPred').value !== '' && +$('#toyPred').value === 8) {
+    S.toy.predict = true; setMsg('#toyPredMsg', true, '✓ <i>y</i> = 2 × 4 = 8. 관찰하지 않은 값을 학습한 모델로 계산했습니다. 이것이 <b>예측</b>입니다.'); $('#toyTerms').hidden = false; drawToy(); toyDone();
+  } else setMsg('#toyPredMsg', false, '학습으로 찾은 <i>a</i>를 넣은 식 <i>y</i> = <i>ax</i>에 <i>x</i> = 4를 대입해 보세요.');
+};
+$('#toyFill').onclick = () => {
+  $('#toyZero').value = '1.83'; $$('[data-ta]').forEach(el => el.value = toyS(+el.dataset.ta));
+  $('#sqA').value = 2; $('#sqB').value = 3; $('#toyPred').value = 8;
+  ['#toyZeroCheck', '#toyTableCheck', '#sqCheck', '#toyPredCheck'].forEach(id => $(id).click());
+};
+
+/* ---------- STEP 1: 표본 ---------- */
+function updateCountMax() {
+  const n = pool($('#range').value).length;
+  $('#count').max = n; $('#countLabel').textContent = `표본 개수 (20~${fmt(n)})`;
+  if (+$('#count').value > n) $('#count').value = n;
+}
+$('#range').onchange = updateCountMax; updateCountMax();
+function makeSample(rangeKey, n) {
+  const p = pool(rangeKey); n = Math.max(20, Math.min(p.length, Math.round(n) || 30));
+  const rows = shuffle(p.slice()).slice(0, n).map(feat), nTest = Math.max(4, Math.round(n * 0.2));
+  rows.forEach((q, i) => q.role = i < nTest ? 'test' : 'train');
+  return rows;
+}
+$('#pick').onclick = () => {
+  const guess = $('input[name=guess]:checked');
+  if (!guess) { toast('먼저 거리와 후퇴속도의 관계를 예상해 주세요.'); $('#guessBox').scrollIntoView({ block: 'center' }); return; }
+  S.range = $('#range').value;
+  S.rows = makeSample(S.range, +$('#count').value);
+  $('#count').value = S.rows.length;
+  Object.assign(S, { sortKey: null, calcOK: false, trendOK: false, modelOK: false, saved: null, gd: null, interpOK: false, pred1OK: false, pred2OK: false, history: [] });
+  S.marked = new Set(); S.best = slopeOf(train());
+  $$('input[name=trend],input[name=model]').forEach(x => x.checked = false);
+  ['#trendMsg', '#modelMsg', '#guessMsg', '#answerMsg', '#pred1Msg', '#pred2Msg', '#calcMsg'].forEach(id => { $(id).textContent = ''; $(id).className = 'msg'; });
+  ['#answerA', '#pred1', '#pred2'].forEach(id => $(id).value = '');
+  $('#modelCard').hidden = true; $('#compareCard').hidden = true; $('#hubbleNote').hidden = true; $('#testResults').hidden = true;
+  $('#slope').value = 20;
+  renderSample(); buildCalc();
+  S.unlocked = Math.max(1, Math.min(S.unlocked, 1)); unlock(2, `${RANGES[S.range].label} ${fmt(pool(S.range).length)}개 중 ${S.rows.length}개를 뽑았습니다. 다음 단계로 가세요.`);
+};
+function renderSample() {
+  const idx = S.rows.map((_, i) => i);
+  if (S.sortKey) idx.sort((a, b) => (S.rows[a][S.sortKey] - S.rows[b][S.sortKey]) * S.sortDir);
+  $('#sampleRows').innerHTML = idx.map((i, k) => { const q = S.rows[i]; return `<tr><td>${k + 1}</td><td>${q.name}</td><td>${q.z.toFixed(5)}</td><td>${q.m.toFixed(5)}</td><td>${role(q)}</td></tr>`; }).join('');
+  const zs = S.rows.map(q => q.z), bright = S.rows.reduce((a, b) => b.m < a.m ? b : a), far = S.rows.reduce((a, b) => b.z > a.z ? b : a);
+  $('#stN').textContent = `${S.rows.length}개 (학습 ${train().length} · 검증 ${test().length})`;
+  $('#stZ').textContent = `${Math.min(...zs).toFixed(3)} ~ ${Math.max(...zs).toFixed(3)} · 평균 ${(zs.reduce((a, b) => a + b, 0) / zs.length).toFixed(3)}`;
+  $('#stBright').textContent = `${bright.name} (${bright.m.toFixed(2)})`;
+  $('#stFar').textContent = `${far.name} (${far.z.toFixed(3)})`;
+  $$('.sort').forEach(b => { const on = b.dataset.key === S.sortKey; b.querySelector('span').textContent = on ? (S.sortDir === 1 ? '↑' : '↓') : '↕'; });
+}
+const role = q => q.role === 'train' ? '<span class="pill train">학습용</span>' : '<span class="pill test">검증용</span>';
+$$('.sort').forEach(b => b.onclick = () => { if (!S.rows.length) return; const k = b.dataset.key; S.sortDir = S.sortKey === k ? -S.sortDir : 1; S.sortKey = k; renderSample(); });
+
+/* ---------- STEP 2: v, r 계산 ---------- */
+function buildCalc() {
+  $('#calcRows').innerHTML = S.rows.map((q, i) => `<tr><td>${q.name}</td><td>${role(q)}</td><td>${q.z.toFixed(5)}</td><td>${q.m.toFixed(5)}</td><td><input data-i="${i}" data-k="v" inputmode="decimal" aria-label="${q.name} 후퇴속도"></td><td><input data-i="${i}" data-k="r" inputmode="decimal" aria-label="${q.name} 거리"></td><td class="judge">대기</td></tr>`).join('');
+}
+function checkCalc(fill) {
+  let good = 0;
+  S.rows.forEach((q, i) => {
+    const iv = $(`input[data-i="${i}"][data-k="v"]`), ir = $(`input[data-i="${i}"][data-k="r"]`);
+    if (fill) { iv.value = Math.round(q.v); ir.value = q.r.toFixed(1); }
+    const a = iv.value !== '' && Math.abs(+iv.value - q.v) <= Math.max(20, q.v * 0.002);
+    const b = ir.value !== '' && Math.abs(+ir.value - q.r) <= Math.max(0.5, q.r * 0.01);
+    iv.className = a ? 'ok' : 'bad'; ir.className = b ? 'ok' : 'bad';
+    iv.closest('tr').querySelector('.judge').textContent = a && b ? '✓ 정확' : '다시 계산';
+    if (a && b) good++;
+  });
+  const all = good === S.rows.length;
+  setMsg('#calcMsg', all, `${good} / ${S.rows.length}개 정확`);
+  if (all) { S.calcOK = true; unlock(3, '계산 완료! 학습용 자료를 좌표평면에 찍어 보세요.'); }
+}
+$('#checkCalc').onclick = () => checkCalc(false);
+$('#fillCalc').onclick = () => checkCalc(true);
+
+/* ---------- STEP 3: 점 찍기와 모델 ---------- */
+function drawPoints() {
+  const { xm, ym } = axisMax(), z = chart($('#plot'), { xmin: 0, xmax: xm, ymin: 0, ymax: ym, xlabel: '거리 r (Mpc)', ylabel: '후퇴속도 v (km/s)' });
+  S.rows.forEach((q, i) => { if (S.marked.has(i)) z.dot(q.r, q.v, 4.5, '#2563eb'); });
+  const tr = S.rows.map((q, i) => [q, i]).filter(([q]) => q.role === 'train');
+  $('#plotted').textContent = S.marked.size; $('#plotTotal').textContent = tr.length;
+  $('#pointList').innerHTML = tr.map(([q, i]) => { const on = S.marked.has(i); return `<button data-point="${i}" class="${on ? 'done' : ''}" ${on ? 'disabled' : ''}>${on ? '✓' : '○'} ${q.name} (${q.r.toFixed(1)}, ${fmt(Math.round(q.v))})</button>`; }).join('');
+  if (S.marked.size === tr.length && tr.length) $('#modelCard').hidden = false;
+}
+RENDER[3] = drawPoints;
+$('#pointList').onclick = e => { const b = e.target.closest('[data-point]'); if (b) { S.marked.add(+b.dataset.point); drawPoints(); } };
+$('#plotAll').onclick = () => { S.rows.forEach((q, i) => q.role === 'train' && S.marked.add(i)); drawPoints(); };
+$('#resetPlot').onclick = () => { S.marked = new Set(); drawPoints(); };
+const GUESS_TXT = { inc: '커진다', dec: '작아진다', none: '관계없다' };
+$('#trendCheck').onclick = () => {
+  const v = $('input[name=trend]:checked')?.value; if (!v) return;
+  const g = $('input[name=guess]:checked')?.value;
+  if (v === 'inc') { S.trendOK = true; setMsg('#trendMsg', true, `✓ 점들이 오른쪽 위로 올라갑니다. 처음 예상은 ‘${GUESS_TXT[g] || '–'}’였습니다. ${g === 'inc' ? '예상과 관찰이 일치합니다.' : '예상과 관찰이 다르네요. 데이터가 생각을 바꿔 주었습니다.'}`); }
+  else setMsg('#trendMsg', false, '거리 r이 커질 때 점들의 높이(v)가 어떻게 변하는지 다시 살펴보세요.');
+  modelDone();
+};
+$('#modelCheck').onclick = () => {
+  const v = $('input[name=model]:checked')?.value; if (!v) return;
+  if (v === 'origin') { S.modelOK = true; setMsg('#modelMsg', true, '✓ 우리 은하 자신(거리 0)은 우리에게서 멀어지지 않으므로 직선은 원점을 지나야 합니다. 이제 데이터로 정해야 할 값은 기울기 <i>a</i> 하나입니다. 이 <i>a</i>를 모델의 <b>매개변수</b>라고 합니다.'); }
+  else setMsg('#modelMsg', false, '거리가 0일 때 후퇴속도는 얼마여야 할지 생각해 보세요.');
+  modelDone();
+};
+function modelDone() { if (S.trendOK && S.modelOK) unlock(4, '모델 v = ar을 정했습니다. 이제 매개변수 a를 학습시켜 봅시다.'); }
+
+/* ---------- STEP 4: 사람이 학습 ---------- */
+function lossRange() { const tr = train(); return { ymax: Math.max(sse(0, tr), sse(150, tr)) * 1.05 }; }
+function drawLoss(canvas, marks) {
+  const tr = train(), { ymax } = lossRange();
+  const z = chart(canvas, { xmin: 0, xmax: 150, ymin: 0, ymax, xlabel: '기울기 a', ylabel: 'S(a)', yfmt: t => fmtBig(t), xfmt: t => t, left: 64 });
+  z.curve(a => sse(a, tr), 0, 150, '#7c3aed');
+  return z;
+}
+function updateSlope() {
+  const a = +$('#slope').value, tr = train(), { xm, ym } = axisMax();
+  $('#aval').textContent = a.toFixed(1); $('#sse').textContent = fmtBig(sse(a, tr)) + ' (km/s)²';
+  const z = chart($('#linePlot'), { xmin: 0, xmax: xm, ymin: 0, ymax: ym, xlabel: '거리 r (Mpc)', ylabel: '후퇴속도 v (km/s)' });
+  z.clip(); tr.forEach(q => z.line(q.r, q.v, q.r, a * q.r, '#ef9a8a', 1.2)); z.line(0, 0, xm, a * xm, '#ef513b', 3); z.unclip();
+  tr.forEach(q => z.dot(q.r, q.v, 3.8, '#2563eb'));
+  const L = drawLoss($('#lossPlot'));
+  if (S.saved !== null) { L.dot(S.saved, sse(S.saved, tr), 6, '#0e9f7b', '#fff'); }
+  L.dot(a, sse(a, tr), 6, '#ef513b', '#fff');
+}
+RENDER[4] = updateSlope;
+$('#slope').oninput = updateSlope;
+$('#saveGuess').onclick = () => {
+  const a = +$('#slope').value; S.saved = a; updateSlope();
+  if (Math.abs(a - S.best) <= 3) { setMsg('#guessMsg', true, `✓ 내 추정값 <i>a</i> = ${a.toFixed(1)} 저장 완료. 손실함수가 거의 가장 작은 곳을 찾았어요.`); unlock(5, '이번에는 컴퓨터가 스스로 a를 찾게 해 봅시다.'); }
+  else setMsg('#guessMsg', false, `내 추정값 <i>a</i> = ${a.toFixed(1)} 저장 완료. 아래 그래프에서 <i>S</i>(<i>a</i>)가 더 낮아지는 쪽이 있는지 살펴보고 다시 저장해 보세요.`);
+};
+$('#bestGuess').onclick = () => { $('#slope').value = S.best.toFixed(1); updateSlope(); };
+
+/* ---------- STEP 5: 기계가 학습 ---------- */
+function gdReset() {
+  const a0 = Math.max(0, Math.min(150, +$('#gdStart').value || 20)), h0 = Math.max(0.1, +$('#gdH').value || 10);
+  $('#gdStart').value = a0; $('#gdH').value = h0;
+  S.gd = { a: a0, h: h0, iter: 0, path: [a0], log: [], done: false };
+  $('#gdRows').innerHTML = ''; $('#gdMsg').className = 'msg'; $('#gdMsg').textContent = '‘한 단계 진행’을 눌러 보세요.';
+  drawGd();
+}
+function gdStep() {
+  const g = S.gd, tr = train(); if (g.done) return;
+  const L = sse(g.a - g.h, tr), M = sse(g.a, tr), R = sse(g.a + g.h, tr); let act;
+  if (L < M && L <= R) { act = `왼쪽으로 ${fmt(g.h, g.h < 1 ? 3 : 1)} 이동`; g.log.push([g.iter + 1, g.a, g.h, L, M, R, act]); g.a -= g.h; }
+  else if (R < M) { act = `오른쪽으로 ${fmt(g.h, g.h < 1 ? 3 : 1)} 이동`; g.log.push([g.iter + 1, g.a, g.h, L, M, R, act]); g.a += g.h; }
+  else { act = '이동 폭을 절반으로'; g.log.push([g.iter + 1, g.a, g.h, L, M, R, act]); g.h /= 2; }
+  g.iter++; g.path.push(g.a);
+  if (g.h < 0.01) g.done = true;
+  const r = g.log.at(-1);
+  $('#gdRows').insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td>${r[1].toFixed(3)}</td><td>${r[2] < 1 ? r[2].toFixed(4) : r[2].toFixed(1)}</td><td>${fmtBig(r[3])}</td><td>${fmtBig(r[4])}</td><td>${fmtBig(r[5])}</td><td>${r[6]}</td></tr>`);
+  const box = $('#gdRows').closest('.tablewrap'); box.scrollTop = box.scrollHeight;
+  drawGd();
+  if (g.done) gdFinish();
+}
+function drawGd() {
+  const g = S.gd, tr = train(); if (!g) return;
+  const z = drawLoss($('#gdPlot'));
+  g.path.forEach((a, i) => { if (i) z.line(g.path[i - 1], sse(g.path[i - 1], tr), a, sse(a, tr), '#f59e0b', 1.5); });
+  g.path.forEach((a, i) => z.dot(a, sse(a, tr), i === g.path.length - 1 ? 6 : 3.5, i === g.path.length - 1 ? '#ef513b' : '#f59e0b'));
+  $('#gdIter').textContent = g.iter; $('#gdA').textContent = g.a.toFixed(3); $('#gdHval').textContent = g.h < 1 ? g.h.toFixed(4) : g.h.toFixed(1); $('#gdS').textContent = fmtBig(sse(g.a, tr));
+}
+let gdTimer = null;
+function setGdBusy(b) { ['#gdStep', '#gdRun', '#gdReset'].forEach(id => $(id).disabled = b); }
+$('#gdReset').onclick = gdReset;
+$('#gdStep').onclick = () => { if (!S.gd) gdReset(); gdStep(); };
+$('#gdRun').onclick = () => {
+  if (!S.gd || S.gd.done) gdReset();
+  setGdBusy(true);
+  gdTimer = setInterval(() => { gdStep(); if (S.gd.done || S.gd.iter > 400) { clearInterval(gdTimer); setGdBusy(false); } }, 90);
+};
+['#gdStart', '#gdH'].forEach(id => $(id).onchange = gdReset);
+function gdFinish() {
+  setMsg('#gdMsg', true, `✓ ${S.gd.iter}번 반복해서 <i>a</i> ≈ ${S.gd.a.toFixed(2)}에서 멈췄습니다.`);
+  const tr = train(), rv = tr.reduce((s, q) => s + q.r * q.v, 0), rr = tr.reduce((s, q) => s + q.r * q.r, 0);
+  $('#cmpMine').textContent = S.saved === null ? '–' : S.saved.toFixed(1);
+  $('#cmpGd').textContent = S.gd.a.toFixed(2); $('#cmpFormula').textContent = S.best.toFixed(2);
+  $('#dotRV').textContent = fmt(Math.round(rv)); $('#dotRR').textContent = fmt(Math.round(rr)); $('#bestA').textContent = S.best.toFixed(2) + ' km/s/Mpc';
+  $('#compareCard').hidden = false;
+  if (S.interpOK) unlock(6, '학습 완료! 검증용 초신성으로 모델을 평가해 봅시다.');
+}
+RENDER[5] = () => { if (!S.gd) { $('#gdStart').value = 20; gdReset(); } else drawGd(); };
+$('#checkA').onclick = () => {
+  const v = +$('#answerA').value;
+  if ($('#answerA').value !== '' && Math.abs(v - S.best) <= 0.5) {
+    S.interpOK = true;
+    const ageYr = 3.0857e19 / S.best / 3.156e7;
+    setMsg('#answerMsg', true, `✓ 거리가 1 Mpc 멀어질 때마다 후퇴속도가 약 ${S.best.toFixed(1)} km/s씩 커집니다.`);
+    $('#hubbleNote').innerHTML = `<h4>이 기울기가 바로 허블 상수입니다</h4><p>천문학에서는 이 값을 <b>허블 상수</b>(<i>H</i><sub>0</sub>)라고 부르며, 정밀한 관측으로 구한 값은 약 67~73 km/s/Mpc입니다. 내 표본으로 학습한 값은 ${S.best.toFixed(1)} km/s/Mpc입니다.</p><p><b>심화:</b> 1 ÷ <i>a</i>는 "지금의 속도로 거꾸로 돌아가면 모든 은하가 한 점에 모이는 시간"으로, 우주 나이의 대략적인 값입니다. 단위를 맞춰 계산하면 약 <b>${fmt(ageYr / 1e8, 0)}억 년</b>입니다.</p>`;
+    $('#hubbleNote').hidden = false;
+    if (S.gd && S.gd.done) unlock(6, '학습 완료! 검증용 초신성으로 모델을 평가해 봅시다.');
+  } else setMsg('#answerMsg', false, '<i>v</i> = <i>ar</i>에서 <i>r</i>이 1 커지면 <i>v</i>는 얼마나 커질까요? 수학으로 구한 <i>a</i>를 확인해 보세요.');
+};
+$('#fillA').onclick = () => { $('#answerA').value = S.best.toFixed(1); $('#checkA').click(); };
+
+/* ---------- STEP 6: 예측과 평가 ---------- */
+const mae = rows => rows.reduce((s, q) => s + Math.abs(S.best * q.r - q.v), 0) / rows.length;
+const mre = rows => rows.reduce((s, q) => s + Math.abs(S.best * q.r - q.v) / q.v, 0) / rows.length * 100;
+function render6() {
+  const t0 = test()[0];
+  $('#modelEq').innerHTML = `<i>v</i> = ${S.best.toFixed(2)}<i>r</i>`;
+  $('#pred1Q').innerHTML = `검증용 초신성 <b>${t0.name}</b>까지의 거리는 <i>r</i> = ${t0.r.toFixed(1)} Mpc입니다. 모델로 후퇴속도를 예측해 보세요. (정수로)`;
+  updateNewZ();
+  if (S.pred1OK) drawTest();
+}
+RENDER[6] = render6;
+function drawTest() {
+  $('#testResults').hidden = false;
+  const { xm, ym } = axisMax(), a = S.best, te = test();
+  const z = chart($('#testPlot'), { xmin: 0, xmax: xm, ymin: 0, ymax: ym, xlabel: '거리 r (Mpc)', ylabel: '후퇴속도 v (km/s)' });
+  z.clip(); te.forEach(q => z.line(q.r, q.v, q.r, a * q.r, '#f3b48a', 1.5)); z.line(0, 0, xm, a * xm, '#ef513b', 2.5); z.unclip();
+  train().forEach(q => z.dot(q.r, q.v, 3, '#93b4f5'));
+  te.forEach(q => z.dot(q.r, q.v, 5, '#ea7a2c', '#fff'));
+  $('#maeTrain').textContent = `${fmt(Math.round(mae(train())))} km/s (${mre(train()).toFixed(1)}%)`;
+  $('#maeTest').textContent = `${fmt(Math.round(mae(te)))} km/s (${mre(te).toFixed(1)}%)`;
+  $('#testRows').innerHTML = te.map(q => { const p = a * q.r; return `<tr><td>${q.name}</td><td>${q.r.toFixed(1)}</td><td>${fmt(Math.round(q.v))}</td><td>${fmt(Math.round(p))}</td><td>${(p - q.v >= 0 ? '+' : '') + fmt(Math.round(p - q.v))}</td></tr>`; }).join('');
+}
+$('#pred1Check').onclick = () => {
+  const t0 = test()[0], ans = S.best * t0.r, v = +$('#pred1').value;
+  if ($('#pred1').value !== '' && Math.abs(v - ans) <= Math.max(30, ans * 0.01)) {
+    S.pred1OK = true; const err = ans - t0.v;
+    setMsg('#pred1Msg', true, `✓ 예측값은 약 ${fmt(Math.round(ans))} km/s입니다. 실제 관측값은 ${fmt(Math.round(t0.v))} km/s이므로 오차는 ${(err >= 0 ? '+' : '') + fmt(Math.round(err))} km/s입니다.`);
+    drawTest(); pred6Done();
+  } else setMsg('#pred1Msg', false, `<i>v</i> = ${S.best.toFixed(2)} × ${t0.r.toFixed(1)}을 계산해 보세요.`);
+};
+function updateNewZ() {
+  if (!S.best) return;
+  const z = Math.max(0, +$('#newZ').value || 0), v = C * z;
+  $('#newOut').innerHTML = `<i>v</i> = ${fmt(Math.round(v))} km/s → 예측 거리 <i>r</i> = ${fmt(v / S.best, 1)} Mpc`;
+}
+$('#newZ').oninput = updateNewZ;
+$('#pred2Check').onclick = () => {
+  const ans = C * 0.02 / S.best, v = +$('#pred2').value;
+  if ($('#pred2').value !== '' && Math.abs(v - ans) <= Math.max(1, ans * 0.02)) {
+    S.pred2OK = true; setMsg('#pred2Msg', true, `✓ <i>v</i> = 6,000 km/s, <i>r</i> = 6,000 ÷ ${S.best.toFixed(2)} ≈ ${fmt(Math.round(ans))} Mpc입니다. 학습한 모델로 직접 잴 수 없는 거리를 예측했습니다.`); pred6Done();
+  } else setMsg('#pred2Msg', false, '먼저 <i>v</i> = <i>cz</i>로 속도를 구하고, <i>r</i> = <i>v</i> ÷ <i>a</i>로 거리를 구해 보세요.');
+};
+function pred6Done() { if (S.pred1OK && S.pred2OK) unlock(7, '예측 완료! 마지막으로 표본을 바꾸며 모델이 어떻게 달라지는지 실험해 봅시다.'); }
+$('#fill6').onclick = () => { const t0 = test()[0]; $('#pred1').value = Math.round(S.best * t0.r); $('#pred1Check').click(); $('#pred2').value = Math.round(C * 0.02 / S.best); $('#pred2Check').click(); };
+
+/* ---------- STEP 7: 표본 바꾸기 ---------- */
+function record(label, rangeKey, rows) {
+  const tr = rows.filter(q => q.role === 'train'), te = rows.filter(q => q.role === 'test'), a = slopeOf(tr);
+  const rel = te.reduce((s, q) => s + Math.abs(a * q.r - q.v) / q.v, 0) / te.length * 100;
+  S.history.push({ label, rangeKey, n: rows.length, zmax: Math.max(...rows.map(q => q.z)), a, rel });
+}
+const ROWCOL = { near: '#0e9f7b', all: '#7c3aed', far: '#ea7a2c' };
+function render7() {
+  if (!S.history.length) record('내 표본', S.range, S.rows);
+  $('#histRows').innerHTML = S.history.map((h, i) => `<tr><td>${i + 1}${h.label ? ` (${h.label})` : ''}</td><td>${RANGES[h.rangeKey].label}</td><td>${h.n}</td><td>${h.zmax.toFixed(3)}</td><td><b>${h.a.toFixed(2)}</b></td><td>${h.rel.toFixed(1)}%</td></tr>`).join('');
+  const keys = ['near', 'all', 'far'], amin = Math.min(30, ...S.history.map(h => h.a)) - 2, amax = Math.max(90, ...S.history.map(h => h.a)) + 2;
+  const z = chart($('#histPlot'), { xmin: amin, xmax: amax, ymin: -0.5, ymax: 2.5, xlabel: '학습한 기울기 a (km/s/Mpc)', ylabel: '', yfmt: () => '', xfmt: t => t, left: 92 });
+  keys.forEach((k, i) => { z.g.fillStyle = ROWCOL[k]; z.g.textAlign = 'right'; z.g.font = 'bold 12px system-ui,sans-serif'; z.g.fillText(RANGES[k].label, z.p.l - 8, z.Y(2 - i) + 4); });
+  S.history.forEach((h, j) => { const i = keys.indexOf(h.rangeKey); z.dot(h.a, 2 - i + ((j * 37) % 7 - 3) * 0.06, 6, ROWCOL[h.rangeKey] + 'cc', '#fff'); });
+  drawAll();
+}
+RENDER[7] = render7;
+$('#expRange').onchange = () => { const n = pool($('#expRange').value).length; $('#expCount').max = n; if (+$('#expCount').value > n) $('#expCount').value = n; };
+$('#expRun').onclick = () => {
+  const k = $('#expRange').value, rows = makeSample(k, +$('#expCount').value);
+  $('#expCount').value = rows.length; record('', k, rows); render7();
+  const h = S.history.at(-1); toast(`${RANGES[k].label} ${h.n}개로 학습한 결과 a = ${h.a.toFixed(2)}입니다.`);
+};
+function drawAll() {
+  const all = DATA.map(feat), aNear = slopeOf(pool('near').map(feat)), aAll = slopeOf(all);
+  const xm = Math.max(...all.map(q => q.r)) * 1.03, ym = Math.max(...all.map(q => q.v)) * 1.05;
+  const z = chart($('#allPlot'), { xmin: 0, xmax: xm, ymin: 0, ymax: ym, xlabel: '거리 r (Mpc)', ylabel: '후퇴속도 v (km/s)' });
+  all.forEach(q => z.dot(q.r, q.v, 2.2, '#94a3b8aa'));
+  z.clip(); z.line(0, C, xm, C, '#64748b', 1.5, [6, 4]); z.line(0, 0, xm, aNear * xm, '#0e9f7b', 2.5); z.line(0, 0, xm, aAll * xm, '#7c3aed', 2.5); z.unclip();
+  z.text('빛의 속도 30만 km/s', xm * 0.02, C * 1.03, '#475569');
+  const overC = all.filter(q => q.v > C).length;
+  $('#limitText').innerHTML = `가까운 초신성(<i>z</i> &lt; 0.1)으로 학습하면 <i>a</i> ≈ <b>${aNear.toFixed(1)}</b>, 전체로 학습하면 <i>a</i> ≈ <b>${aAll.toFixed(1)}</b>입니다. 먼 초신성일수록 점들이 직선 <i>v</i> = <i>ar</i>보다 아래로 휘어져, 하나의 직선 모델로는 전체 자료를 설명하기 어렵습니다. 또 <i>v</i> = <i>cz</i>는 <i>z</i>가 작을 때의 근사식이어서, <i>z</i> &gt; 1인 초신성 ${overC}개는 빛보다 빠른 속도로 계산됩니다.<br><b>생각해 보기:</b> 어떤 범위의 자료로 학습했는지에 따라 모델이 달라집니다. 실제 천문학자들은 이런 먼 초신성 자료를 더 정밀한 우주 모형과 비교해 우주의 팽창이 점점 빨라지고 있다는 사실을 발견했고, 이 연구는 2011년 노벨 물리학상을 받았습니다.`;
+}
+
+/* ---------- 시작 ---------- */
+if (TEACHER) {
+  $('input[name=guess][value=inc]').checked = true;
+  $('#pick').click(); checkCalc(true); S.unlocked = 7;
+  S.rows.forEach((q, i) => q.role === 'train' && S.marked.add(i)); $('#modelCard').hidden = false;
+  toast('교사용 화면: 모든 단계가 열려 있습니다.');
+}
+openStep(0);
+
+</script>
+</body>
+</html>

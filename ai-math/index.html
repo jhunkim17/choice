@@ -1,4 +1,275 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>선택의 수학 · AI 추천 탐구실</title><link rel="stylesheet" href="styles.css?v=acd4bc828753"><script src="script.js?v=9ff203c90b84" defer></script></head>
-<body><header><span class="badge">AI × 공통수학</span><h1>선택의 수학 <small>AI 추천 탐구실</small></h1><button id="export" class="outline light">기록 내려받기</button><button id="reset" class="outline light">초기화</button></header>
-<nav aria-label="차시 선택" id="tabs"></nav><main><div class="intro"><span id="eyebrow"></span><h2 id="title"></h2><p id="description"></p></div><div id="content"></div></main><footer>가상 데이터로 탐구하는 추천 모형 · 진행 기록은 이 브라우저에 저장됩니다. <span id="save-status" role="status"></span></footer><div id="toast" role="status" aria-live="polite"></div></body></html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>초신성 데이터로 설명하는 우주의 팽창</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div><span class="badge">AI × 수학</span><h1>초신성 데이터로 설명하는 우주의 팽창</h1><p>AI는 데이터로 어떻게 학습하고 예측할까요? 표본을 뽑고, 손실함수를 줄이고, 처음 보는 초신성을 예측해 봅니다.</p></div></header>
+<nav id="tabs" aria-label="활동 단계"></nav>
+<main>
+
+<!-- STEP 0 -->
+<section class="stage" data-step="0">
+<span class="tag">1차시 · STEP 0</span>
+<h2>점 3개로 AI의 학습과 예측 체험하기</h2>
+<p class="lead">AI가 예측을 하려면 먼저 데이터를 잘 설명하는 모델을 찾아야 합니다. 세 점 (1, 1), (2, 3), (3, 7)을 가장 잘 설명하는 직선 <i>y</i> = <i>ax</i>를 찾아봅시다.</p>
+<div class="uses">
+<div><b>① 요약하기</b><span>여러 자료를 간단한 식 하나로 나타냅니다.</span><em>AI 용어: 모델</em></div>
+<div><b>② 예측하기</b><span>아직 관찰하지 않은 값을 식으로 추측합니다.</span><em>AI 용어: 예측</em></div>
+<div><b>③ 오차 줄이기</b><span>예측과 실제의 차이가 가장 작은 식을 찾습니다.</span><em>AI 용어: 학습</em></div>
+</div>
+
+<div class="lesson">
+<h3>1. 직선을 움직이며 오차 살펴보기</h3>
+<div class="plot-layout">
+<div class="canvasbox"><canvas id="toyPlot" class="tall"></canvas></div>
+<aside>
+<label class="sliderlabel">기울기 <i>a</i> = <b id="toyAval">1.00</b></label>
+<input id="toyA" type="range" min="0" max="4" step="0.05" value="1">
+<div class="tablewrap small"><table><thead><tr><th><i>x</i></th><th>실제값 <i>y</i></th><th>예측값 <i>ax</i></th><th>오차<br><i>ax</i> − <i>y</i></th><th>오차²</th></tr></thead><tbody id="toyRows"></tbody></table></div>
+<div class="sums"><div><small>오차의 합</small><b id="toySum">–</b></div><div><small>오차제곱합 <i>S</i>(<i>a</i>)</small><b id="toySSE">–</b></div></div>
+</aside>
+</div>
+<div class="qbox"><p><b>Q1.</b> 오차의 합은 6<i>a</i> − 11입니다. 오차의 합이 0이 되는 <i>a</i>의 값을 구해 보세요. (소수 둘째 자리까지)</p>
+<div class="controls"><input id="toyZero" type="number" step="0.01" inputmode="decimal" aria-label="오차의 합이 0이 되는 a"><button class="primary" id="toyZeroCheck">확인</button><button class="teacher-only" id="toyFill">정답 채우기(교사용)</button></div><p class="msg" id="toyZeroMsg"></p></div>
+</div>
+
+<div class="lesson">
+<h3>2. 손실함수 <i>S</i>(<i>a</i>)가 가장 작은 곳 찾기</h3>
+<p>오차를 그냥 더하면 양수와 음수가 서로 지워집니다. 그래서 오차를 제곱해서 더한 <b>오차제곱합</b>을 씁니다. AI에서는 이렇게 "얼마나 틀렸는지"를 재는 함수를 <b>손실함수</b>라고 합니다.</p>
+<div class="math"><i>S</i>(<i>a</i>) = (<i>a</i> − 1)² + (2<i>a</i> − 3)² + (3<i>a</i> − 7)²</div>
+<div class="plot-layout">
+<div><p><b>Q2.</b> 표를 완성하세요.</p>
+<div class="tablewrap small"><table><thead><tr><th><i>a</i></th><th><i>S</i>(<i>a</i>)</th></tr></thead><tbody id="toyLossRows"></tbody></table></div>
+<div class="controls"><button class="primary" id="toyTableCheck">표 확인</button></div><p class="msg" id="toyTableMsg"></p></div>
+<div class="canvasbox"><canvas id="toyLoss" class="short"></canvas></div>
+</div>
+<div class="qbox"><p><b>Q3.</b> 식을 전개하면 <i>S</i>(<i>a</i>) = 14<i>a</i>² − 56<i>a</i> + 59입니다. 완전제곱식으로 나타내 보세요.</p>
+<p class="square"><i>S</i>(<i>a</i>) = 14(<i>a</i> − <input id="sqA" type="number" step="any" aria-label="꼭짓점의 a 좌표">)² + <input id="sqB" type="number" step="any" aria-label="최솟값"></p>
+<div class="controls"><button class="primary" id="sqCheck">확인</button></div><p class="msg" id="sqMsg"></p></div>
+</div>
+
+<div class="lesson">
+<h3>3. 학습한 모델로 예측하기</h3>
+<div class="qbox"><p><b>Q4.</b> 학습으로 찾은 모델로 <i>x</i> = 4일 때의 <i>y</i>를 예측해 보세요.</p>
+<div class="controls"><input id="toyPred" type="number" step="any" aria-label="x가 4일 때 예측값"><button class="primary" id="toyPredCheck">확인</button></div><p class="msg" id="toyPredMsg"></p></div>
+<div class="terms" id="toyTerms" hidden>
+<h4>방금 한 일을 AI 용어로 바꾸면</h4>
+<table><tbody>
+<tr><td>모델</td><td>자료를 설명하는 식 <i>y</i> = <i>ax</i></td></tr>
+<tr><td>매개변수</td><td>데이터로부터 정해야 하는 값 <i>a</i></td></tr>
+<tr><td>손실함수</td><td>얼마나 틀렸는지 재는 함수 <i>S</i>(<i>a</i>)</td></tr>
+<tr><td>학습</td><td>손실함수가 가장 작아지는 <i>a</i> = 2 찾기</td></tr>
+<tr><td>예측</td><td>학습한 모델로 <i>x</i> = 4일 때 <i>y</i> = 8 계산하기</td></tr>
+</tbody></table>
+<p>다음 차시에는 같은 과정을 실제 초신성 관측 자료로 해 봅니다.</p>
+</div>
+</div>
+</section>
+
+<!-- STEP 1 -->
+<section class="stage" data-step="1" hidden>
+<span class="tag">2차시 · STEP 1</span>
+<h2>탐구할 초신성 표본을 뽑으세요</h2>
+<p class="lead">Ia형 초신성 1,048개의 관측 자료(Pantheon 표본)가 이 파일 안에 들어 있어 휴대폰에서도 바로 쓸 수 있습니다.</p>
+<div class="chips"><details><summary>학습 데이터</summary>모델이 매개변수를 정할 때 쓰는 자료</details><details><summary>검증 데이터</summary>학습에 쓰지 않고 남겨 두었다가 예측 실력을 평가할 때 쓰는 자료</details></div>
+<div class="qbox"><p><b>먼저 예상해 보세요.</b> 지구에서 멀리 있는 초신성일수록 멀어지는 속도(후퇴속도)는 어떻게 될까요?</p>
+<div class="radios" id="guessBox"><label><input type="radio" name="guess" value="inc"> 커진다</label><label><input type="radio" name="guess" value="dec"> 작아진다</label><label><input type="radio" name="guess" value="none"> 관계없다</label></div></div>
+<div class="controls">
+<label>자료 범위<select id="range"><option value="near">가까운 초신성 (z &lt; 0.1)</option><option value="all">전체 초신성</option></select></label>
+<label><span id="countLabel">표본 개수</span><input id="count" type="number" min="20" value="30"></label>
+<button class="primary" id="pick">무작위 표본 뽑기</button>
+</div>
+<p class="note">뽑은 표본의 80%는 <b>학습용</b>, 20%는 <b>검증용</b>으로 자동으로 나뉩니다. 검증용 자료는 학습하는 동안 쓰지 않고 남겨 두었다가 STEP 6에서 모델의 예측 실력을 평가할 때 씁니다.</p>
+<div class="stats" id="sampleStats">
+<div><small>선택한 표본</small><b id="stN">–</b></div>
+<div><small>적색편이 <i>zcmb</i>의 범위 · 평균</small><b id="stZ">–</b></div>
+<div><small>가장 밝은 초신성 (<i>mb</i> 최소)</small><b id="stBright">–</b></div>
+<div><small>가장 큰 <i>zcmb</i></small><b id="stFar">–</b></div>
+</div>
+<div class="tablewrap"><table><thead><tr><th>번호</th><th>Ia형 초신성</th><th><button class="sort" data-key="z">적색편이 <i>zcmb</i> <span>↕</span></button></th><th><button class="sort" data-key="m">겉보기등급 <i>mb</i> <span>↕</span></button></th><th>용도</th></tr></thead><tbody id="sampleRows"><tr><td colspan="5">예상을 고른 뒤 표본을 뽑아 주세요.</td></tr></tbody></table></div>
+</section>
+
+<!-- STEP 2 -->
+<section class="stage" data-step="2" hidden>
+<span class="tag">2차시 · STEP 2</span>
+<h2>후퇴속도 <i>v</i>와 거리 <i>r</i>을 계산하세요</h2>
+<p class="lead">관측값 <i>zcmb</i>와 <i>mb</i>를 AI가 다룰 수 있는 수치(특성)로 바꾸는 단계입니다.</p>
+<div class="formula-grid">
+<div class="formula"><small>후퇴속도</small><i>v</i> = <i>c</i> × <i>zcmb</i><br><span class="note"><i>c</i> = 3 × 10<sup>5</sup> km/s</span></div>
+<div class="formula"><small>거리</small><i>r</i> = 10<sup>(<i>mb</i> − 5.7)/5</sup> (Mpc)<br><span class="note">Ia형 초신성의 절대등급을 −19.3으로 가정한 식</span></div>
+</div>
+<details class="source"><summary>수식 보기: 거리 공식은 어떻게 나왔을까? (심화 · 상용로그)</summary>
+<p>겉보기등급 <i>m</i>, 절대등급 <i>M</i>, 거리 <i>d</i>(pc) 사이에는 <i>m</i> − <i>M</i> = 5 log <i>d</i> − 5가 성립합니다. <i>M</i> = −19.3을 넣으면</p>
+<p class="center"><i>mb</i> + 19.3 = 5 log <i>d</i> − 5 → log <i>d</i> = (<i>mb</i> + 24.3)/5</p>
+<p>1 Mpc = 10<sup>6</sup> pc이므로 log <i>r</i> = (<i>mb</i> + 24.3)/5 − 6 = (<i>mb</i> − 5.7)/5, 즉 <i>r</i> = 10<sup>(<i>mb</i> − 5.7)/5</sup>입니다.</p>
+<p class="note">상용로그는 고등학교 2학년 대수 내용이므로 평가 대상에서 제외합니다.</p>
+</details>
+<details class="source"><summary>유의할 점: <i>v</i> = <i>cz</i>는 어디까지 맞을까?</summary>
+<p><i>v</i> = <i>cz</i>는 적색편이가 작을 때(대략 <i>z</i> &lt; 0.1)만 잘 맞는 근사식입니다. 먼 은하의 적색편이는 우주 공간의 팽창으로 생기기 때문에, <i>z</i>가 큰 자료에 이 식을 그대로 쓰면 속도가 지나치게 크게 계산됩니다. <i>z</i> &gt; 1이면 빛의 속도보다 큰 값이 나오기도 합니다.</p>
+</details>
+<div class="tablewrap"><table><thead><tr><th>초신성</th><th>용도</th><th><i>zcmb</i></th><th><i>mb</i></th><th><i>v</i> (km/s)</th><th><i>r</i> (Mpc)</th><th>확인</th></tr></thead><tbody id="calcRows"></tbody></table></div>
+<div class="controls"><button class="primary" id="checkCalc">계산 확인</button><button id="fillCalc">모두 계산하기</button><span id="calcMsg" class="msg"></span></div>
+</section>
+
+<!-- STEP 3 -->
+<section class="stage" data-step="3" hidden>
+<span class="tag">2차시 · STEP 3</span>
+<h2>점을 찍고 모델을 정하세요</h2>
+<p class="lead">학습용 초신성의 (<i>r</i>, <i>v</i>)를 좌표평면에 찍어 경향을 관찰합니다. 가로축은 거리 <i>r</i>(Mpc), 세로축은 후퇴속도 <i>v</i>(km/s)입니다.</p>
+<div class="chips"><details><summary>모델</summary>자료 사이의 관계를 나타내는 식</details><details><summary>매개변수</summary>모델 안에서 데이터로부터 정해야 하는 값</details></div>
+<div class="plot-layout">
+<div class="canvasbox"><canvas id="plot" class="tall"></canvas></div>
+<aside><small>찍은 점 (학습용)</small><div class="counter"><span id="plotted">0</span> / <span id="plotTotal">0</span></div><button class="primary wide" id="plotAll">모든 점 한 번에 찍기</button><div id="pointList"></div><button class="wide" id="resetPlot">다시 찍기</button></aside>
+</div>
+<div class="lesson" id="modelCard" hidden>
+<h3>관찰하고 모델 정하기</h3>
+<div class="qbox"><p><b>Q1.</b> 점들의 경향으로 알맞은 것은?</p>
+<div class="radios"><label><input type="radio" name="trend" value="inc"> 거리가 멀수록 후퇴속도가 커진다</label><label><input type="radio" name="trend" value="dec"> 거리가 멀수록 후퇴속도가 작아진다</label><label><input type="radio" name="trend" value="none"> 거리와 후퇴속도는 관계없다</label></div>
+<div class="controls"><button class="primary" id="trendCheck">확인</button></div><p class="msg" id="trendMsg"></p></div>
+<div class="qbox"><p><b>Q2.</b> 직선의 식은 보통 <i>y</i> = <i>mx</i> + <i>b</i>로 씁니다. 우리는 절편 <i>b</i>를 빼고 <i>v</i> = <i>ar</i>로 두려고 합니다. 그 이유로 가장 알맞은 것은?</p>
+<div class="radios"><label><input type="radio" name="model" value="origin"> 거리가 0이면 후퇴속도도 0이어야 하므로</label><label><input type="radio" name="model" value="easy"> 절편이 있으면 계산할 수 없으므로</label><label><input type="radio" name="model" value="few"> 자료의 개수가 적으므로</label></div>
+<div class="controls"><button class="primary" id="modelCheck">확인</button></div><p class="msg" id="modelMsg"></p></div>
+</div>
+</section>
+
+<!-- STEP 4 -->
+<section class="stage" data-step="4" hidden>
+<span class="tag">2차시 · STEP 4</span>
+<h2>사람이 학습하기: 손실함수가 가장 작은 <i>a</i> 찾기</h2>
+<p class="lead">모델 <i>v</i> = <i>ar</i>의 기울기 <i>a</i>를 움직이며 손실함수 <i>S</i>(<i>a</i>) = Σ(<i>ar</i><sub>i</sub> − <i>v</i><sub>i</sub>)²이 가장 작아지는 값을 찾아 저장하세요.</p>
+<div class="chips"><details><summary>손실함수</summary>모델의 예측이 실제와 얼마나 다른지 재는 함수. 여기서는 오차제곱합</details></div>
+<div class="plot-layout">
+<div class="canvasbox"><canvas id="linePlot" class="tall"></canvas></div>
+<aside>
+<label class="sliderlabel">기울기 <i>a</i> = <b id="aval">–</b> km/s/Mpc</label>
+<input id="slope" type="range" min="0" max="150" step="0.1" value="20">
+<div class="sse"><small>손실함수 <i>S</i>(<i>a</i>)</small><b id="sse">–</b></div>
+<div class="canvasbox inner"><canvas id="lossPlot" class="short"></canvas></div>
+<button class="primary wide" id="saveGuess">이 값을 내 추정값으로 저장</button>
+<button class="wide teacher-only" id="bestGuess">최솟값으로 이동(교사용)</button>
+<p class="msg" id="guessMsg"></p>
+</aside>
+</div>
+</section>
+
+<!-- STEP 5 -->
+<section class="stage" data-step="5" hidden>
+<span class="tag">2차시 · STEP 5</span>
+<h2>기계가 학습하기: 규칙으로 <i>a</i>를 고쳐 나가기</h2>
+<p class="lead">이번에는 컴퓨터가 정해진 규칙에 따라 <i>a</i>를 스스로 고쳐 나갑니다. 컴퓨터는 그래프 전체를 보지 못하고, 지금 위치 주변의 손실만 계산할 수 있습니다.</p>
+<div class="chips"><details><summary>학습(최적화)</summary>손실함수가 작아지는 방향으로 매개변수를 반복해서 고쳐 나가는 과정</details></div>
+<div class="rule"><b>컴퓨터의 학습 규칙</b><ol><li>시작값 <i>a</i>와 이동 폭 <i>h</i>를 정한다.</li><li><i>S</i>(<i>a</i> − <i>h</i>), <i>S</i>(<i>a</i>), <i>S</i>(<i>a</i> + <i>h</i>)를 계산한다.</li><li>세 값 중 가장 작은 쪽으로 <i>a</i>를 옮긴다.</li><li>지금 자리가 가장 작으면 이동 폭 <i>h</i>를 절반으로 줄인다.</li><li><i>h</i>가 0.01보다 작아지면 멈춘다.</li></ol></div>
+<div class="controls">
+<label>시작값 <i>a</i><input id="gdStart" type="number" step="1" value="20"></label>
+<label>이동 폭 <i>h</i><input id="gdH" type="number" step="1" value="10"></label>
+<button id="gdReset">처음부터</button><button id="gdStep">한 단계 진행</button><button class="primary" id="gdRun">끝까지 진행</button>
+</div>
+<div class="plot-layout">
+<div class="canvasbox"><canvas id="gdPlot" class="tall"></canvas></div>
+<aside>
+<div class="stats one"><div><small>반복 횟수</small><b id="gdIter">0</b></div><div><small>현재 <i>a</i></small><b id="gdA">–</b></div><div><small>이동 폭 <i>h</i></small><b id="gdHval">–</b></div><div><small>현재 <i>S</i>(<i>a</i>)</small><b id="gdS">–</b></div></div>
+<p class="msg" id="gdMsg">‘한 단계 진행’을 눌러 보세요.</p>
+</aside>
+</div>
+<div class="tablewrap log"><table><thead><tr><th>반복</th><th><i>a</i></th><th><i>h</i></th><th><i>S</i>(<i>a</i> − <i>h</i>)</th><th><i>S</i>(<i>a</i>)</th><th><i>S</i>(<i>a</i> + <i>h</i>)</th><th>결정</th></tr></thead><tbody id="gdRows"></tbody></table></div>
+
+<div id="compareCard" hidden>
+<div class="lesson">
+<h3>세 가지 방법으로 구한 <i>a</i> 비교</h3>
+<div class="calculation"><div>내가 찾은 <i>a</i> (STEP 4)<b id="cmpMine">–</b></div><div>기계가 찾은 <i>a</i><b id="cmpGd">–</b></div><div>수학으로 구한 <i>a</i><b id="cmpFormula">–</b></div></div>
+<h4>수학으로 확인하기: 이차함수의 최솟값</h4>
+<p><i>S</i>(<i>a</i>) = Σ(<i>ar</i><sub>i</sub> − <i>v</i><sub>i</sub>)²을 전개하면 <i>a</i>에 대한 이차함수입니다.</p>
+<div class="math"><i>S</i>(<i>a</i>) = (Σ<i>r</i><sub>i</sub>²)<i>a</i>² − 2(Σ<i>r</i><sub>i</sub><i>v</i><sub>i</sub>)<i>a</i> + Σ<i>v</i><sub>i</sub>²<br>→ <i>a</i> = <span class="frac"><span>Σ<i>r</i><sub>i</sub><i>v</i><sub>i</sub></span><span>Σ<i>r</i><sub>i</sub>²</span></span>일 때 최소</div>
+<p>1차시의 14(<i>a</i> − 2)² + 3과 같은 원리입니다. 학습용 자료로 계산하면</p>
+<div class="calculation"><div>Σ<i>r</i><sub>i</sub><i>v</i><sub>i</sub><b id="dotRV">–</b></div><div>Σ<i>r</i><sub>i</sub>²<b id="dotRR">–</b></div><div><i>a</i> = Σ<i>r</i><sub>i</sub><i>v</i><sub>i</sub> ÷ Σ<i>r</i><sub>i</sub>²<b id="bestA">–</b></div></div>
+<details class="source"><summary>심화: 벡터의 내적과 정사영으로 구하기 (고급대수)</summary>
+<p>거리와 속도 자료를 벡터 <b><i>r</i>⃗ = (<i>r</i><sub>1</sub>, …, <i>r</i><sub>n</sub>)</b>, <b><i>v</i>⃗ = (<i>v</i><sub>1</sub>, …, <i>v</i><sub>n</sub>)</b>으로 두면 <i>S</i>(<i>a</i>) = |<i>a</i><i>r</i>⃗ − <i>v</i>⃗|²입니다. <i>a</i><i>r</i>⃗가 <i>v</i>⃗에 가장 가까울 때 오차 벡터는 <i>r</i>⃗에 수직이므로</p>
+<p class="center">(<i>v</i>⃗ − <i>a</i><i>r</i>⃗) · <i>r</i>⃗ = 0 → <i>a</i> = (<i>v</i>⃗ · <i>r</i>⃗) ÷ (<i>r</i>⃗ · <i>r</i>⃗)</p>
+<p class="note">교육과정 범위 밖의 내용이므로 평가 대상에서 제외합니다.</p>
+</details>
+</div>
+<div class="lesson">
+<h3>기울기 <i>a</i> 해석하기</h3>
+<div class="qbox"><p>거리가 1 Mpc 멀어질 때 후퇴속도는 약 몇 km/s 커질까요? (소수 첫째 자리까지)</p>
+<div class="controls"><input id="answerA" type="number" step="0.1" aria-label="1 Mpc당 후퇴속도 증가량"><span>km/s</span><button class="primary" id="checkA">확인</button><button class="teacher-only" id="fillA">정답 채우기(교사용)</button></div><p class="msg" id="answerMsg"></p></div>
+<div class="terms" id="hubbleNote" hidden></div>
+</div>
+</div>
+</section>
+
+<!-- STEP 6 -->
+<section class="stage" data-step="6" hidden>
+<span class="tag">3차시 · STEP 6</span>
+<h2>학습한 모델로 예측하고 평가하기</h2>
+<p class="lead">학습에 쓰지 않고 남겨 두었던 <b>검증용 초신성</b>으로 모델의 예측 실력을 평가합니다. 모델: <b id="modelEq">–</b></p>
+<div class="chips"><details><summary>예측</summary>학습한 모델에 새로운 입력을 넣어 결과를 계산하는 것</details><details><summary>일반화</summary>학습에 쓰지 않은 새로운 자료에서도 모델이 잘 맞는 정도</details></div>
+<div class="lesson">
+<h3>1. 검증용 초신성 하나 예측하기</h3>
+<div class="qbox"><p id="pred1Q">–</p>
+<div class="controls"><input id="pred1" type="number" step="any" aria-label="예측한 후퇴속도"><span>km/s</span><button class="primary" id="pred1Check">확인</button></div><p class="msg" id="pred1Msg"></p></div>
+</div>
+<div class="lesson" id="testResults" hidden>
+<h3>2. 검증용 초신성 전체 평가</h3>
+<div class="plot-layout">
+<div class="canvasbox"><canvas id="testPlot" class="tall"></canvas><p class="legend"><span class="dot train"></span>학습용 <span class="dot test"></span>검증용 <span class="lineKey"></span>모델 <i>v</i> = <i>ar</i></p></div>
+<aside>
+<div class="stats one"><div><small>학습용 자료의 평균 오차</small><b id="maeTrain">–</b></div><div><small>검증용 자료의 평균 오차</small><b id="maeTest">–</b></div></div>
+<p class="note">평균 오차는 |예측값 − 실제값|의 평균이고, 괄호 안은 실제값에 대한 비율입니다.</p>
+<div class="qbox"><p>학습에 쓰지 않은 검증용 자료에서도 모델이 비슷하게 맞았나요? 그렇게 판단한 이유는?</p><textarea id="note6" rows="3" placeholder="관찰한 결과와 이유를 써 보세요."></textarea></div>
+</aside>
+</div>
+<div class="tablewrap"><table><thead><tr><th>검증용 초신성</th><th><i>r</i> (Mpc)</th><th>실제 <i>v</i></th><th>예측 <i>v</i> = <i>ar</i></th><th>오차</th></tr></thead><tbody id="testRows"></tbody></table></div>
+</div>
+<div class="lesson">
+<h3>3. 거리를 모르는 은하의 거리 예측하기</h3>
+<p>천문학자들은 허블 법칙을 이용해, 적색편이만 측정한 은하까지의 거리를 추정합니다. <i>v</i> = <i>cz</i>로 속도를 구한 뒤 <i>r</i> = <i>v</i> ÷ <i>a</i>로 계산합니다.</p>
+<div class="controls"><label>적색편이 <i>z</i><input id="newZ" type="number" step="0.005" min="0" max="0.1" value="0.03"></label><div class="calcout" id="newOut">–</div></div>
+<div class="qbox"><p><b>Q.</b> 적색편이가 <i>z</i> = 0.02인 은하까지의 거리는 약 몇 Mpc일까요? (정수로)</p>
+<div class="controls"><input id="pred2" type="number" step="any" aria-label="예측한 거리"><span>Mpc</span><button class="primary" id="pred2Check">확인</button><button class="teacher-only" id="fill6">정답 채우기(교사용)</button></div><p class="msg" id="pred2Msg"></p></div>
+</div>
+</section>
+
+<!-- STEP 7 -->
+<section class="stage" data-step="7" hidden>
+<span class="tag">3차시 · STEP 7</span>
+<h2>표본을 바꾸면 모델도 바뀔까?</h2>
+<p class="lead">AI 모델은 어떤 데이터로 학습했는지에 따라 달라집니다. 조건을 바꿔 여러 번 학습시키고 결과를 기록해 봅시다. 여기서는 컴퓨터가 계산과 학습을 한 번에 처리합니다.</p>
+<div class="chips"><details><summary>데이터 편향</summary>학습 데이터가 한쪽으로 치우쳐 모델이 다른 상황에서 잘 맞지 않게 되는 것</details></div>
+<div class="rule"><b>실험해 보기</b><ol><li>같은 조건으로 세 번 학습시키면 <i>a</i>는 얼마나 달라질까?</li><li>표본 수를 20개와 150개로 바꾸면 <i>a</i>의 흔들림은 어떻게 달라질까?</li><li>가까운 초신성, 전체, 먼 초신성으로 학습시키면 <i>a</i>는 어떻게 달라질까?</li></ol></div>
+<div class="controls">
+<label>자료 범위<select id="expRange"><option value="near">가까운 초신성 (z &lt; 0.1)</option><option value="all">전체 초신성</option><option value="far">먼 초신성 (z ≥ 0.3)</option></select></label>
+<label>표본 개수<input id="expCount" type="number" min="20" value="30"></label>
+<button class="primary" id="expRun">새 표본으로 학습하기</button>
+</div>
+<div class="canvasbox"><canvas id="histPlot" class="short"></canvas></div>
+<div class="tablewrap log"><table><thead><tr><th>회차</th><th>자료 범위</th><th>표본 수</th><th>최대 <i>z</i></th><th>학습한 <i>a</i></th><th>검증 평균 오차</th></tr></thead><tbody id="histRows"></tbody></table></div>
+<div class="lesson">
+<h3>전체 자료로 보는 직선 모델의 한계</h3>
+<p>초신성 1,048개를 모두 찍고, 가까운 초신성으로 학습한 모델과 전체로 학습한 모델을 함께 그렸습니다.</p>
+<div class="canvasbox"><canvas id="allPlot" class="tall"></canvas><p class="legend"><span class="dot all"></span>초신성 1,048개 <span class="lineKey near"></span>가까운 초신성으로 학습 <span class="lineKey wide"></span>전체로 학습 <span class="lineKey light"></span>빛의 속도</p></div>
+<div class="warning" id="limitText"></div>
+</div>
+<div class="lesson">
+<h3>AI 원리로 돌아가기</h3>
+<div class="tablewrap"><table class="map"><thead><tr><th>우리가 한 일</th><th>AI 용어</th><th>실제 AI와 다른 점</th></tr></thead><tbody>
+<tr><td>표본을 학습용과 검증용으로 나눔</td><td>학습 데이터, 검증 데이터</td><td>실제로는 훨씬 많은 자료를 씀</td></tr>
+<tr><td>관계를 <i>v</i> = <i>ar</i>로 정함</td><td>모델, 매개변수</td><td>실제 모델은 매개변수가 수백만 개 이상</td></tr>
+<tr><td>오차제곱합 <i>S</i>(<i>a</i>)를 정의함</td><td>손실함수</td><td>문제에 따라 다른 손실함수도 씀</td></tr>
+<tr><td>양옆을 비교하며 <i>a</i>를 고침</td><td>학습(최적화)</td><td>실제로는 미분을 이용한 경사하강법을 주로 씀</td></tr>
+<tr><td>검증용 초신성과 새 은하를 예측함</td><td>예측, 일반화</td><td>원리는 같음</td></tr>
+<tr><td>자료 범위에 따라 <i>a</i>가 달라짐</td><td>데이터 편향</td><td>원리는 같음</td></tr>
+</tbody></table></div>
+<div class="qbox"><p><b>성찰 1.</b> AI(컴퓨터)는 왜 이 <i>a</i>를 골랐을까요? 손실함수라는 말을 넣어 설명해 보세요.</p><textarea rows="3" placeholder="나의 설명"></textarea></div>
+<div class="qbox"><p><b>성찰 2.</b> 가까운 초신성으로 학습한 모델이 먼 은하의 속도를 잘 예측하지 못하는 이유는 무엇일까요?</p><textarea rows="3" placeholder="나의 설명"></textarea></div>
+</div>
+</section>
+
+</main>
+<footer><button id="prev" hidden>← 이전</button><span id="toast">STEP 0부터 시작해 보세요.</span><button class="primary" id="next" disabled>다음 →</button></footer>
+<script src="script.js"></script>
+</body>
+</html>
