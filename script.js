@@ -108,6 +108,8 @@ if(b.id==='export-bottom')download();
 });
 function download(){const payload={...state,exportedAt:new Date().toISOString(),cohorts,summary:{comparisonOrder:PAIRS.map(([a,b])=>labels[a]+labels[b]),agreementUnit:"pairwise choices",comparisonsPerClass:150,meanWeights:[mean(0),mean(1)],agreementCounts:[[accuracy(0,0),accuracy(0,1)],[accuracy(1,0),accuracy(1,1)]]}};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='선택의수학_탐구기록.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('탐구 기록을 내려받았습니다.');}
 $('#export').onclick=download;
+$('#import').onclick=()=>$('#import-file').click();
+$('#import-file').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;const rd=new FileReader();rd.onload=()=>{let d;try{d=JSON.parse(rd.result);}catch{return toast('기록 파일을 읽을 수 없습니다.');}if(d?.version!==3||!Array.isArray(d.shares)||d.shares.length!==9||d.est?.length!==2)return toast('이 콘텐츠에서 내려받은 탐구 기록 파일이 아닙니다.');if(!confirm('불러온 기록으로 바꿀까요? 지금 이 브라우저에 있는 기록은 사라집니다.'))return;const {exportedAt,cohorts:_c,summary,...rest}=d;state={...fresh(),...rest};class2Open=false;render();toast('탐구 기록을 불러왔습니다. 이어서 진행하세요.');};rd.readAsText(f);};
 $('#reset').onclick=()=>{if(confirm('이 브라우저의 모든 탐구 기록을 초기화할까요? 필요한 기록은 먼저 내려받으세요.')){state=fresh();class2Open=false;render();toast('새 탐구를 시작합니다.');}};
 document.addEventListener('input',e=>{if(e.target.id!=='budget')return;const p=state.prices[state.stock],b=Number(e.target.value),n=Number.isFinite(b)&&b>0?Math.floor((b+.000001)/p):0,el=$('#buy-preview');if(el)el.textContent=n?`→ ${n}주 (${money(n*p)})`:'→ 1주도 살 수 없어요';});
 render();

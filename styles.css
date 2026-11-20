@@ -23,3 +23,4 @@ var{font-family:"Inquiry Math","Cambria Math",serif;font-style:normal;font-weigh
 .stock .price{color:#2f5fe0;font-weight:700}
 .nowrap{white-space:nowrap}
 #day-result table{font-size:.88rem}#day-result th,#day-result td{padding:8px 6px}
+@media(max-width:600px){header{grid-template-columns:auto repeat(2,minmax(0,1fr))}header h1{grid-column:2/4}header button{padding-left:6px;padding-right:6px}}
